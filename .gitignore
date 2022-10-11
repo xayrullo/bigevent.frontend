@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /dist
-# yarn.lock
+yarn.lock
+.nuxt
 
 # local env files
 .env.local

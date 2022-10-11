@@ -1,12 +1,11 @@
 
 export default {
   ssr: false,
-  subdirectory: '/multikart',
   /*
   ** Headers of the page
   */
   head: {
-    title: 'Multikart Ecommerce | Vuejs shopping theme',
+    title: 'BigEvent',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -21,9 +20,7 @@ export default {
     ]
   },
 
-  router: {
-    base: '/multikart/'
-  },
+  router: {},
   /*
   ** Customize the progress-bar color
   */
