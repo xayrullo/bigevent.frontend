@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header />
+    <x-header />
     <Slider />
     <CollectionBanner />
     <ProductSlider :products="products" @openQuickview="showQuickview" @openCompare="showCoampre" @openCart="showCart" />
@@ -10,7 +10,7 @@
     <Blog />
     <Instagram />
     <LogoSlider />
-    <Footer />
+    <x-footer />
     <quickviewModel :openModal="showquickviewmodel" :productData="quickviewproduct" />
     <compareModel :openCompare="showcomparemodal" :productData="comapreproduct" @closeCompare="closeCompareModal" />
     <cartModel :openCart="showcartmodal" :productData="cartproduct" @closeCart="closeCartModal" :products="products" />
@@ -19,8 +19,6 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import Header from '../../../components/header/header1'
-import Footer from '../../../components/footer/footer1'
 import quickviewModel from '../../../components/widgets/quickview'
 import compareModel from '../../../components/widgets/compare-popup'
 import cartModel from '../../../components/cart-model/cart-modal-popup'
@@ -37,7 +35,6 @@ import LogoSlider from './components/logo_slider'
 
 export default {
   components: {
-    Header,
     Slider,
     CollectionBanner,
     ProductSlider,
@@ -47,7 +44,6 @@ export default {
     Blog,
     Instagram,
     LogoSlider,
-    Footer,
     quickviewModel,
     compareModel,
     cartModel,

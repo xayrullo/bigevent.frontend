@@ -1,17 +1,14 @@
 <template>
   <div>
     <nuxt id="body-content"/>
-    <layoutSetting/>
-    <div class="tap-top top-cls" v-scroll-to="'#body-content'">
-      <div>
-          <i class="fa fa-angle-double-up"></i>
-      </div>
-    </div>
+    <layout-setting/>
+    <back-to-top />
   </div>
 </template>
 
 <script>
-import layoutSetting from '../components/widgets/layout-setting'
+import LayoutSetting from '../components/widgets/layout-setting'
+import BackToTop from '../components/main/back-to-top'
 export default {
   head() {
     return {
@@ -19,7 +16,8 @@ export default {
     }
   },
   components: {
-    layoutSetting
+    BackToTop,
+    LayoutSetting
   },
   mounted() {
     this.$nextTick(() => {
