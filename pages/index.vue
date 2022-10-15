@@ -2,38 +2,66 @@
   <div>
     <x-header />
     <slider />
-    <directions-slider class="mt-4"/>
+    <directions-slider
+      title="Explore Our Collections"
+      subtitle="Luxury pieces and accessories that are designed to be treasured."
+      :directions="directions"
+      class="mt-4"
+    />
     <CollectionBanner />
-    <ProductSlider :products="products" @openQuickview="showQuickview" @openCompare="showCoampre" @openCart="showCart" />
+    <ProductSlider
+      :products="products"
+      @openQuickview="showQuickview"
+      @openCompare="showCoampre"
+      @openCart="showCart"
+    />
     <Banner />
-    <ProductTab :products="products" :category="category" @openQuickview="showQuickview" @openCompare="showCoampre" @openCart="showCart" />
+    <ProductTab
+      :products="products"
+      :category="category"
+      @openQuickview="showQuickview"
+      @openCompare="showCoampre"
+      @openCart="showCart"
+    />
     <Services />
     <Blog />
     <Instagram />
     <LogoSlider />
     <x-footer />
-    <quickviewModel :openModal="showquickviewmodel" :productData="quickviewproduct" />
-    <compareModel :openCompare="showcomparemodal" :productData="comapreproduct" @closeCompare="closeCompareModal" />
-    <cartModel :openCart="showcartmodal" :productData="cartproduct" @closeCart="closeCartModal" :products="products" />
+    <quickviewModel
+      :openModal="showquickviewmodel"
+      :productData="quickviewproduct"
+    />
+    <compareModel
+      :openCompare="showcomparemodal"
+      :productData="comapreproduct"
+      @closeCompare="closeCompareModal"
+    />
+    <cartModel
+      :openCart="showcartmodal"
+      :productData="cartproduct"
+      @closeCart="closeCartModal"
+      :products="products"
+    />
     <newsletterModel />
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
-import quickviewModel from '~/components/widgets/quickview'
-import compareModel from '~/components/widgets/compare-popup'
-import cartModel from '~/components/cart-model/cart-modal-popup'
-import newsletterModel from '~/components/widgets/newsletter-popup'
-import Slider from '~/components/home/slider'
-import DirectionsSlider from '~/components/home/directions-slider'
-import CollectionBanner from './shop/fashion/components/collection_banner'
-import ProductSlider from './shop/fashion/components/product_slider'
-import Banner from './shop/fashion/components/banner'
-import ProductTab from './shop/fashion/components/product_tab'
-import Services from './shop/fashion/components/services'
-import Blog from './shop/fashion/components/blog'
-import Instagram from './shop/fashion/components/instagram'
-import LogoSlider from './shop/fashion/components/logo_slider'
+import { mapState } from "vuex";
+import quickviewModel from "~/components/widgets/quickview";
+import compareModel from "~/components/widgets/compare-popup";
+import cartModel from "~/components/cart-model/cart-modal-popup";
+import newsletterModel from "~/components/widgets/newsletter-popup";
+import Slider from "~/components/home/slider";
+import DirectionsSlider from "~/components/home/directions-slider";
+import CollectionBanner from "./shop/fashion/components/collection_banner";
+import ProductSlider from "./shop/fashion/components/product_slider";
+import Banner from "./shop/fashion/components/banner";
+import ProductTab from "./shop/fashion/components/product_tab";
+import Services from "./shop/fashion/components/services";
+import Blog from "./shop/fashion/components/blog";
+import Instagram from "./shop/fashion/components/instagram";
+import LogoSlider from "./shop/fashion/components/logo_slider";
 
 export default {
   components: {
@@ -50,7 +78,7 @@ export default {
     quickviewModel,
     compareModel,
     cartModel,
-    newsletterModel
+    newsletterModel,
   },
   data() {
     return {
@@ -61,47 +89,79 @@ export default {
       showcartmodal: false,
       quickviewproduct: {},
       comapreproduct: {},
-      cartproduct: {}
-    }
+      cartproduct: {},
+      directions: [
+        {
+          id: 1,
+          title: "Wedding Dresses",
+          link: "",
+          image: "directions/wedding-dresses.jpeg",
+        },
+        {
+          id: 2,
+          title: "Bridesmaids & Occasionwear",
+          link: "",
+          image: "directions/bridesmaids-and-occasionwear.jpeg",
+        },
+        {
+          id: 3,
+          title: "Ready to Wear",
+          link: "",
+          image: "directions/ready-to-wear.jpeg",
+        },
+        {
+          id: 4,
+          title: "Shoes & Accessories",
+          link: "",
+          image: "directions/shoes-and-accessories.webp",
+        },
+        {
+          id: 5,
+          title: "Veils & Headbands",
+          link: "",
+          image: "directions/veils-and-hair.webp",
+        },
+      ],
+    };
   },
   computed: {
     ...mapState({
-      productslist: state => state.products.productslist
-    })
+      productslist: (state) => state.products.productslist,
+    }),
   },
   mounted() {
-    this.productsArray()
+    this.productsArray();
   },
   methods: {
     productsArray: function () {
       this.productslist.map((item) => {
-        if (item.type === 'fashion') {
-          this.products.push(item)
+        if (item.type === "fashion") {
+          this.products.push(item);
           item.collection.map((i) => {
-            const index = this.category.indexOf(i)
-            if (index === -1) this.category.push(i)
-          })
+            const index = this.category.indexOf(i);
+            if (index === -1) this.category.push(i);
+          });
         }
-      })
+      });
     },
     showQuickview(item, productData) {
-      this.showquickviewmodel = item
-      this.quickviewproduct = productData
+      this.showquickviewmodel = item;
+      this.quickviewproduct = productData;
     },
     showCoampre(item, productData) {
-      this.showcomparemodal = item
-      this.comapreproduct = productData
+      this.showcomparemodal = item;
+      this.comapreproduct = productData;
     },
     closeCompareModal(item) {
-      this.showcomparemodal = item
+      this.showcomparemodal = item;
     },
     showCart(item, productData) {
-      this.showcartmodal = item
-      this.cartproduct = productData
+      this.showcartmodal = item;
+      this.cartproduct = productData;
     },
     closeCartModal(item) {
-      this.showcartmodal = item
-    }
-  }
-}
+      this.showcartmodal = item;
+    },
+  },
+};
 </script>

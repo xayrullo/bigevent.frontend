@@ -4,20 +4,37 @@
       <div class="row">
         <div class="col">
           <div class="title1 section-t-space">
-            <h4>{{subtitle}}</h4>
-            <h2 class="title-inner1">{{title}}</h2>
+            <h4>{{ subtitle }}</h4>
+            <h2 class="title-inner1">{{ title }}</h2>
           </div>
         </div>
       </div>
     </div>
     <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(item, index) in items" :key="index">
-          <div>
-            <div class="logo-block text-center">
-              <a href="#">
-                <img :src="item.imagepath" alt />
-              </a>
+        <div
+          class="swiper-slide"
+          v-for="(direction, index) in directions"
+          :key="index"
+        >
+          <div class="product-box">
+            <div class="img-wrapper">
+              <div class="front">
+                <nuxt-link to="/">
+                  <img
+                    :src="$tools.getImgUrl(direction.image)"
+                    :id="direction.id"
+                    class="img-fluid bg-img"
+                    :alt="direction.title"
+                    :key="index"
+                  />
+                </nuxt-link>
+              </div>
+            </div>
+            <div class="product-detail">
+              <nuxt-link :to="direction.link">
+                <h6>{{ direction.title }}</h6>
+              </nuxt-link>
             </div>
           </div>
         </div>
@@ -27,12 +44,18 @@
 </template>
   <script type="text/javascript">
 export default {
+  props: {
+    directions: Array,
+    subtitle: String,
+    title: String,
+  },
   components: {},
   data() {
     return {
       swiperOption: {
         slidesPerView: 6,
         freeMode: true,
+        spaceBetween: 20,
         autoplay: {
           delay: 2500,
           disableOnInteraction: false,
@@ -52,34 +75,16 @@ export default {
           },
         },
       },
-      items: [
-        {
-          imagepath: require("@/assets/images/logos/1.png"),
-        },
-        {
-          imagepath: require("@/assets/images/logos/2.png"),
-        },
-        {
-          imagepath: require("@/assets/images/logos/3.png"),
-        },
-        {
-          imagepath: require("@/assets/images/logos/4.png"),
-        },
-        {
-          imagepath: require("@/assets/images/logos/5.png"),
-        },
-        {
-          imagepath: require("@/assets/images/logos/6.png"),
-        },
-        {
-          imagepath: require("@/assets/images/logos/7.png"),
-        },
-        {
-          imagepath: require("@/assets/images/logos/8.png"),
-        },
-      ],
     };
+  },
+  mounted() {
+    console.log("Directions: ", this.directions);
   },
 };
 </script>
-  
+<style scoped>
+.nuxt-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+</style>

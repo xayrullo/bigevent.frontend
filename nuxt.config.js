@@ -39,6 +39,7 @@ export default {
      { src: '~/plugins/plugin.js', ssr:false },
      { src: '~/plugins/localStorage.js', ssr:false },
      { src: '~/plugins/local-components.js' },
+     { src: '~/plugins/tools.js' },
   ],
   /*
   ** Nuxt.js modules
