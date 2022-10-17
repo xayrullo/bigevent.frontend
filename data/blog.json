@@ -1,157 +1,49 @@
 {
     "data": [
       { 
-        "title": "Lorem ipsum dolor consectetur adipiscing",
-        "images": ["10.jpg"],
+        "id": 1,
+        "title": "Carl & Katy in the Aura Gown",
+        "image": "blogs/carl-and-katy.webp",
         "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "oct 9, 2019",
-        "type": "fashion",
-        "tags": ["latest", "new"]
+        "description": "Our beautiful #GRACEBride Katy wears AURA, whilst getting hitched with new hubby Carl at their picturesque wedding venue - Wine + Garden, Ft. Lauderdale in Florida.",
+        "content": "",
+        "createdAt": "2022-09-07T09:30:48.294Z"
       },
-      {
-        "title": "Lorem ipsum dolor sit consectetur elit",
-        "images": ["10.jpg"],
+      { 
+        "id": 2,
+        "title": "Carol & Katia in the Summer Gown",
+        "image": "blogs/carol-and-katia.webp",
         "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "nov 1, 2019",
-        "type": "fashion",
-        "tags": ["latest", "fashion"]
+        "description": "#GRACEBride Katia and husband Carol got hitched in Côte d’Azur, South of France – with the theme of their wedding being chic and elegant; white, beige and pink flowers decorated their special day. Katia is from Paris and Carol grew up by the seaside of Romania, so this venue was the perfect combination for the lovers.​",
+        "content": "",
+        "createdAt": "2022-09-07T09:30:48.294Z"
       },
-      {
-        "title": "Lorem ipsum dolor sit adipiscing elit",
-        "images": ["10.jpg"],
+      { 
+        "id": 3,
+        "title": "Chad & Davi in the Nathalia Gown",
+        "image": "blogs/chad-and-davi.webp",
         "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "nov 29, 2019",
-        "type": "fashion",
-        "tags": ["recent", "new"]
+        "description": "Introducing our first NATHALIA #GRACEBride and wow is she coming in with a bang! Davionna and Chad exchanged vows at their romantic Santorini elopement - Euro summer goals!",
+        "content": "",
+        "createdAt": "2022-09-07T09:30:48.294Z"
       },
-      {
-        "title": "Lorem ipsum sit consectetur adipiscing",
-        "images": ["10.jpg"],
+      { 
+        "id": 4,
+        "title": "Maurice & Kris in the Orla Gown",
+        "image": "blogs/maurice-and-kris.webp",
         "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "dec 9, 2019",
-        "type": "fashion",
-        "tags": ["popular", "recent"]
+        "description": "#GRACEBRIDEKris wears our ORLA gown, eloping at the naturally beautiful Joshua Tree, Los Angeles.",
+        "content": "",
+        "createdAt": "2022-09-07T09:30:48.294Z"
       },
-      {
-        "title": "Lorem ipsum consectetur adipiscing elit",
-        "images": ["10.jpg"],
+      { 
+        "id": 5,
+        "title": "Slater & Stacie in the Verdelle 2.0 Gown",
+        "image": "blogs/slater-and-stacie.webp",
         "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "nov 19, 2019",
-        "type": "fashion",
-        "tags": ["recent", "fashion"]
-      },
-      {
-        "title": "Lorem ipsum shoes adipiscing elit",
-        "images": ["10.jpg"],
-        "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "dec 19, 2019",
-        "type": "shoes",
-        "tags": ["shoes", "trending"]
-      },
-      {
-        "title": "Lorem footwear consectetur adipiscing",
-        "images": ["10.jpg"],
-        "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "oct 2, 2019",
-        "type": "shoes",
-        "tags": ["style", "recent"]
-      },
-      {
-        "title": "Lorem ipsum dolor adipiscing elit",
-        "images": ["10.jpg"],
-        "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "oct 26, 2019",
-        "type": "shoes",
-        "tags": ["popular", "shoes"]
-      },
-      {
-        "title": "Lorem shoes dolor consectetur elit",
-        "images": ["10.jpg"],
-        "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "oct 26, 2019",
-        "type": "shoes",
-        "tags": ["popular", "shoes"]
-      },
-      {
-        "title": "Bags style dolor consectetur elit",
-        "images": ["10.jpg"],
-        "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "oct 26, 2019",
-        "type": "bags",
-        "tags": ["bags", "new"]
-      },
-      {
-        "title": "New bags dolor adipiscing consectetur",
-        "images": ["10.jpg"],
-        "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "oct 26, 2019",
-        "type": "bags",
-        "tags": ["popular", "trending"]
-      },
-      {
-        "title": "Lorem bags for women dolor consectetur",
-        "images": ["10.jpg"],
-        "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "oct 26, 2019",
-        "type": "bags",
-        "tags": ["latest", "recent"]
-      },
-      {
-        "title": "handbag and backpack consectetur adipiscing",
-        "images": ["10.jpg"],
-        "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "oct 10, 2019",
-        "type": "bags",
-        "tags": ["bags", "style"]
-      },
-      {
-        "title": "watches lorem consectetur adipiscing dolor",
-        "images": ["10.jpg"],
-        "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "oct 15, 2019",
-        "type": "watch",
-        "tags": ["new", "style"]
-      },
-      {
-        "title": "women watches elit consectetur dolor",
-        "images": ["10.jpg"],
-        "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "oct 15, 2019",
-        "type": "watch",
-        "tags": ["popular", "recent"]
-      },
-      {
-        "title": "trending watches for men adipiscing elit",
-        "images": ["10.jpg"],
-        "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "dec 15, 2019",
-        "type": "watch",
-        "tags": ["trending", "style"]
-      },
-      {
-        "title": "trending kids clothing adipiscing elit",
-        "images": ["10.jpg"],
-        "author": "John Dio",
-        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters",
-        "date": "dec 15, 2019",
-        "type": "kids",
-        "tags": ["trending", "new"]
+        "description": "#GRACEBride Stacie and new hubby Slater took the 'western boho' wedding vibe to a whole new level and we can't get enough. These two lovebirds exchanged vows in Sun Valley, Idaho on Slater's family property. This special 50 acre ranch has been in the family over 100 years!",
+        "content": "",
+        "createdAt": "2022-09-07T09:30:48.294Z"
       }
     ]
   }

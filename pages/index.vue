@@ -53,11 +53,11 @@ import cartModel from "~/components/cart-model/cart-modal-popup";
 import newsletterModel from "~/components/widgets/newsletter-popup";
 import Slider from "~/components/home/slider";
 import DirectionsSlider from "~/components/home/directions-slider";
+import Blog from "~/components/home/blog";
 // import Banner from "~/components/home/banner";
 import ProductSlider from "./shop/fashion/components/product_slider";
 import ProductTab from "./shop/fashion/components/product_tab";
 import Services from "./shop/fashion/components/services";
-import Blog from "./shop/fashion/components/blog";
 import Instagram from "./shop/fashion/components/instagram";
 import LogoSlider from "./shop/fashion/components/logo_slider";
 
@@ -66,10 +66,10 @@ export default {
     Slider,
     DirectionsSlider,
     ProductSlider,
+    Blog,
     // Banner,
     ProductTab,
     Services,
-    Blog,
     Instagram,
     LogoSlider,
     quickviewModel,

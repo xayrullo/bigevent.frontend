@@ -13,3 +13,10 @@
 @import 'theme/theme-dark';
 @import 'theme/menu';
 @import 'theme/responsive';
+div {
+  font: 300 1em Avenir,sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: normal;
+  color: #222222;
+}
