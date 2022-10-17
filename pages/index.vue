@@ -8,14 +8,13 @@
       :directions="directions"
       class="mt-4"
     />
-    <CollectionBanner />
     <ProductSlider
       :products="products"
       @openQuickview="showQuickview"
       @openCompare="showCoampre"
       @openCart="showCart"
     />
-    <Banner />
+    <!-- <Banner /> -->
     <ProductTab
       :products="products"
       :category="category"
@@ -54,9 +53,8 @@ import cartModel from "~/components/cart-model/cart-modal-popup";
 import newsletterModel from "~/components/widgets/newsletter-popup";
 import Slider from "~/components/home/slider";
 import DirectionsSlider from "~/components/home/directions-slider";
-import CollectionBanner from "./shop/fashion/components/collection_banner";
+// import Banner from "~/components/home/banner";
 import ProductSlider from "./shop/fashion/components/product_slider";
-import Banner from "./shop/fashion/components/banner";
 import ProductTab from "./shop/fashion/components/product_tab";
 import Services from "./shop/fashion/components/services";
 import Blog from "./shop/fashion/components/blog";
@@ -67,9 +65,8 @@ export default {
   components: {
     Slider,
     DirectionsSlider,
-    CollectionBanner,
     ProductSlider,
-    Banner,
+    // Banner,
     ProductTab,
     Services,
     Blog,
