@@ -9,7 +9,7 @@
                   <div class="subscribe">
                     <div>
                       <h4>KNOW IT ALL FIRST!</h4>
-                      <p>Never Miss Anything From Multikart By Signing Up To Our Newsletter.</p>
+                      <p>Never Miss Anything From BigEVENT By Signing Up To Our Newsletter.</p>
                     </div>
                   </div>
                 </div>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="footer-contant">
                   <div class="footer-logo">
-                    <img :src='"@/assets/images/icon/logo.png"' alt="logo" />
+                    <img :src='"@/assets/images/logos/BigEvent.png"' height="100" alt="logo" />
                   </div>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
                   <div class="footer-social">
