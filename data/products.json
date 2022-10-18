@@ -2,13 +2,13 @@
     "data": [
         {
             "id": 1,
-            "title": "trim dress",
-            "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.",
+            "title": "Goldie",
+            "description": "Meet Goldie - a GRACE icon in the making and a top favourite of ours. Modern and effortlessly chic, Goldie exudes an easy-going nature, complimented by a striking silhouette and fabric. This open back, high neck gown features a double-layered bias-cut satin for a luxe and dense feel, with artfully placed pleating at the waist to accentuate your shape. To help women who are concerned about side-boob or simply want extra support, we've included a complimentary satin rouleau that is easy to tighten or cut off if desired. Goldie was made for the woman who knows who she is and what she wants.",
             "type": "fashion",
             "brand": "nike",
             "collection": ["new products"],
             "category": "Women",
-            "price": 145,
+            "price": 2300,
             "sale": true,
             "discount": "40",
             "stock": 5,
