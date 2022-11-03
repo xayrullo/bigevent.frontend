@@ -152,7 +152,7 @@
     />
   </div>
 </template>
-      <script>
+<script>
 import { mapState } from "vuex";
 import quickviewModel from "~/components/widgets/quickview";
 import compareModel from "~/components/widgets/compare-popup";

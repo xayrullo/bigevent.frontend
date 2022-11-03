@@ -10,7 +10,16 @@
             </div>
             <div class="col-sm-6">
               <nav aria-label="breadcrumb" class="theme-breadcrumb">
-                <ol class="breadcrumb">
+                <ol class="breadcrumb" v-if="routes && routes.length">
+                  <li class="breadcrumb-item">
+                    <nuxt-link :to="{ path: '/' }">Home</nuxt-link>
+                  </li>
+                  <li v-for="(route, index) in routes" :key="index" class="breadcrumb-item">
+                    <nuxt-link :to="{ path: `/${route.path}` }">{{ route.name }}</nuxt-link>
+                  </li>
+                  <li class="breadcrumb-item active" v-if="title">{{ title }}</li>
+                </ol>
+                <ol class="breadcrumb" v-else>
                   <li class="breadcrumb-item">
                     <nuxt-link :to="{ path: '/' }">Home</nuxt-link>
                   </li>
@@ -25,7 +34,10 @@
   </template>
   <script>
   export default {
-    props: ['title']
+    props: {
+      title: String,
+      routes: Array
+    }
   }
   </script>
   

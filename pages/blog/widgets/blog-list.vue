@@ -8,28 +8,19 @@
     >
       <div class="col-xl-6">
         <div class="blog-left">
-          <nuxt-link :to="{ path: '/blog/blog-detail'}">
-            <img :src="getImgUrl(blog.images[0])" class="img-fluid" alt />
+          <nuxt-link :to="{ path: `/blog/${blog.id}`}">
+            <img :src="$tools.getFileUrl(blog.attributes.image.data.attributes.url)" height="250" style="object-fit: cover;" alt />
           </nuxt-link>
         </div>
       </div>
       <div class="col-xl-6">
         <div class="blog-right">
           <div>
-            <h6>{{ blog.date }}</h6>
-            <nuxt-link :to="{ path: '/blog/blog-detail'}">
-              <h4>{{blog.title}}</h4>
+            <h6>{{ $tools.getDate(blog.attributes.createdAt) }}</h6>
+            <nuxt-link :to="{ path: `/blog/${blog.id}`}">
+              <h4>{{blog.attributes.title}}</h4>
             </nuxt-link>
-            <ul class="post-social">
-              <li>Posted By : {{blog.auther}}</li>
-              <li>
-                <i class="fa fa-heart"></i> 5 Hits
-              </li>
-              <li>
-                <i class="fa fa-comments"></i> 10 Comment
-              </li>
-            </ul>
-            <p>{{blog.description}}</p>
+            <p>{{blog.attributes.description}}</p>
           </div>
         </div>
       </div>
@@ -88,16 +79,13 @@ export default {
     }
   },
   computed: mapState({
-    bloglist: state => state.blog.bloglist
+    bloglist: state => state.blog.blogs
   }),
   mounted() {
     this.getPaginate()
     this.updatePaginate(1)
   },
   methods: {
-    getImgUrl(path) {
-      return require('@/assets/images/' + path)
-    },
     getPaginate() {
       this.paginates = Math.round(this.bloglist.length / this.paginate)
       this.pages = []

@@ -22,13 +22,13 @@
             :key="index"
             :class="menuItem.megamenu ? 'mega-menu' : 'dropdown'"
           >
-            <a href="#" class="nav-link" @click="setActive(menuItem.title)">
+            <nuxt-link :to="{ path: menuItem.path }" class="nav-link" @click="setActive(menuItem.title)">
               {{ menuItem.title }}
               <span
                 class="sub-arrow"
                 v-if="menuItem.children || menuItem.megamenu"
               ></span>
-            </a>
+            </nuxt-link>
             <ul
               class="nav-submenu"
               :class="{ opensubmenu: isActive(menuItem.title) }"

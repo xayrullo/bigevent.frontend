@@ -6,20 +6,16 @@
           <ul class="recent-blog">
             <li v-for="(blog,index) in bloglist.slice(0, 6)" :key="index">
               <div class="media">
-                <img :src="getImgUrl(blog.images[0])" class="img-fluid" alt />
+                <nuxt-link :to="{ path: `/blog/${blog.id}`}">
+                  <img :src="$tools.getFileUrl(blog.attributes.image.data.attributes.url)" style="object-fit: cover;" height="50" />
+                </nuxt-link>
                 <div class="media-body align-self-center">
-                  <h6>{{ blog.date }}</h6>
-                  <p>{{ blog.title }}</p>
+                  <nuxt-link :to="{ path: `/blog/${blog.id}`}">
+                    <h6>{{ $tools.getDate(blog.attributes.createdAt) }}</h6>
+                  </nuxt-link>
+                  <p>{{ blog.attributes.title }}</p>
                 </div>
               </div>
-            </li>
-          </ul>
-        </div>
-        <div class="theme-card">
-          <h4>Popular Tags</h4>
-          <ul class="popular-tag">
-            <li v-for="(tag,index) in getblogtags" :key="index">
-              <span>{{ tag }}</span>
             </li>
           </ul>
         </div>
@@ -32,16 +28,12 @@ import { mapState } from 'vuex'
 export default {
   computed: {
     ...mapState({
-      bloglist: state => state.blog.bloglist
+      bloglist: state => state.blog.blogs
     }),
     getblogtags() {
       return this.$store.getters['blog/getblogTag']
     }
   },
-  methods: {
-    getImgUrl(path) {
-      return require('@/assets/images/' + path)
-    }
-  }
+  methods: {}
 }
 </script>
