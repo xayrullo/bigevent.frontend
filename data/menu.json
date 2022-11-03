@@ -7,50 +7,35 @@
       "active": false,
       "children": [
         {
-          "path": "/",
+          "path": "/collections/wedding-dresses",
           "title": "Wedding Dresses",
           "type": "link"
         },
         {
-          "path": "/",
-          "title": "Ready To Wear",
-          "type": "link"
-        },
-        {
-          "path": "/",
+          "path": "/collections/bridesmaids-occasionwear",
           "title": "Bridesmaids & Occasionwear",
           "type": "link"
         },
         {
-          "path": "/",
-          "title": "Wedding Veils & Headbands",
-          "type": "link"
-        },
-        {
-          "path": "/",
+          "path": "/shoes-accessories",
           "title": "Shoes & Accessories",
           "type": "link"
         }
       ]
     },
     {
-      "title": "Showroom",
-      "type": "sub",
-      "active": false
-    },
-    {
+      "path": "/blog",
       "title": "Blog",
-      "type": "sub",
       "active": false
     },
     {
+      "path": "/about",
       "title": "About",
-      "type": "sub",
       "active": false
     },
     {
+      "path": "/contact",
       "title": "Contact",
-      "type": "sub",
       "active": false
     }
   ]

@@ -2,21 +2,24 @@
   <div>
     <header>
       <div class="mobile-fix-option"></div>
-      <TopBar/>
+      <TopBar />
       <div class="container">
         <div class="row">
           <div class="col-sm-12">
             <div class="main-menu">
               <div class="menu-left">
                 <div class="">
-                  <nuxt-link :to="{ path: '/'}">
-                    <img :src='"@/assets/images/logos/BigEvent.png"' height="90" />
+                  <nuxt-link :to="{ path: '/' }">
+                    <img
+                      :src="'@/assets/images/logos/BigEvent.png'"
+                      height="90"
+                    />
                   </nuxt-link>
                 </div>
               </div>
               <div class="menu-right pull-right">
-                  <Nav/>
-                  <HeaderWidgets/>
+                <Nav />
+                <HeaderWidgets />
               </div>
             </div>
           </div>
@@ -26,25 +29,25 @@
   </div>
 </template>
 <script>
-import TopBar from './topbar'
-import Nav from './navbar'
-import HeaderWidgets from './header-widgets'
+import TopBar from "./topbar";
+import Nav from "./navbar";
+import HeaderWidgets from "./header-widgets";
 export default {
   data() {
-    return {}
+    return {};
   },
   components: {
     TopBar,
     Nav,
-    HeaderWidgets
+    HeaderWidgets,
   },
   methods: {
     left_sidebar() {
-      this.leftSidebarVal = true
+      this.leftSidebarVal = true;
     },
     closeBarValFromChild(val) {
-      this.leftSidebarVal = val
-    }
-  }
-}
+      this.leftSidebarVal = val;
+    },
+  },
+};
 </script>

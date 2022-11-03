@@ -12,9 +12,10 @@ import BackToTop from '../components/main/back-to-top'
 export default {
   head() {
     return {
-      title: 'MultiKart Ecommerce | Vuejs Shopping Theme'
+      title: 'BigEVENT Ecommerce'
     }
   },
+  asyncData({ store, params, i18n, route }) {},
   components: {
     BackToTop,
     LayoutSetting

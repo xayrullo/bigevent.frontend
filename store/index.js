@@ -6,6 +6,7 @@ import products from './modules/products'
 import cart from './modules/cart'
 import filter from './modules/filter'
 import layout from './modules/layout'
+import directory from './modules/directory'
 Vue.use(Vuex)
 const createStore = () => {
   return new Vuex.Store({
@@ -15,7 +16,8 @@ const createStore = () => {
       products,
       cart,
       filter,
-      layout
+      layout,
+      directory,
     }
   })
 }

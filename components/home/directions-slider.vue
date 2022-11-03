@@ -20,9 +20,9 @@
           <div class="product-box">
             <div class="img-wrapper">
               <div class="front">
-                <nuxt-link to="/">
+                <nuxt-link :to="`/collections/${direction.attributes.link}`">
                   <img
-                    :src="$tools.getImgUrl(direction.image)"
+                    :src="$tools.getFileUrl(direction.attributes.image.data.attributes.url)"
                     :id="direction.id"
                     class="img-fluid bg-img"
                     :alt="direction.title"
@@ -31,9 +31,9 @@
                 </nuxt-link>
               </div>
             </div>
-            <div class="product-detail">
-              <nuxt-link :to="direction.link">
-                <h6>{{ direction.title }}</h6>
+            <div class="product-detail mt-2">
+              <nuxt-link :to="`/collections/${direction.attributes.link}`">
+                <h5>{{ direction.attributes.title }}</h5>
               </nuxt-link>
             </div>
           </div>
@@ -77,9 +77,7 @@ export default {
       },
     };
   },
-  mounted() {
-    console.log("Directions: ", this.directions);
-  },
+  mounted() {},
 };
 </script>
 <style scoped>

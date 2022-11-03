@@ -1,7 +1,7 @@
 <template>
   <div>
-    <x-header />
-    <slider />
+    <x-header/>
+    <slider :directions="directions"/>
     <directions-slider
       title="Explore Our Collections"
       subtitle="Luxury pieces and accessories that are designed to be treasured."
@@ -24,7 +24,7 @@
     />
     <Services />
     <Blog />
-    <Instagram />
+    <!-- <Instagram /> -->
     <LogoSlider />
     <x-footer />
     <quickviewModel
@@ -58,7 +58,7 @@ import Blog from "~/components/home/blog";
 import ProductSlider from "./shop/fashion/components/product_slider";
 import ProductTab from "./shop/fashion/components/product_tab";
 import Services from "./shop/fashion/components/services";
-import Instagram from "./shop/fashion/components/instagram";
+// import Instagram from "./shop/fashion/components/instagram";
 import LogoSlider from "./shop/fashion/components/logo_slider";
 
 export default {
@@ -70,7 +70,7 @@ export default {
     // Banner,
     ProductTab,
     Services,
-    Instagram,
+    // Instagram,
     LogoSlider,
     quickviewModel,
     compareModel,
@@ -87,43 +87,15 @@ export default {
       quickviewproduct: {},
       comapreproduct: {},
       cartproduct: {},
-      directions: [
-        {
-          id: 1,
-          title: "Wedding Dresses",
-          link: "",
-          image: "directions/wedding-dresses.jpeg",
-        },
-        {
-          id: 2,
-          title: "Bridesmaids & Occasionwear",
-          link: "",
-          image: "directions/bridesmaids-and-occasionwear.jpeg",
-        },
-        {
-          id: 3,
-          title: "Ready to Wear",
-          link: "",
-          image: "directions/ready-to-wear.jpeg",
-        },
-        {
-          id: 4,
-          title: "Shoes & Accessories",
-          link: "",
-          image: "directions/shoes-and-accessories.webp",
-        },
-        {
-          id: 5,
-          title: "Veils & Headbands",
-          link: "",
-          image: "directions/veils-and-hair.webp",
-        },
-      ],
     };
+  },
+  asyncData({ store, params, i18n, route }) {
+    store.dispatch('getDirections', { populate: "*"})
   },
   computed: {
     ...mapState({
       productslist: (state) => state.products.productslist,
+      directions: state => state.directory.directions
     }),
   },
   mounted() {

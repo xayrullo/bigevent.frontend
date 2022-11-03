@@ -16,7 +16,7 @@ export default {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Lato:300,400,700,900' }
     ],
     script: [
-      { src: 'https://checkout.stripe.com/checkout.js'}
+      { src: 'https://checkout.stripe.com/checkout.js' }
     ]
   },
 
@@ -36,10 +36,11 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-     { src: '~/plugins/plugin.js', ssr:false },
-     { src: '~/plugins/localStorage.js', ssr:false },
-     { src: '~/plugins/local-components.js' },
-     { src: '~/plugins/tools.js' },
+    { src: '~/plugins/plugin.js', ssr: false },
+    { src: '~/plugins/localStorage.js', ssr: false },
+    { src: '~/plugins/local-components.js' },
+    { src: '~/plugins/tools.js' },
+    { src: '~/plugins/axios.js' },
   ],
   /*
   ** Nuxt.js modules
@@ -48,13 +49,23 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
-    'vue-scrollto/nuxt'
+    'vue-scrollto/nuxt',
+  ],
+  buildModules: [
+    '@nuxtjs/dotenv',
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+  },
+  strapi: {
+    url: process.env.VUE_APP_BASE_URL || 'http://localhost:1337',
+    prefix: '/api',
+    version: 'v4',
+    cookie: {},
+    cookieName: 'strapi_jwt'
   },
   generate: {
     fallback: true
