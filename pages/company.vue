@@ -1,6 +1,8 @@
 <template>
   <div>
     <x-header />
-    <router-view></router-view>
+    COMPANY
     <x-footer />
   </div>
+</template>
+  

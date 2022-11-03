@@ -1,6 +1,7 @@
 <template>
   <div>
     <x-header />
-    <router-view></router-view>
+    ABOUT
     <x-footer />
   </div>
+</template>
