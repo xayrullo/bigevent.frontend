@@ -7,14 +7,13 @@
           <div class="swiper-wrapper">
             <div
               class="swiper-slide"
-              v-for="(item, index) in items"
+              v-for="(item, index) in directions"
               :key="index"
             >
               <div
-                class="home"
-                :class="item.alignclass"
+                class="home p-left text-left"
                 v-bind:style="{
-                  'background-image': 'url(' + item.imagepath + ')',
+                  'background-image': 'url(' + $tools.getFileUrl(item.attributes.banner.data.attributes.url) + ')',
                 }"
               >
                 <div class="container">
@@ -22,12 +21,12 @@
                     <div class="col">
                       <div class="slider-contain">
                         <div>
-                          <h1>{{ item.title }}</h1>
-                          <h4>{{ item.description }}</h4>
+                          <h1>{{ item.attributes.title }}</h1>
+                          <h4>{{ item.attributes.description }}</h4>
                           <nuxt-link
-                            :to="{ path: '/collection/leftsidebar/all' }"
+                            :to="{ path: `/collections/${item.attributes.link}` }"
                             class="btn btn-solid"
-                            >shop now</nuxt-link
+                            >Shop new collection</nuxt-link
                           >
                         </div>
                       </div>
@@ -45,8 +44,11 @@
     <!-- Home slider end -->
   </div>
 </template>
-  <script type="text/javascript">
+<script type="text/javascript">
 export default {
+  props: {
+    directions: Array
+  },
   data() {
     return {
       swiperOption: {
