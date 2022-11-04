@@ -2,7 +2,7 @@ import products from '../../data/products'
 
 const state = {
   productslist: products.data,
-  products: products.data,
+  products: [],
   wishlist: [],
   compare: [],
   currency: {
@@ -15,6 +15,7 @@ const state = {
 }
 // getters
 const getters = {
+  getProducts: state => state.products,
   getcollectionProduct: (state) => {
     return collection => state.products.filter((product) => {
       return collection === product.collection
@@ -52,6 +53,12 @@ const getters = {
 }
 // mutations
 const mutations = {
+  LOADING(state, payload) {
+    state.loading = payload
+  },
+  SET_PRODUCTS(state, payload) {
+    state.products = payload
+  },
   changeCurrency: (state, payload) => {
     state.currency = payload
   },
@@ -100,6 +107,24 @@ const mutations = {
 }
 // actions
 const actions = {
+  getProducts({ commit }, payload) {
+    commit('LOADING', true);
+    return new Promise((resolve, reject) => {
+      this.$axios
+        .$get(`products`, { params: payload })
+        .then(res => {
+          const _res = res.data || res;
+          commit('SET_PRODUCTS', _res);
+          resolve(_res);
+        })
+        .catch(error => {
+          reject(error);
+        })
+        .finally(() => {
+          commit('LOADING', false);
+        });
+    });
+  },
   changeCurrency: (context, payload) => {
     context.commit('changeCurrency', payload)
   },

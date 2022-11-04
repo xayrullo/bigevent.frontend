@@ -8,24 +8,25 @@
       <div class="front">
         <nuxt-link :to="{ path: 'products/' + product.id }">
           <img
-            :src="getImgUrl(imageSrc ? imageSrc : product.images[0].src)"
+            :src="$tools.getFileUrl(imageSrc.id ? imageSrc.attributes.url : product.attributes.media.data[0].attributes.url)"
             :id="product.id"
-            class="img-fluid bg-img"
-            :alt="product.title"
-            :key="index"
+            class="bg-img"
+            height="500"
+            style="object-fit: cover;"
+            :alt="product.attributes.name"
           />
         </nuxt-link>
       </div>
       <ul class="product-thumb-list">
         <li
+          v-for="(image, index) in product.attributes.media.data.slice(0, 3)"
           class="grid_thumb_img"
-          :class="{ active: imageSrc === image.src }"
-          v-for="(image, index) in product.images"
+          :class="{ active: imageSrc.id === image.id }"
           :key="index"
-          @click="productVariantChange(image.src)"
+          @click="productVariantChange(image)"
         >
           <a href="javascript:void(0);">
-            <img :src="getImgUrl(image.src)" />
+            <img :src="$tools.getFileUrl(image.attributes.url)" />
           </a>
         </li>
       </ul>
@@ -75,24 +76,24 @@
         <i class="fa fa-star"></i>
         <i class="fa fa-star"></i>
       </div>
-      <nuxt-link :to="{ path: '/product/sidebar/' + product.id }">
-        <h6>{{ product.title }}</h6>
+      <nuxt-link :to="{ path: 'products/' + product.id }">
+        <h6>{{ product.attributes.title }}</h6>
       </nuxt-link>
-      <p>{{ product.description }}</p>
-      <h4 v-if="product.sale">
-        {{ (discountedPrice(product) * curr.curr) | currency(curr.symbol) }}
-        <del>{{ (product.price * curr.curr) | currency(curr.symbol) }}</del>
+      <p>{{ product.attributes.description }}</p>
+      <h4 v-if="product.attributes.isSale">
+        {{ discountedPrice(product) }}
+        <del>{{ product.attributes.price }}</del>
       </h4>
-      <h4 v-else>{{ (product.price * curr.curr) | currency(curr.symbol) }}</h4>
-      <ul class="color-variant" v-if="isColor && product.variants[0].color">
+      <h4 v-else>{{ product.attributes.price }}</h4>
+      <ul class="color-variant" v-if="product.attributes.isColor">
         <li
-          v-for="(variant, variantIndex) in Color(product.variants)"
+          v-for="(variant, variantIndex) in Color(product.attributes.colors)"
           :key="variantIndex"
         >
           <a
             @click="productColorchange(variant, product)"
             :class="[variant]"
-            v-bind:style="{ 'background-color': variant }"
+            v-bind:style="{ 'background-color': variant.attributes.code }"
           ></a>
         </li>
       </ul>
@@ -100,14 +101,13 @@
   </div>
 </template>
   
-  <script>
+<script>
 import { mapState, mapGetters } from "vuex";
-import { log } from "util";
 export default {
   props: ["product", "index", "isColor"],
   data() {
     return {
-      imageSrc: "",
+      imageSrc: {},
       quickviewProduct: {},
       compareProduct: {},
       cartProduct: {},
@@ -160,28 +160,27 @@ export default {
       );
       this.$store.dispatch("products/addToCompare", product);
     },
-    Color(variants) {
+    Color(colors) {
       const uniqColor = [];
-      for (let i = 0; i < Object.keys(variants).length; i++) {
-        if (uniqColor.indexOf(variants[i].color) === -1) {
-          uniqColor.push(variants[i].color);
+      for (let i = 0; i < colors.length; i++) {
+        if (uniqColor.indexOf(colors[i].attributes.code) === -1) {
+          uniqColor.push(colors[i].attributes.code);
         }
       }
       return uniqColor;
     },
     productColorchange(color, product) {
-      product.variants.map((item) => {
-        if (item.color === color) {
-          product.images.map((img) => {
-            if (img.image_id === item.image_id) {
-              this.imageSrc = img.src;
+      product.attributes.colors.map((item) => {
+        if (item.attributes.code === color.attributes.code) {
+          product.attributes.media.data.map((img) => {
+            if (img.attributes.code === item.attributes.code) {
+              this.imageSrc = img;
             }
           });
         }
       });
     },
     productVariantChange(imgsrc) {
-      console.log("I am calll");
       this.imageSrc = imgsrc;
     },
     countDownChanged(dismissCountDown) {

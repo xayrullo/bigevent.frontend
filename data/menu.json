@@ -20,6 +20,11 @@
           "path": "/collections/shoes-accessories",
           "title": "Shoes & Accessories",
           "type": "link"
+        },
+        {
+          "path": "/collections/dynamic",
+          "title": "Dynamic",
+          "type": "link"
         }
       ]
     },
