@@ -36,7 +36,7 @@
                               <div class="search-count">
                                 <h5>
                                   Showing Products 1-12 of
-                                  {{ productslist.length }} Result
+                                  {{ products.length }} Result
                                 </h5>
                               </div>
                               <div class="product-page-filter">
@@ -70,7 +70,7 @@
                                 text-center
                                 section-t-space section-b-space
                               "
-                              v-if="productslist.length == 0"
+                              v-if="products.length == 0"
                             >
                               <img
                                 :src="$tools.getImgUrl('empty-search.jpg')"
@@ -91,8 +91,8 @@
                             </div>
                           </div>
                           <div
-                            class="col-grid-box col-lg-2 col-md-4 col-sm-6"
-                            v-for="(product, index) in productslist"
+                            class="col-grid-box col-lg-3 col-md-4 col-sm-6"
+                            v-for="(product, index) in products"
                             :key="index"
                             v-show="setPaginate(index)"
                           >
@@ -113,9 +113,9 @@
                       </div>
                       <div
                         class="product-pagination mb-0"
-                        v-if="productslist.length > this.paginate"
+                        v-if="products.length > this.paginate"
                       >
-                        <pagination :pages="pages" :length="productslist.length"/>
+                        <pagination :pages="pages" :length="products.length"/>
                       </div>
                     </div>
                   </div>
@@ -147,12 +147,12 @@
       :openCart="showcartmodal"
       :productData="cartproduct"
       @closeCart="closeCartModal"
-      :products="productslist"
+      :products="products"
     />
   </div>
 </template>
   <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import quickviewModel from "~/components/widgets/quickview";
 import compareModel from "~/components/widgets/compare-popup";
 import cartModel from "~/components/cart-model/cart-modal-popup";
@@ -179,10 +179,15 @@ export default {
       dismissCountDown: 0,
     };
   },
+  asyncData({ store }) {
+    store.dispatch('products/getProducts', {
+      populate: "*",
+    })
+  },
   computed: {
     ...mapState({
-      productslist: (state) => state.products.productslist,
-    }),
+      products: (state) => state.products.products,
+    })
   },
   mounted() {
     this.getPaginate();
@@ -191,7 +196,7 @@ export default {
   methods: {
     onChangeSort(event) {
       if (event.target.value === "a-z") {
-        this.productslist.sort(function (a, b) {
+        this.products.sort(function (a, b) {
           if (a.title < b.title) {
             return -1;
           } else if (a.title > b.title) {
@@ -200,7 +205,7 @@ export default {
           return 0;
         });
       } else if (event.target.value === "z-a") {
-        this.productslist.sort(function (a, b) {
+        this.products.sort(function (a, b) {
           if (a.title > b.title) {
             return -1;
           } else if (a.title < b.title) {
@@ -209,7 +214,7 @@ export default {
           return 0;
         });
       } else if (event.target.value === "low") {
-        this.productslist.sort(function (a, b) {
+        this.products.sort(function (a, b) {
           if (a.price < b.price) {
             return -1;
           } else if (a.price > b.price) {
@@ -218,7 +223,7 @@ export default {
           return 0;
         });
       } else if (event.target.value === "high") {
-        this.productslist.sort(function (a, b) {
+        this.products.sort(function (a, b) {
           if (a.price > b.price) {
             return -1;
           } else if (a.price < b.price) {
@@ -229,7 +234,7 @@ export default {
       }
     },
     getPaginate() {
-      this.paginates = Math.round(this.productslist.length / this.paginate);
+      this.paginates = Math.round(this.products.length / this.paginate);
       this.pages = [];
       for (let i = 0; i < this.paginates; i++) {
         this.pages.push(i + 1);

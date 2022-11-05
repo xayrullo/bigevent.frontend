@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <breadcrumbs :title="getDetail.title" />
-    <!-- section start -->
+  <div v-if="product.id">
+    <breadcrumbs :title="product.attributes.title" />
     <section>
       <div class="collection-wrapper productdetail">
         <div class="container">
@@ -11,14 +10,14 @@
                 <div class="swiper-wrapper">
                   <div
                     class="swiper-slide"
-                    v-for="(product, index) in getDetail.images"
+                    v-for="(product, index) in product.attributes.media.data"
                     :key="index"
                   >
                     <img
-                      :src="getImgUrl(product.src)"
-                      :id="product.image_id"
+                      :src="$tools.getFileUrl(product.attributes.url)"
+                      :id="product.id"
                       class="img-fluid bg-img"
-                      :alt="product.alt"
+                      :alt="product.attributes.name"
                     />
                   </div>
                 </div>
@@ -29,14 +28,15 @@
                     <div class="swiper-wrapper">
                       <div
                         class="swiper-slide"
-                        v-for="(product, index) in getDetail.images"
+                        v-for="(product, index) in product.attributes.media
+                          .data"
                         :key="index"
                       >
                         <img
-                          :src="getImgUrl(product.src)"
-                          :id="product.image_id"
+                          :src="$tools.getFileUrl(product.attributes.url)"
+                          :id="product.id"
                           class="img-fluid bg-img"
-                          alt="product.alt"
+                          :alt="product.attributes.name"
                           @click="slideTo(index)"
                         />
                       </div>
@@ -47,34 +47,29 @@
             </div>
             <div class="col-lg-6 rtl-text">
               <div class="product-right">
-                <h2>{{ getDetail.title }}</h2>
-                <h4 v-if="getDetail.sale">
-                  <del>{{
-                    (getDetail.price * curr.curr) | currency(curr.symbol)
-                  }}</del>
-                  <span>{{ getDetail.discount }}% off</span>
+                <h2>{{ product.attributes.title }}</h2>
+                <h4 v-if="product.attributes.isSale">
+                  <del>{{ product.attributes.price }}</del>
+                  <span>{{ product.attributes.discount }}% off</span>
                 </h4>
-                <h3 v-if="getDetail.sale">
-                  {{
-                    (discountedPrice(getDetail) * curr.curr)
-                      | currency(curr.symbol)
-                  }}
+                <h3 v-if="product.attributes.isSale">
+                  {{ discountedPrice(product) }}
                 </h3>
                 <h3 v-else>
-                  {{ (getDetail.price * curr.curr) | currency(curr.symbol) }}
+                  {{ product.attributes.price }}
                 </h3>
                 <ul class="color-variant">
                   <li
                     v-bind:class="{ active: activeColor == variant }"
-                    v-for="(variant, variantIndex) in Color(getDetail.variants)"
+                    v-for="(variant, variantIndex) in Color(product.attributes.colors)"
                     :key="variantIndex"
                   >
                     <a
                       :class="[variant]"
-                      v-bind:style="{ 'background-color': variant }"
+                      v-bind:style="{ 'background-color': color.attributes.code }"
                       @click="
                         sizeVariant(
-                          getDetail.variants[variantIndex].image_id,
+                          product.attributes.colors[variantIndex].id,
                           variantIndex,
                           variant
                         )
@@ -82,9 +77,9 @@
                     ></a>
                   </li>
                 </ul>
-                <div class="pro_inventory" v-if="getDetail.stock < 8">
+                <div class="pro_inventory" v-if="product.attributes.stock < 8">
                   <p class="active">
-                    Hurry! We have only {{ getDetail.stock }} product in stock.
+                    Hurry! We have only {{ product.attributes.stock }} product in stock.
                   </p>
                   <div class="inventory-scroll">
                     <span style="width: 95%"></span>
@@ -115,10 +110,10 @@
                       </li>
                     </ul>
                   </div>
-                  <h5 class="avalibility" v-if="counter <= getDetail.stock">
+                  <h5 class="avalibility" v-if="counter <= product.attributes.stock">
                     <span>In Stock</span>
                   </h5>
-                  <h5 class="avalibility" v-if="counter > getDetail.stock">
+                  <h5 class="avalibility" v-if="counter > product.attributes.stock">
                     <span>Out of Stock</span>
                   </h5>
                   <h6 class="product-title">quantity</h6>
@@ -139,7 +134,7 @@
                         type="text"
                         name="quantity"
                         class="form-control input-number"
-                        :disabled="counter > getDetail.stock"
+                        :disabled="counter > product.attributes.stock"
                         v-model="counter"
                       />
                       <span class="input-group-prepend">
@@ -161,8 +156,8 @@
                     <button
                       class="btn btn-solid"
                       title="Add to cart"
-                      @click="addToCart(getDetail, counter)"
-                      :disabled="counter > getDetail.stock"
+                      @click="addToCart(product, counter)"
+                      :disabled="counter > product.attributes.stock"
                     >
                       Add To Cart
                     </button>
@@ -170,15 +165,15 @@
                   <button
                     class="btn btn-solid"
                     title="buy now"
-                    @click="buyNow(getDetail, counter)"
-                    :disabled="counter > getDetail.stock"
+                    @click="buyNow(product, counter)"
+                    :disabled="counter > product.attributes.stock"
                   >
                     Buy Now
                   </button>
                 </div>
                 <div class="border-product">
                   <h6 class="product-title">product details</h6>
-                  <p>{{ getDetail.description.substring(0, 200) + "...." }}</p>
+                  <p>{{ product.attributes.description.substring(0, 200) + "...." }}</p>
                 </div>
                 <div class="border-product">
                   <h6 class="product-title">share it</h6>
@@ -231,19 +226,17 @@
         </div>
       </div>
     </section>
-    <!-- Section ends -->
-    <!-- product-tab starts -->
     <section class="tab-product m-0">
       <div class="container">
         <div class="row">
           <div class="col-sm-12 col-lg-12">
             <b-tabs card>
               <b-tab title="Description" active>
-                <b-card-text>{{ getDetail.description }}</b-card-text>
+                <b-card-text>{{ product.attributes.description }}</b-card-text>
               </b-tab>
               <b-tab title="Details">
                 <b-card-text>
-                  {{ getDetail.description }}
+                  {{ product.attributes.description }}
                   <div class="single-product-tables">
                     <table>
                       <tbody>
@@ -294,18 +287,26 @@
         </div>
       </div>
     </section>
-    <!-- product-tab ends -->
-    <relatedProduct :productTYpe="productTYpe" :productId="productId" />
   </div>
 </template>
   <script>
 import { mapState, mapGetters } from "vuex";
 import Timer from "~/components/widgets/timer";
-import relatedProduct from "~/components/widgets/related-products";
+// import relatedProduct from "~/components/widgets/related-products";
 export default {
   components: {
     Timer,
-    relatedProduct,
+    // relatedProduct,
+  },
+  asyncData({ store, route }) {
+    store.dispatch("products/getDetail", {
+      id: route.params.detail,
+      query: {
+        populate: "*",
+      },
+    }).then(res => {
+      console.log('Product: ', res)
+    });
   },
   data() {
     return {
@@ -332,24 +333,29 @@ export default {
   computed: {
     ...mapState({
       currency: (state) => state.products.currency,
+      product: (state) => state.products.product,
     }),
     ...mapGetters({
       curr: "products/changeCurrency",
+      // product: "products/getProduct"
     }),
     getDetail: function () {
-      return this.$store.getters["products/getProductById"](1);
+      return this.$store.getters["products/getProduct"];
     },
+    // product: function () {
+    //   return this.$store.getters["products/getProduct"];
+    // },
     swiper() {
       return this.$refs.mySwiper.swiper;
     },
   },
   mounted() {
     // For displaying default color and size on pageload
-    this.uniqColor = this.getDetail.variants[0].color;
-    this.sizeVariant(this.getDetail.variants[0].image_id);
-    // Active default color
-    this.activeColor = this.uniqColor;
-    this.changeSizeVariant(this.getDetail.variants[0].size);
+    // this.uniqColor = this.getDetail.variants[0].color;
+    // this.sizeVariant(this.getDetail.variants[0].image_id);
+    // // Active default color
+    // this.activeColor = this.uniqColor;
+    // this.changeSizeVariant(this.getDetail.variants[0].size);
   },
   methods: {
     priceCurrency: function () {
@@ -359,15 +365,17 @@ export default {
       this.$store.dispatch("products/addToWishlist", product);
     },
     discountedPrice(product) {
-      const price = product.price - (product.price * product.discount) / 100;
+      const price =
+        product.attributes.price -
+        (product.attributes.price * product.attributes.discount) / 100;
       return price;
     },
     // Display Unique Color
     Color(variants) {
       const uniqColor = [];
-      for (let i = 0; i < Object.keys(variants).length; i++) {
-        if (uniqColor.indexOf(variants[i].color) === -1) {
-          uniqColor.push(variants[i].color);
+      for (let i = 0; i < variants.length; i++) {
+        if (uniqColor.indexOf(variants[i].attributes.code) === -1) {
+          uniqColor.push(variants[i].attributes.code);
         }
       }
       this.stock();
@@ -405,21 +413,21 @@ export default {
       this.swiper.slideTo(slideId, 1000, false);
       this.size = [];
       this.activeColor = color;
-      this.getDetail.variants.filter((item) => {
-        if (id === item.image_id) {
-          this.size.push(item.size);
-        }
-      });
+      // this.product.attributes.colors.filter((item) => {
+      //   if (id === item.id) {
+      //     this.size.push(item);
+      //   }
+      // });
     },
     stock() {
-      this.getDetail.variants.filter((item) => {
-        if (
-          this.activeColor === item.color &&
-          this.selectedSize === item.size
-        ) {
-          this.qty = item.qty;
-        }
-      });
+      // this.product.attributes.colors.filter((item) => {
+      //   if (
+      //     this.activeColor === item.attributes.code &&
+      //     this.selectedSize === item.attributes.size
+      //   ) {
+      //     this.qty = item.attributes.qty;
+      //   }
+      // });
     },
   },
 };
