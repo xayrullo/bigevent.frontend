@@ -6,13 +6,19 @@
         <span class="lable4" v-if="product.sale">on sale</span>
       </div>
       <div class="front">
-        <nuxt-link :to="{ path: 'products/' + product.id }">
+        <nuxt-link :to="{ path: '/collections/products/' + product.id }">
           <img
-            :src="$tools.getFileUrl(imageSrc.id ? imageSrc.attributes.url : product.attributes.media.data[0].attributes.url)"
+            :src="
+              $tools.getFileUrl(
+                imageSrc.id
+                  ? imageSrc.attributes.url
+                  : product.attributes.media.data[0].attributes.url
+              )
+            "
             :id="product.id"
             class="bg-img"
             height="500"
-            style="object-fit: cover;"
+            style="object-fit: cover"
             :alt="product.attributes.name"
           />
         </nuxt-link>

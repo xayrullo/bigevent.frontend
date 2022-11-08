@@ -543,6 +543,21 @@ button {
       opacity: 1;
     }
   }
+  &.active {
+    color: $white !important;
+    background-color: var(--theme-deafult);
+
+    i {
+      color: $white !important;
+    }
+
+    &:before {
+      transition: 0.5s all ease;
+      left: 0;
+      right: 0;
+      opacity: 1;
+    }
+  }
 
   &.btn-sm {
     padding: 9px 16px;

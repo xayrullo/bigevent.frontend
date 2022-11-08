@@ -1,5 +1,5 @@
 <template>
-  <div v-if="product.id">
+  <div>
     <breadcrumbs :title="product.attributes.title" />
     <section>
       <div class="collection-wrapper productdetail">
@@ -61,12 +61,16 @@
                 <ul class="color-variant">
                   <li
                     v-bind:class="{ active: activeColor == variant }"
-                    v-for="(variant, variantIndex) in Color(product.attributes.colors)"
+                    v-for="(variant, variantIndex) in Color(
+                      product.attributes.colors
+                    )"
                     :key="variantIndex"
                   >
                     <a
                       :class="[variant]"
-                      v-bind:style="{ 'background-color': color.attributes.code }"
+                      v-bind:style="{
+                        'background-color': color.attributes.code,
+                      }"
                       @click="
                         sizeVariant(
                           product.attributes.colors[variantIndex].id,
@@ -79,7 +83,8 @@
                 </ul>
                 <div class="pro_inventory" v-if="product.attributes.stock < 8">
                   <p class="active">
-                    Hurry! We have only {{ product.attributes.stock }} product in stock.
+                    Hurry! We have only {{ product.attributes.stock }} product
+                    in stock.
                   </p>
                   <div class="inventory-scroll">
                     <span style="width: 95%"></span>
@@ -110,10 +115,16 @@
                       </li>
                     </ul>
                   </div>
-                  <h5 class="avalibility" v-if="counter <= product.attributes.stock">
+                  <h5
+                    class="avalibility"
+                    v-if="counter <= product.attributes.stock"
+                  >
                     <span>In Stock</span>
                   </h5>
-                  <h5 class="avalibility" v-if="counter > product.attributes.stock">
+                  <h5
+                    class="avalibility"
+                    v-if="counter > product.attributes.stock"
+                  >
                     <span>Out of Stock</span>
                   </h5>
                   <h6 class="product-title">quantity</h6>
@@ -173,7 +184,11 @@
                 </div>
                 <div class="border-product">
                   <h6 class="product-title">product details</h6>
-                  <p>{{ product.attributes.description.substring(0, 200) + "...." }}</p>
+                  <p>
+                    {{
+                      product.attributes.description.substring(0, 200) + "...."
+                    }}
+                  </p>
                 </div>
                 <div class="border-product">
                   <h6 class="product-title">share it</h6>
@@ -298,15 +313,17 @@ export default {
     Timer,
     // relatedProduct,
   },
-  asyncData({ store, route }) {
-    store.dispatch("products/getDetail", {
-      id: route.params.detail,
-      query: {
-        populate: "*",
-      },
-    }).then(res => {
-      console.log('Product: ', res)
-    });
+  async asyncData({ store, route }) {
+    await store
+      .dispatch("products/getDetail", {
+        id: route.params.detail,
+        query: {
+          populate: "*",
+        },
+      })
+      .then((res) => {
+        console.log("Product: ", res);
+      });
   },
   data() {
     return {
