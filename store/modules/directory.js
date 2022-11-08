@@ -35,7 +35,6 @@ const actions = {
                 .$get(`directions`, { params: payload })
                 .then(res => {
                     const _res = res.data || res;
-                    console.log('set directions: ', _res)
                     commit('SET_DIRECTIONS', _res);
                     resolve(_res);
                 })

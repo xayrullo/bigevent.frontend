@@ -22,7 +22,11 @@
             :key="index"
             :class="menuItem.megamenu ? 'mega-menu' : 'dropdown'"
           >
-            <nuxt-link :to="{ path: menuItem.path }" class="nav-link" @click="setActive(menuItem.title)">
+            <nuxt-link
+              :to="{ path: menuItem.path }"
+              class="nav-link"
+              @click="setActive(menuItem.title)"
+            >
               {{ menuItem.title }}
               <span
                 class="sub-arrow"
@@ -157,7 +161,6 @@ export default {
       return this.activeChildItem === menuChildItem;
     },
     setActiveChild: function (menuChildItem) {
-      console.log(menuChildItem);
       if (this.activeChildItem === menuChildItem) {
         this.activeChildItem = "";
       } else {

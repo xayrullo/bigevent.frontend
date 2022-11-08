@@ -15,7 +15,6 @@ class Auth extends EventEmitter {
       email: authResult.user.email,
       photoURL: authResult.user.photoURL
     }))
-    console.log('userlogin', localStorage.getItem('userlogin'))
   }
 
   Logout() {

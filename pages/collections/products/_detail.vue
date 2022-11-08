@@ -314,16 +314,12 @@ export default {
     // relatedProduct,
   },
   async asyncData({ store, route }) {
-    await store
-      .dispatch("products/getDetail", {
-        id: route.params.detail,
-        query: {
-          populate: "*",
-        },
-      })
-      .then((res) => {
-        console.log("Product: ", res);
-      });
+    await store.dispatch("products/getDetail", {
+      id: route.params.detail,
+      query: {
+        populate: "*",
+      },
+    });
   },
   data() {
     return {

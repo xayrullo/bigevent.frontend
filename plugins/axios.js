@@ -16,13 +16,11 @@ export default function ({ $axios, redirect, $auth, app }) {
     }
   })
   $axios.onError((error) => {
-    console.log('Errror: ', error.response)
     if (error.response && error.response.status === 400) {
       Vue.prototype.$snotify.error(error.response.data.data[0].messages[0].message)
       return
     }
     if (error.response && error.response.status === 401) {
-      console.log('401')
       Vue.prototype.$snotify.error('Not Authenticated: Sorry, you have to be logged in to access this!')
       return
     }

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <x-header/>
-    <slider :directions="directions"/>
+    <x-header />
+    <slider :directions="directions" />
     <directions-slider
       title="Explore Our Collections"
       subtitle="Luxury pieces and accessories that are designed to be treasured."
@@ -89,13 +89,17 @@ export default {
       cartproduct: {},
     };
   },
-  asyncData({ store, params, i18n, route }) {
-    store.dispatch('getDirections', { populate: "*"})
+  async asyncData({ store, params, i18n, route }) {
+    await store.dispatch("getDirections", { populate: "*" });
+    await store.dispatch("blog/getBlogs", {
+      populate: "*",
+      sort: ["createdAt:desc"],
+    });
   },
   computed: {
     ...mapState({
       productslist: (state) => state.products.productslist,
-      directions: state => state.directory.directions
+      directions: (state) => state.directory.directions,
     }),
   },
   mounted() {
