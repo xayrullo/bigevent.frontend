@@ -19,21 +19,27 @@
                 <i class="fa fa-heart" aria-hidden="true"></i>
               </nuxt-link>
             </li>
-            <li class="onhover-dropdown mobile-account">
-              <i class="fa fa-user" aria-hidden="true"></i> My Account
+            <li
+              v-if="$store.state.auth.loggedIn"
+              class="onhover-dropdown mobile-account"
+            >
+              <i class="fa fa-user" aria-hidden="true"></i>
+              {{ "My Account" }}
               <ul class="onhover-show-div">
                 <li>
-                  <a v-if="isLogin" @click="logout"> Logout </a>
-                  <nuxt-link v-if="!isLogin" :to="{ path: '/login' }"
-                    >Login</nuxt-link
-                  >
+                  <nuxt-link :to="{ path: '/page/account/dashboard' }">
+                    {{ "Dashboard" }}
+                  </nuxt-link>
                 </li>
                 <li>
-                  <nuxt-link :to="{ path: '/page/account/dashboard' }"
-                    >Dashboard</nuxt-link
-                  >
+                  <a @click="userLogout" class="text-danger">{{ "Logout" }}</a>
                 </li>
               </ul>
+            </li>
+            <li v-else class="mobile-account">
+              <nuxt-link :to="{ path: '/login' }">
+                {{ "Login" }}
+              </nuxt-link>
             </li>
           </ul>
         </div>
@@ -57,14 +63,8 @@ export default {
     }
   },
   methods: {
-    logout: function () {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          UserAuth.Logout();
-          this.$router.replace("/page/account/login-firebase");
-        });
+    async userLogout() {
+      await this.$auth.logout();
     },
   },
 };

@@ -1,100 +1,75 @@
 <template>
   <div>
     <x-header />
-    <breadcrumbs />
+    <Breadcrumbs :title="'Login'" />
     <section class="login-page section-b-space">
       <div class="container">
         <div class="row">
           <div class="col-lg-6">
-            <h3>{{ logintitle }}</h3>
+            <h3>{{ "Login" }}</h3>
             <div class="theme-card">
-              <form class="theme-form" v-on:submit="checkForm" method="post">
-                <div v-if="errors.length">
-                  <ul class="validation-error mb-3">
-                    <li v-for="(error, index) in errors" :key="index">
-                      {{ error }}
-                    </li>
-                  </ul>
-                </div>
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    v-model="email"
-                    placeholder="Email"
-                    name="email"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="password">Password</label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="password"
-                    v-model="password"
-                    placeholder="Enter your password"
-                    required
-                  />
-                </div>
-                <a
-                  class="btn-solid btn"
-                  href="javascript:void(0)"
-                  @click="signUp"
-                >
-                  Login
-                </a>
-
-                <!-- Social Media -->
-                <!-- <div class="social mt-3">
-                  <div class="form-group btn-showcase d-flex">
-                    <button
-                      type="button"
-                      @click="socialLoginFacebook"
-                      class="btn social-btn btn-fb d-inline-block"
+              <ValidationObserver v-slot="{ invalid }">
+                <form class="theme-form" @submit.prevent="onSubmit">
+                  <div class="form-group">
+                    <label for="email">{{
+                      "Enter email or phone number"
+                    }}</label>
+                    <ValidationProvider
+                      rules="required|phoneOrEmail"
+                      v-slot="{ errors }"
+                      name="email"
                     >
-                      <i class="fa fa-facebook"></i>
-                    </button>
-                    <button
-                      type="button"
-                      @click="socialLogin"
-                      class="btn social-btn btn-twitter d-inline-block"
-                    >
-                      <i class="fa fa-google"></i>
-                    </button>
-                    <button
-                      type="button"
-                      @click="socialLoginTwitter"
-                      class="btn social-btn btn-google d-inline-block"
-                    >
-                      <i class="fa fa-twitter"></i>
-                    </button>
-                    <button
-                      type="button"
-                      @click="socialLoginGit"
-                      class="btn social-btn btn-github d-inline-block"
-                    >
-                      <i class="fa fa-github"></i>
-                    </button>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        v-model="auth.identifier"
+                        :placeholder="'Enter email or phone number'"
+                        name="email"
+                      />
+                      <span class="validate-error">{{ errors[0] }}</span>
+                    </ValidationProvider>
                   </div>
-                </div> -->
-              </form>
+                  <div v-if="isEmail" class="form-group">
+                    <label for="password">{{ "Password" }}</label>
+                    <ValidationProvider
+                      rules="required|min:6"
+                      v-slot="{ errors }"
+                      name="password"
+                    >
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        v-model="auth.password"
+                        :placeholder="'Enter your password'"
+                      />
+                      <span class="validate-error">{{ errors[0] }}</span>
+                    </ValidationProvider>
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn btn-solid"
+                    :disabled="invalid"
+                  >
+                    {{ "Login" }}
+                  </button>
+                </form>
+              </ValidationObserver>
             </div>
           </div>
           <div class="col-lg-6 right-login">
-            <h3>Are you new user?</h3>
+            <h3>{{ "Are you new user?" }}</h3>
             <div class="theme-card authentication-right">
-              <h6 class="title-font">Create A Account</h6>
+              <h6 class="title-font">{{ "Create an account" }}</h6>
               <p>
                 Sign up for a free account at our store. Registration is quick
                 and easy. It allows you to be able to order from our shop. To
                 start shopping click register.
               </p>
-              <nuxt-link :to="{ path: '/register' }" class="btn btn-solid">
-                Create an Account
-              </nuxt-link>
+              <nuxt-link :to="{ path: '/register' }" class="btn btn-solid">{{
+                "Create an account"
+              }}</nuxt-link>
             </div>
           </div>
         </div>
@@ -103,118 +78,82 @@
     <x-footer />
   </div>
 </template>
-  <script>
-import firebase from "firebase";
-// import Userauth from "./auth/auth";
+<script>
+import Breadcrumbs from "~/components/widgets/breadcrumbs";
+
+const EMAILREG =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const MOBILEREG = /^([+]?[9]{2}[8][0-9]{2}[0-9]{7})$/;
 
 export default {
-  components: {},
+  auth: "guest",
+  components: {
+    Breadcrumbs,
+  },
   data() {
     return {
       logintitle: "Login",
       registertitle: "New Customer",
-      errors: [],
-      email: "test@admin.com",
-      password: "test@123456",
+      auth: {
+        identifier: "",
+        password: "",
+      },
+      isEmail: false,
+      isPhone: false,
+      isPhoneOtpPending: false,
     };
   },
-  methods: {
-    checkForm: function (e) {
-      this.errors = [];
-      if (!this.email) {
-        this.errors.push("Email required.");
-      } else if (!this.validEmail(this.email)) {
-        this.errors.push("Valid email required.");
-      }
-      if (!this.password) {
-        this.errors.push("Password required.");
-      }
-      if (!this.errors.length) return true;
-      e.preventDefault();
-    },
-    validEmail: function (email) {
-      const re =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-    },
-
-    signUp: function () {
-      if (this.email === "" && this.password === "") {
-        this.email = "test@admin.com";
-        this.password = "test@123456";
+  watch: {
+    "auth.identifier"() {
+      if (EMAILREG.test(this.auth.identifier)) {
+        this.isPhone = false;
+        this.isEmail = true;
       } else {
-        firebase
-          .auth()
-          .signInWithEmailAndPassword(this.email, this.password)
-          .then(
-            (result) => {
-              Userauth.localLogin(result);
-              this.$router.replace("/page/account/checkout");
-            },
-            (err) => {
-              this.email = "test@admin.com";
-              this.password = "test@123456";
-              this.$toasted.show("Oops..." + err.message, {
-                theme: "bubble",
-                position: "bottom-right",
-                type: "error",
-                duration: 2000,
-              });
-            }
-          );
+        this.isEmail = false;
+        this.isPhone = false;
+      }
+      this.isPhoneOtpPending = false;
+    },
+  },
+  methods: {
+    sendOtp() {},
+    registerPhone() {},
+    async registerEmail() {
+      this.$snotify.info(this.$t("login-in"));
+      try {
+        await this.$auth
+          .loginWith("local", {
+            data: this.auth,
+          })
+          .then(async (res) => {
+            // this.afterLoginProcess()
+          });
+      } catch (e) {
+        if (e.response) this.authError = e.response.data.error.message;
+        this.$sentry.captureException(e);
       }
     },
-    socialLogin() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then((result) => {
-          Userauth.localLogin(result);
-          this.$router.replace("/page/account/checkout");
-        })
-        .catch((err) => {
-          alert("Oops. " + err.message);
-        });
+    async afterLoginProcess() {
+      await this.$store.dispatch("setUser", { populate: "*" });
+      this.$snotify.success("Successfully Logged In");
     },
-    socialLoginFacebook() {
-      const provider = new firebase.auth.FacebookAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then((result) => {
-          Userauth.localLogin(result);
-          this.$router.replace("/page/account/checkout");
-        })
-        .catch((err) => {
-          alert("Oops. " + err.message);
-        });
+    async onSubmit() {
+      if (this.auth.identifier.includes("+") > 0) {
+        this.auth.identifier = this.auth.identifier.substring(1);
+      }
+      if (MOBILEREG.test(this.auth.identifier)) {
+        this.sendOtp();
+        return;
+      }
+      this.tryToLogin();
     },
-    socialLoginTwitter() {
-      const provider = new firebase.auth.TwitterAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then((result) => {
-          Userauth.localLogin(result);
-          this.$router.replace("/page/account/checkout");
-        })
-        .catch((err) => {
-          alert("Oops. " + err.message);
-        });
-    },
-    socialLoginGit() {
-      const provider = new firebase.auth.GithubAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then((result) => {
-          Userauth.localLogin(result);
-          this.$router.replace("/page/account/checkout");
-        })
-        .catch((err) => {
-          alert("Oops. " + err.message);
-        });
+    tryToLogin() {
+      this.loading = true;
+      if (this.isEmail) {
+        this.registerEmail();
+      } else {
+        this.registerPhone();
+      }
     },
   },
 };
