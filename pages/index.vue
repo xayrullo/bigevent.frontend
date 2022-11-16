@@ -8,14 +8,14 @@
       :directions="directions"
       class="mt-4"
     />
-    <ProductSlider
+    <!-- <ProductSlider
       :products="products"
       @openQuickview="showQuickview"
       @openCompare="showCoampre"
       @openCart="showCart"
-    />
+    /> -->
     <!-- <Banner /> -->
-    <ProductTab
+    <special-products
       :products="products"
       :category="category"
       @openQuickview="showQuickview"
@@ -25,7 +25,7 @@
     <Services />
     <Blog />
     <!-- <Instagram /> -->
-    <LogoSlider />
+    <companies />
     <x-footer />
     <quickviewModel
       :openModal="showquickviewmodel"
@@ -53,10 +53,12 @@ import cartModel from "~/components/cart-model/cart-modal-popup";
 import newsletterModel from "~/components/widgets/newsletter-popup";
 import Slider from "~/components/home/slider";
 import DirectionsSlider from "~/components/home/directions-slider";
+import SpecialProducts from "~/components/home/special-products";
+import Companies from "~/components/home/companies";
 import Blog from "~/components/home/blog";
 // import Banner from "~/components/home/banner";
-import ProductSlider from "./shop/fashion/components/product_slider";
-import ProductTab from "./shop/fashion/components/product_tab";
+// import ProductSlider from "./shop/fashion/components/product_slider";
+// import ProductTab from "./shop/fashion/components/product_tab";
 import Services from "./shop/fashion/components/services";
 // import Instagram from "./shop/fashion/components/instagram";
 import LogoSlider from "./shop/fashion/components/logo_slider";
@@ -65,10 +67,11 @@ export default {
   components: {
     Slider,
     DirectionsSlider,
-    ProductSlider,
+    // ProductSlider,
     Blog,
+    SpecialProducts,
     // Banner,
-    ProductTab,
+    // ProductTab,
     Services,
     // Instagram,
     LogoSlider,
@@ -91,6 +94,10 @@ export default {
   },
   async asyncData({ store, params, i18n, route }) {
     await store.dispatch("getDirections", { populate: "*" });
+    await store.dispatch("products/getSpecialProducts", {
+      populate: "*",
+      sort: ["createdAt:desc"],
+    });
     await store.dispatch("blog/getBlogs", {
       populate: "*",
       sort: ["createdAt:desc"],
