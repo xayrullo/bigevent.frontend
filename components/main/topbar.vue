@@ -49,8 +49,6 @@
 </template>
   
   <script>
-import firebase from "firebase";
-import UserAuth from "~/pages/page/account/auth/auth";
 export default {
   data() {
     return {

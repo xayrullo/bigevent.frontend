@@ -119,7 +119,7 @@ export default {
     sendOtp() {},
     registerPhone() {},
     async registerEmail() {
-      this.$snotify.info(this.$t("login-in"));
+      this.$snotify.info("Login In");
       try {
         await this.$auth
           .loginWith("local", {

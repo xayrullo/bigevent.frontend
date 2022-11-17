@@ -42,6 +42,7 @@ export default {
     { src: "~/plugins/local-components.js" },
     { src: "~/plugins/tools.js" },
     { src: "~/plugins/axios.js" },
+    { src: "~/plugins/vee-validate.js" },
   ],
   /*
    ** Nuxt.js modules
@@ -74,7 +75,13 @@ export default {
         },
         endpoints: {
           login: { url: "auth/local", method: "post" },
-          user: { url: "users/me", method: "get" },
+          user: {
+            url: "users/me",
+            method: "get",
+            params: {
+              populate: "*",
+            },
+          },
           logout: false,
         },
         redirect: {

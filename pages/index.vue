@@ -25,7 +25,7 @@
     <Services />
     <Blog />
     <!-- <Instagram /> -->
-    <companies />
+    <!-- <companies /> -->
     <x-footer />
     <quickviewModel
       :openModal="showquickviewmodel"
@@ -54,7 +54,7 @@ import newsletterModel from "~/components/widgets/newsletter-popup";
 import Slider from "~/components/home/slider";
 import DirectionsSlider from "~/components/home/directions-slider";
 import SpecialProducts from "~/components/home/special-products";
-import Companies from "~/components/home/companies";
+// import Companies from "~/components/home/companies";
 import Blog from "~/components/home/blog";
 // import Banner from "~/components/home/banner";
 // import ProductSlider from "./shop/fashion/components/product_slider";
@@ -65,6 +65,7 @@ import LogoSlider from "./shop/fashion/components/logo_slider";
 
 export default {
   components: {
+    // Companies,
     Slider,
     DirectionsSlider,
     // ProductSlider,
@@ -93,7 +94,7 @@ export default {
     };
   },
   async asyncData({ store, params, i18n, route }) {
-    await store.dispatch("getDirections", { populate: "*" });
+    await store.dispatch("directory/getDirections", { populate: "*" });
     await store.dispatch("products/getSpecialProducts", {
       populate: "*",
       sort: ["createdAt:desc"],
