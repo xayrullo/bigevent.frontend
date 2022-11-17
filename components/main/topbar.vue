@@ -19,24 +19,26 @@
                 <i class="fa fa-heart" aria-hidden="true"></i>
               </nuxt-link>
             </li>
-            <li
-              v-if="$store.state.auth.loggedIn"
-              class="onhover-dropdown mobile-account"
-            >
+            <li v-if="isLoggedIn" class="onhover-dropdown mobile-account">
               <i class="fa fa-user" aria-hidden="true"></i>
               {{ "My Account" }}
               <ul class="onhover-show-div">
                 <li>
-                  <nuxt-link :to="{ path: '/page/account/dashboard' }">
+                  <nuxt-link
+                    :to="{ path: '/page/account/dashboard' }"
+                    class="cursor-pointer"
+                  >
                     {{ "Dashboard" }}
                   </nuxt-link>
                 </li>
                 <li>
-                  <a @click="userLogout" class="text-danger">{{ "Logout" }}</a>
+                  <a @click="userLogout" class="text-danger cursor-pointer">{{
+                    "Logout"
+                  }}</a>
                 </li>
               </ul>
             </li>
-            <li v-else class="mobile-account">
+            <li v-else>
               <nuxt-link :to="{ path: '/login' }">
                 {{ "Login" }}
               </nuxt-link>
@@ -49,6 +51,7 @@
 </template>
   
   <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -60,9 +63,23 @@ export default {
       this.isLogin = localStorage.getItem("userlogin");
     }
   },
+  computed: {
+    ...mapState({
+      isLoggedIn: (state) => state.auth.loggedIn,
+      currentUser: (state) => state.auth.user,
+    }),
+  },
+  watch: {
+    isLoggedIn() {
+      console.log("IsLoggedIn: ", this.isLoggedIn);
+    },
+  },
   methods: {
     async userLogout() {
+      // await localStorage.removeItem('local')
+      // await localStorage.removeItem('user_info')
       await this.$auth.logout();
+      this.$router.go("/");
     },
   },
 };

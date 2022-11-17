@@ -7,6 +7,7 @@
 </template>
 <script>
 export default {
-  auth: true,
+  auth: false,
+  middleware: "auth-redirect",
 };
 </script>

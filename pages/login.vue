@@ -134,7 +134,6 @@ export default {
       }
     },
     async afterLoginProcess() {
-      await this.$store.dispatch("setUser", { populate: "*" });
       this.$snotify.success("Successfully Logged In");
     },
     async onSubmit() {

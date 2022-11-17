@@ -20,6 +20,14 @@ export default {
     BackToTop,
     LayoutSetting,
   },
+  async fetch() {
+    if (!process.client) {
+      return;
+    }
+    const token = localStorage.getItem("auth._token.local");
+    if (token !== "false" && token)
+      await this.$auth.setUserToken(localStorage.getItem("auth._token.local"));
+  },
   mounted() {
     this.fetchGlobals();
     this.$nextTick(() => {
