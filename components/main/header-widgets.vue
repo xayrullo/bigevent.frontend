@@ -6,7 +6,7 @@
           <div>
             <img
               alt
-              :src="'@/assets/images/icon/layout4/search.png'"
+              :src="$tools.getImgUrl('icon/layout4/search.png')"
               @click="openSearch()"
               class="img-fluid"
             />
@@ -81,7 +81,7 @@
           <div>
             <img
               alt
-              :src="'@/assets/images/icon/layout4/cart.png'"
+              :src="$tools.getImgUrl('icon/layout4/cart.png')"
               class="img-fluid"
             />
             <i class="ti-shopping-cart"></i>

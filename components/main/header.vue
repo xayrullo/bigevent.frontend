@@ -11,7 +11,7 @@
                 <div class="">
                   <nuxt-link :to="{ path: '/' }">
                     <img
-                      :src="'@/assets/images/logos/BigEvent.png'"
+                      :src="$tools.getImgUrl('logos/BigEvent.png')"
                       height="90"
                     />
                   </nuxt-link>
