@@ -39,6 +39,7 @@
     "vue-server-renderer": "^2.7.10",
     "vue-slider-component": "3.2.15",
     "vue-snotify": "^3.2.1",
+    "vue-star-rating": "^1.7.0",
     "vue2-animate": "^2.1.4",
     "vue2-filters": "^0.14.0",
     "vuejs-paginate": "^2.1.0",

@@ -18,6 +18,7 @@
             :id="product.id"
             class="bg-img"
             height="500"
+            width="320"
             style="object-fit: cover"
             :alt="product.attributes.name"
           />
@@ -76,21 +77,24 @@
     </div>
     <div class="product-detail">
       <div class="rating">
-        <i class="fa fa-star"></i>
-        <i class="fa fa-star"></i>
-        <i class="fa fa-star"></i>
-        <i class="fa fa-star"></i>
-        <i class="fa fa-star"></i>
+        <star-rating
+          star-size="15"
+          :rating="product.attributes.rate"
+          :increment="0.01"
+          :read-only="true"
+        />
       </div>
       <nuxt-link :to="{ path: 'products/' + product.id }">
         <h6>{{ product.attributes.title }}</h6>
       </nuxt-link>
       <p>{{ product.attributes.description }}</p>
       <h4 v-if="product.attributes.isSale">
-        {{ discountedPrice(product) }}
-        <del>{{ product.attributes.price }}</del>
+        {{ discountedPrice(product) | currency }}
+        <del>{{ product.attributes.price | currency }}</del>
       </h4>
-      <h4 v-else>{{ product.attributes.price }}</h4>
+      <h4 v-else>
+        {{ $tools.priceFormat(product.attributes.price) | currency }}
+      </h4>
       <ul class="color-variant" v-if="product.attributes.isColor">
         <li
           v-for="(variant, variantIndex) in Color(product.attributes.colors)"
@@ -108,9 +112,13 @@
 </template>
   
 <script>
+import StarRating from "vue-star-rating";
 import { mapState, mapGetters } from "vuex";
 export default {
   props: ["product", "index", "isColor"],
+  components: {
+    StarRating,
+  },
   data() {
     return {
       imageSrc: {},
@@ -127,6 +135,11 @@ export default {
       dismissSecs: 5,
       dismissCountDown: 0,
     };
+  },
+  filters: {
+    currency(price) {
+      return price + " sum";
+    },
   },
   computed: {
     ...mapState({
