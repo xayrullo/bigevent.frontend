@@ -60,9 +60,7 @@
                           </div>
                         </div>
                       </div>
-                      <div
-                        class="product-wrapper-grid"
-                      >
+                      <div class="product-wrapper-grid">
                         <div class="row">
                           <div class="col-sm-12">
                             <div
@@ -111,11 +109,13 @@
                           </div>
                         </div>
                       </div>
-                      <div
-                        class="product-pagination mb-0"
-                        v-if="products.length > this.paginate"
-                      >
-                        <pagination :pages="pages" :length="products.length"/>
+                      <div class="product-pagination mb-0">
+                        <pagination
+                          :pageCount="pagination.pageCount"
+                          :pageSize="pagination.pageSize"
+                          :page="pagination.page"
+                          @onChange="changePage($event)"
+                        />
                       </div>
                     </div>
                   </div>
@@ -179,21 +179,57 @@ export default {
       dismissCountDown: 0,
     };
   },
-  asyncData({ store }) {
-    store.dispatch('products/getProducts', {
+  asyncData({ store, route }) {
+    store.dispatch("products/getProducts", {
       populate: "*",
-    })
+      sort: ["createdAt:desc"],
+      pagination: {
+        page: route.query.page ? route.query.page : 1,
+        pageSize: route.query.pageSize
+          ? route.query.pageSize
+          : store.state.products.pagination.pageSize,
+      },
+    });
   },
   computed: {
     ...mapState({
       products: (state) => state.products.products,
-    })
+      pagination: (state) => state.products.pagination,
+    }),
   },
   mounted() {
     this.getPaginate();
     this.updatePaginate(1);
   },
+  watch: {
+    "$route.query": {
+      handler() {
+        this.fetchData();
+      },
+      deep: true,
+    },
+  },
   methods: {
+    changePage(event) {
+      this.$router.push({
+        name: this.$route.name,
+        query: {
+          ...this.$route.query,
+          page: event,
+          pageSize: this.pagination.pageSize,
+        },
+      });
+    },
+    fetchData() {
+      this.$store.dispatch("products/getProducts", {
+        populate: "*",
+        sort: ["createdAt:desc"],
+        pagination: {
+          page: this.$route.query.page ? this.$route.query.page : 1,
+          pageSize: this.pagination.pageSize,
+        },
+      });
+    },
     onChangeSort(event) {
       if (event.target.value === "a-z") {
         this.products.sort(function (a, b) {

@@ -3,12 +3,12 @@
     <div class="row">
       <div class="col-xl-6 col-md-6 col-sm-12">
         <nav aria-label="Page navigation">
-          <ul class="pagination">
+          <ul v-if="pageCount <= 5" class="pagination">
             <li class="page-item">
               <a
                 class="page-link"
                 href="javascript:void(0)"
-                @click="updatePaginate(current - 1)"
+                @click="previousPage"
               >
                 <span aria-hidden="true">
                   <i class="fa fa-chevron-left" aria-hidden="true"></i>
@@ -16,24 +16,81 @@
               </a>
             </li>
             <li
+              v-for="(p, ind) in pageCount"
+              :key="ind"
               class="page-item"
-              v-for="(page_index, index) in pages"
-              :key="index"
-              :class="{ active: page_index == current }"
+              :class="{ active: p === page }"
             >
-              <a
-                class="page-link"
-                href="javascrip:void(0)"
-                @click.prevent="updatePaginate(page_index)"
-                >{{ page_index }}</a
-              >
+              <a class="page-link" @click="$emit('onChange', p)">{{ p }}</a>
             </li>
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0)" @click="nextPage">
+                <span aria-hidden="true">
+                  <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <ul v-else class="pagination">
             <li class="page-item">
               <a
                 class="page-link"
                 href="javascript:void(0)"
-                @click="updatePaginate(current + 1)"
+                @click="previousPage"
               >
+                <span aria-hidden="true">
+                  <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                </span>
+              </a>
+            </li>
+            <li
+              v-if="beginningPages.first > 1"
+              class="page-item"
+              :class="{ active: 1 === page }"
+            >
+              <a class="page-link" @click="$emit('onChange', 1)">{{ 1 }}</a>
+            </li>
+            <li v-if="beginningPages.first > 2" class="page-item">
+              <a class="page-link">...</a>
+            </li>
+            <li
+              class="page-item"
+              :class="{ active: beginningPages.first === page }"
+            >
+              <a class="page-link" @click="changePage(beginningPages.first)">{{
+                beginningPages.first
+              }}</a>
+            </li>
+            <li
+              class="page-item"
+              :class="{ active: beginningPages.second === page }"
+            >
+              <a class="page-link" @click="changePage(beginningPages.second)">{{
+                beginningPages.second
+              }}</a>
+            </li>
+            <li
+              class="page-item"
+              :class="{ active: beginningPages.third === page }"
+            >
+              <a class="page-link" @click="changePage(beginningPages.third)">{{
+                beginningPages.third
+              }}</a>
+            </li>
+            <li v-if="beginningPages.third < pageCount" class="page-item">
+              <a class="page-link">...</a>
+            </li>
+            <li
+              v-if="beginningPages.third < pageCount"
+              class="page-item"
+              :class="{ active: pageCount === page }"
+            >
+              <a class="page-link" @click="changePage(pageCount)">{{
+                pageCount
+              }}</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0)" @click="nextPage">
                 <span aria-hidden="true">
                   <i class="fa fa-chevron-right" aria-hidden="true"></i>
                 </span>
@@ -45,7 +102,7 @@
       <div class="col-xl-6 col-md-6 col-sm-12">
         <div class="product-search-count-bottom">
           <h5>
-            Showing Products 1-12 of
+            Showing 1-12 of
             {{ length }} Result
           </h5>
         </div>
@@ -57,7 +114,19 @@
 export default {
   props: {
     pages: Array,
-    length: Number
+    length: Number,
+    pageSize: {
+      type: Number,
+      required: true,
+    },
+    pageCount: {
+      type: Number,
+      required: true,
+    },
+    page: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {
@@ -65,34 +134,40 @@ export default {
       paginate: 12,
       paginateRange: 3,
       paginates: "",
+      beginningPages: {
+        first: 2,
+        second: 3,
+        third: 4,
+      },
     };
   },
-  mounted() {
-    this.updatePaginate(1);
-  },
+  mounted() {},
   methods: {
-    updatePaginate(i) {
-      this.current = i;
-      let start = 0;
-      let end = 0;
-      if (this.current < this.paginateRange - 1) {
-        start = 1;
-        end = start + this.paginateRange - 1;
+    changePage(page) {
+      if (page === this.pageCount) {
+        this.beginningPages.first = page - 2;
+        this.beginningPages.second = page - 1;
+        this.beginningPages.third = page;
+      } else if (page === 1) {
+        this.beginningPages.first = page;
+        this.beginningPages.second = page + 1;
+        this.beginningPages.third = page + 2;
       } else {
-        start = this.current - 1;
-        end = this.current + 1;
+        this.beginningPages.first = page - 1;
+        this.beginningPages.second = page;
+        this.beginningPages.third = page + 1;
       }
-      if (start < 1) {
-        start = 1;
+      this.$emit("onChange", page);
+    },
+    previousPage() {
+      if (this.page - 1 >= 1) {
+        this.changePage(this.page - 1);
       }
-      if (end > this.paginates) {
-        end = this.paginates;
+    },
+    nextPage() {
+      if (this.page + 1 <= this.pageCount) {
+        this.changePage(this.page + 1);
       }
-      this.pages = [];
-      for (let i = start; i <= end; i++) {
-        this.pages.push(i);
-      }
-      return this.pages;
     },
   },
 };

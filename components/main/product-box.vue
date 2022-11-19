@@ -78,7 +78,7 @@
     <div class="product-detail">
       <div class="rating">
         <star-rating
-          star-size="15"
+          :star-size="15"
           :rating="product.attributes.rate"
           :increment="0.01"
           :read-only="true"
