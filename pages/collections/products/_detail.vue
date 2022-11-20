@@ -49,14 +49,14 @@
               <div class="product-right">
                 <h2>{{ product.attributes.title }}</h2>
                 <h4 v-if="product.attributes.isSale">
-                  <del>{{ product.attributes.price }}</del>
+                  <del>{{ $tools.priceFormat(product.attributes.price) }}</del>
                   <span>{{ product.attributes.discount }}% off</span>
                 </h4>
                 <h3 v-if="product.attributes.isSale">
                   {{ discountedPrice(product) }}
                 </h3>
                 <h3 v-else>
-                  {{ product.attributes.price }}
+                  {{ $tools.priceFormat(product.attributes.price) }}
                 </h3>
                 <ul class="color-variant">
                   <li
@@ -193,33 +193,6 @@
                 <div class="border-product">
                   <h6 class="product-title">share it</h6>
                   <div class="product-icon">
-                    <ul class="product-social">
-                      <li>
-                        <a href="#">
-                          <i class="fa fa-facebook"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i class="fa fa-google-plus"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i class="fa fa-twitter"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i class="fa fa-instagram"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i class="fa fa-rss"></i>
-                        </a>
-                      </li>
-                    </ul>
                     <form class="d-inline-block">
                       <button
                         class="wishlist-btn"
@@ -231,10 +204,10 @@
                     </form>
                   </div>
                 </div>
-                <div class="border-product">
+                <!-- <div class="border-product">
                   <h6 class="product-title">Time Reminder</h6>
                   <Timer date="December 20, 2020" />
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

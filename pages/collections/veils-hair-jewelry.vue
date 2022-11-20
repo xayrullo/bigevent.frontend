@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumbs title="shoes & accessories" />
+    <breadcrumbs title="Veils & Hair Jewelry" />
     <section class="section-b-space ratio_asos">
       <div class="collection-wrapper">
         <div class="container">
@@ -109,13 +109,12 @@
                           </div>
                         </div>
                       </div>
-                      <div
-                        class="product-pagination mb-0"
-                        v-if="products.length > this.paginate"
-                      >
+                      <div class="product-pagination mb-0">
                         <pagination
-                          :pages="pages"
-                          :length="products.length"
+                          :pageCount="pagination.pageCount"
+                          :pageSize="pagination.pageSize"
+                          :page="pagination.page"
+                          @onChange="changePage($event)"
                         />
                       </div>
                     </div>
@@ -153,7 +152,7 @@
   </div>
 </template>
       <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import quickviewModel from "~/components/widgets/quickview";
 import compareModel from "~/components/widgets/compare-popup";
 import cartModel from "~/components/cart-model/cart-modal-popup";
@@ -180,16 +179,75 @@ export default {
       dismissCountDown: 0,
     };
   },
+  asyncData({ store, route }) {
+    store.dispatch("products/getProducts", {
+      populate: "*",
+      sort: ["createdAt:desc"],
+      filters: {
+        $and: [
+          {
+            direction: {
+              id: 6,
+            },
+          },
+        ],
+      },
+      pagination: {
+        page: route.query.page ? route.query.page : 1,
+        pageSize: route.query.pageSize
+          ? route.query.pageSize
+          : store.state.products.pagination.pageSize,
+      },
+    });
+  },
   computed: {
     ...mapState({
       products: (state) => state.products.products,
+      pagination: (state) => state.products.pagination,
     }),
   },
   mounted() {
     this.getPaginate();
     this.updatePaginate(1);
   },
+  watch: {
+    "$route.query": {
+      handler() {
+        this.fetchData();
+      },
+      deep: true,
+    },
+  },
   methods: {
+    changePage(event) {
+      this.$router.push({
+        name: this.$route.name,
+        query: {
+          ...this.$route.query,
+          page: event,
+          pageSize: this.pagination.pageSize,
+        },
+      });
+    },
+    fetchData() {
+      this.$store.dispatch("products/getProducts", {
+        populate: "*",
+        sort: ["createdAt:desc"],
+        filters: {
+          $and: [
+            {
+              direction: {
+                id: 6,
+              },
+            },
+          ],
+        },
+        pagination: {
+          page: this.$route.query.page ? this.$route.query.page : 1,
+          pageSize: this.pagination.pageSize,
+        },
+      });
+    },
     onChangeSort(event) {
       if (event.target.value === "a-z") {
         this.products.sort(function (a, b) {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumbs title="Menswear" />
+    <breadcrumbs title="Gallery" />
     <section class="section-b-space ratio_asos">
       <div class="collection-wrapper">
         <div class="container">
@@ -151,7 +151,7 @@
     />
   </div>
 </template>
-      <script>
+    <script>
 import { mapState, mapGetters } from "vuex";
 import quickviewModel from "~/components/widgets/quickview";
 import compareModel from "~/components/widgets/compare-popup";
@@ -183,15 +183,6 @@ export default {
     store.dispatch("products/getProducts", {
       populate: "*",
       sort: ["createdAt:desc"],
-      filters: {
-        $and: [
-          {
-            direction: {
-              id: 1,
-            },
-          },
-        ],
-      },
       pagination: {
         page: route.query.page ? route.query.page : 1,
         pageSize: route.query.pageSize
@@ -233,15 +224,6 @@ export default {
       this.$store.dispatch("products/getProducts", {
         populate: "*",
         sort: ["createdAt:desc"],
-        filters: {
-          $and: [
-            {
-              direction: {
-                id: 1,
-              },
-            },
-          ],
-        },
         pagination: {
           page: this.$route.query.page ? this.$route.query.page : 1,
           pageSize: this.pagination.pageSize,
@@ -351,4 +333,4 @@ export default {
   },
 };
 </script>
-      
+    

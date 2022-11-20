@@ -5,6 +5,7 @@
       "type": "sub",
       "badgeValue": "new",
       "active": false,
+      "path": "/collections/gallery",
       "children": [
         {
           "path": "/collections/wedding-dresses",
@@ -12,18 +13,28 @@
           "type": "link"
         },
         {
-          "path": "/collections/bridesmaids-occasionwear",
-          "title": "Bridesmaids & Occasionwear",
+          "path": "/collections/veils-hair-jewelry",
+          "title": "Veils & Hair Jewelry",
           "type": "link"
         },
         {
-          "path": "/collections/shoes-accessories",
-          "title": "Shoes & Accessories",
+          "path": "/collections/bridesmaid-dresses",
+          "title": "Bridesmaids Dresses",
           "type": "link"
         },
         {
-          "path": "/collections/dynamic",
-          "title": "Dynamic",
+          "path": "/collections/rings",
+          "title": "Engagement & Wedding Rings",
+          "type": "link"
+        },
+        {
+          "path": "/collections/menswear",
+          "title": "Menswear",
+          "type": "link"
+        },
+        {
+          "path": "/collections/shoes",
+          "title": "Shoes",
           "type": "link"
         }
       ]
