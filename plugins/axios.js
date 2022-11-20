@@ -7,7 +7,6 @@ export default function ({ $axios, redirect, app }) {
   if (app.$auth && app.$auth.loggedIn) {
     // If the user is logged in we can now get the token, we get something like `Bearer yourTokenJ9F0JFODJ` but we only need the string without the word **Bearer**, So we split the string using the space as a separator and we access the second position of the array **[1]**
     const token = app.$auth.strategy.token.get().split(" ")[1];
-    console.log(token);
     $axios.setToken(token, "Bearer"); // Here we specify the token and now it works!!
   }
   $axios.setBaseURL(process.env.VUE_APP_BASE_URL);
@@ -22,7 +21,6 @@ export default function ({ $axios, redirect, app }) {
     return request;
   });
   $axios.onError((error) => {
-    console.log("ERROR: ", error.response);
     if (error.response && error.response.status === 400) {
       Vue.prototype.$snotify.error(
         error.response.data.data[0].messages[0].message

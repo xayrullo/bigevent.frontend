@@ -22,7 +22,13 @@
               <div class="front">
                 <nuxt-link :to="`/collections/${direction.attributes.link}`">
                   <img
-                    :src="$tools.getFileUrl(direction.attributes.image.data.attributes.url)"
+                    :src="
+                      direction.attributes.image.data
+                        ? $tools.getFileUrl(
+                            direction.attributes.image.data.attributes.url
+                          )
+                        : $tools.getImgUrl('1.jpg')
+                    "
                     :id="direction.id"
                     class="img-fluid bg-img"
                     :alt="direction.title"

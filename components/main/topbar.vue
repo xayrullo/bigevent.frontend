@@ -70,9 +70,7 @@ export default {
     }),
   },
   watch: {
-    isLoggedIn() {
-      console.log("IsLoggedIn: ", this.isLoggedIn);
-    },
+    isLoggedIn() {},
   },
   methods: {
     async userLogout() {

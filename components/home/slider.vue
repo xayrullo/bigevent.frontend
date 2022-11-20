@@ -13,7 +13,8 @@
               <div
                 class="home p-left text-left"
                 v-bind:style="{
-                  'background-image': 'url(' + $tools.getFileUrl(item.attributes.banner.data.attributes.url) + ')',
+                  'background-image':
+                    'url(' + getBgImage(item.attributes) + ')',
                 }"
               >
                 <div class="container">
@@ -24,7 +25,9 @@
                           <h1>{{ item.attributes.title }}</h1>
                           <h4>{{ item.attributes.description }}</h4>
                           <nuxt-link
-                            :to="{ path: `/collections/${item.attributes.link}` }"
+                            :to="{
+                              path: `/collections/${item.attributes.link}`,
+                            }"
                             class="btn btn-solid"
                             >Shop new collection</nuxt-link
                           >
@@ -47,7 +50,7 @@
 <script type="text/javascript">
 export default {
   props: {
-    directions: Array
+    directions: Array,
   },
   data() {
     return {
@@ -82,12 +85,21 @@ export default {
         {
           imagepath: require("@/assets/images/banner/wedding-veils.jpg"),
           title: "Wedding Veils & Headbands",
-          description: "For that WOW moment and a dreamy entrance to be remembered, our veils are romantic yet show-stopping, and feature exclusive fabrics and trims. Opt for a versatile silk scarf mid-wedding for added effortless chic.",
+          description:
+            "For that WOW moment and a dreamy entrance to be remembered, our veils are romantic yet show-stopping, and feature exclusive fabrics and trims. Opt for a versatile silk scarf mid-wedding for added effortless chic.",
           button: "",
           alignclass: "p-left text-left",
         },
       ],
     };
+  },
+  methods: {
+    getBgImage(item) {
+      console.log(item);
+      return item.banner.data
+        ? this.$tools.getFileUrl(item.banner.data.attributes.url)
+        : this.$tools.getImgUrl("beauty/banner2.jpg");
+    },
   },
 };
 </script>

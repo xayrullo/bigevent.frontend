@@ -109,11 +109,15 @@
                           </div>
                         </div>
                       </div>
-                      <div class="product-pagination mb-0">
+                      <div
+                        v-if="pagination.pageCount > 1"
+                        class="product-pagination mb-0"
+                      >
                         <pagination
                           :pageCount="pagination.pageCount"
                           :pageSize="pagination.pageSize"
                           :page="pagination.page"
+                          :total="pagination.total"
                           @onChange="changePage($event)"
                         />
                       </div>

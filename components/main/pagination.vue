@@ -101,9 +101,9 @@
       </div>
       <div class="col-xl-6 col-md-6 col-sm-12">
         <div class="product-search-count-bottom">
-          <h5>
-            Showing 1-12 of
-            {{ length }} Result
+          <h5 v-if="pageSize >= total">Showing 1-{{ pageSize }}</h5>
+          <h5 v-else>
+            {{ calPagination() }}
           </h5>
         </div>
       </div>
@@ -127,6 +127,10 @@ export default {
       type: Number,
       required: true,
     },
+    total: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {
@@ -143,6 +147,15 @@ export default {
   },
   mounted() {},
   methods: {
+    calPagination() {
+      const start = this.pageSize * (this.page - 1) + 1;
+      const end =
+        this.pageSize * this.page < this.total
+          ? this.pageSize * this.page
+          : this.total;
+      if (start === end) return "Showing " + start + " of " + this.total;
+      return "Showing " + start + " - " + end + " of " + this.total;
+    },
     changePage(page) {
       if (page === this.pageCount) {
         this.beginningPages.first = page - 2;

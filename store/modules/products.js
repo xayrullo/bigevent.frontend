@@ -134,7 +134,6 @@ const actions = {
       this.$axios
         .$get(`products`, { params: payload })
         .then((res) => {
-          console.log(res);
           commit("SET_PAGINATION", {
             page: res.meta.pagination.page || state.pagination.page,
             total: res.meta.pagination.total,

@@ -6,7 +6,7 @@
         <div class="top-banner-wrapper">
           <a v-if="company.attributes.banner" href="#">
             <img
-              :src="'@/assets/images/mega-menu/2.jpg'"
+              :src="$tools.getImgUrl('mega-menu/2.jpg')"
               class="img-fluid"
               alt
             />
@@ -92,11 +92,14 @@
             </div>
           </div>
         </div>
-        <div
-          class="product-pagination mb-0"
-          v-if="products.length > this.paginate"
-        >
-          <pagination :pages="pages" :length="products.length" />
+        <div v-if="pagination.pageCount > 1" class="product-pagination mb-0">
+          <pagination
+            :pageCount="pagination.pageCount"
+            :pageSize="pagination.pageSize"
+            :page="pagination.page"
+            :total="pagination.total"
+            @onChange="changePage($event)"
+          />
         </div>
       </div>
     </section>
@@ -148,6 +151,7 @@ export default {
   computed: {
     ...mapState({
       //   company: (state) => state.company.company
+      pagination: (state) => state.products.pagination,
     }),
     ...mapGetters({
       companies: "company/getCompanies",
