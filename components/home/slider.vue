@@ -95,7 +95,6 @@ export default {
   },
   methods: {
     getBgImage(item) {
-      console.log(item);
       return item.banner.data
         ? this.$tools.getFileUrl(item.banner.data.attributes.url)
         : this.$tools.getImgUrl("beauty/banner2.jpg");

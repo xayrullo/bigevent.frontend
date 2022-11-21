@@ -22,6 +22,7 @@
       @openCompare="showCoampre"
       @openCart="showCart"
     />
+    <companies />
     <Services />
     <Blog />
     <!-- <Instagram /> -->
@@ -54,7 +55,7 @@ import newsletterModel from "~/components/widgets/newsletter-popup";
 import Slider from "~/components/home/slider";
 import DirectionsSlider from "~/components/home/directions-slider";
 import SpecialProducts from "~/components/home/special-products";
-// import Companies from "~/components/home/companies";
+import Companies from "~/components/home/companies";
 import Blog from "~/components/home/blog";
 // import Banner from "~/components/home/banner";
 // import ProductSlider from "./shop/fashion/components/product_slider";
@@ -65,7 +66,7 @@ import LogoSlider from "./shop/fashion/components/logo_slider";
 
 export default {
   components: {
-    // Companies,
+    Companies,
     Slider,
     DirectionsSlider,
     // ProductSlider,
@@ -103,6 +104,7 @@ export default {
       populate: "*",
       sort: ["createdAt:desc"],
     });
+    await store.dispatch("company/getCompanies", { populate: "*" });
   },
   computed: {
     ...mapState({
