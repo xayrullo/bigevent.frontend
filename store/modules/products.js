@@ -1,10 +1,11 @@
+import Vue from "vue";
 import products from "../../data/products";
-
 const state = {
   productslist: products.data,
   products: [],
   specialProducts: [],
   product: {},
+  wishProducts: [],
   wishlist: [],
   compare: [],
   currency: {
@@ -26,6 +27,7 @@ const getters = {
   getProducts: (state) => state.products,
   getSpecialProducts: (state) => state.specialProducts,
   getProduct: (state) => state.product,
+  getWishProducts: (state) => state.wishProducts,
   getcollectionProduct: (state) => {
     return (collection) =>
       state.products.filter((product) => {
@@ -80,6 +82,14 @@ const mutations = {
   SET_PAGINATION(state, payload) {
     state.pagination = payload;
   },
+  SET_WISH_PRODUCTS(state, payload) {
+    state.wishProducts = payload.map((product) => {
+      return product.attributes.product.data;
+    });
+  },
+  ADD_TO_WISHLIST(state, payload) {
+    state.wishProducts.push({ ...payload });
+  },
   changeCurrency: (state, payload) => {
     state.currency = payload;
   },
@@ -128,6 +138,30 @@ const mutations = {
 };
 // actions
 const actions = {
+  getWishProducts({ commit }, payload) {
+    commit("LOADING", true);
+    return new Promise((resolve, reject) => {
+      this.$axios
+        .$get(`wishlists`, { params: payload })
+        .then((res) => {
+          // commit("SET_PAGINATION", {
+          //   page: res.meta.pagination.page || state.pagination.page,
+          //   total: res.meta.pagination.total,
+          //   pageSize: state.pagination.pageSize,
+          //   pageCount: res.meta.pagination.pageCount,
+          // });
+          const _res = res.data || res;
+          commit("SET_WISH_PRODUCTS", _res);
+          resolve(_res);
+        })
+        .catch((error) => {
+          reject(error);
+        })
+        .finally(() => {
+          commit("LOADING", false);
+        });
+    });
+  },
   getProducts({ commit }, payload) {
     commit("LOADING", true);
     return new Promise((resolve, reject) => {
@@ -191,8 +225,37 @@ const actions = {
   changeCurrency: (context, payload) => {
     context.commit("changeCurrency", payload);
   },
-  addToWishlist: (context, payload) => {
-    context.commit("addToWishlist", payload);
+  addToWishlist(context, payload) {
+    const product = context.state.wishProducts.find(
+      (item) => item.id === payload.data.id
+    );
+    if (product) {
+      Vue.prototype.$snotify.warning(
+        "You have already added this item to your wish list."
+      );
+      return;
+    }
+    if (this.$auth.loggedIn) {
+      return new Promise((resolve, reject) => {
+        this.$axios
+          .$post(`wishlists`, {
+            data: {
+              product: payload.data.id,
+              user: this.$auth.user.id,
+            },
+          })
+          .then((res) => {
+            Vue.prototype.$snotify.success(
+              "Product is successfully added to your wishlist."
+            );
+            context.commit("ADD_TO_WISHLIST", payload.data);
+            resolve(res);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    }
   },
   removeWishlistItem: (context, payload) => {
     context.commit("removeWishlistItem", payload);

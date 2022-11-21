@@ -160,9 +160,9 @@ export default {
       this.$store.dispatch("cart/addToCart", product);
     },
     addToWishlist: function (product) {
-      this.dismissCountDown = this.dismissSecs;
-      this.$emit("showalert", this.dismissCountDown);
-      this.$store.dispatch("products/addToWishlist", product);
+      this.$store.dispatch("products/addToWishlist", {
+        data: product,
+      });
     },
     showQuickview: function (productData) {
       this.showquickview = true;

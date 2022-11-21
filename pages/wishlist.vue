@@ -122,11 +122,11 @@
 import { mapGetters } from "vuex";
 export default {
   auth: true,
-  //   middleware: "auth-redirect",
   components: {},
+  async fetch() {},
   computed: {
     ...mapGetters({
-      wishlist: "products/wishlistItems",
+      wishlist: "products/getWishProducts",
       curr: "products/changeCurrency",
     }),
   },

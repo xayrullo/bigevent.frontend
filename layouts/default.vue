@@ -3,6 +3,7 @@
     <nuxt id="body-content" />
     <layout-setting />
     <back-to-top />
+    <vue-snotify />
   </div>
 </template>
 
@@ -27,9 +28,9 @@ export default {
     const token = localStorage.getItem("auth._token.local");
     if (token !== "false" && token)
       await this.$auth.setUserToken(localStorage.getItem("auth._token.local"));
+    this.fetchGlobals();
   },
   mounted() {
-    this.fetchGlobals();
     this.$nextTick(() => {
       this.$nuxt.$loading.start();
       setTimeout(() => this.$nuxt.$loading.finish(), 3000);
@@ -38,6 +39,21 @@ export default {
   methods: {
     async fetchGlobals() {
       await this.$store.dispatch("directory/getGenders");
+      if (this.$auth.loggedIn) {
+        await this.$store.dispatch("products/getWishProducts", {
+          populate:
+            "product, product.brand, product.country, product.colors, product.sizes, product.direction, product.company",
+          filters: {
+            $and: [
+              {
+                user: {
+                  id: this.$auth.user.id,
+                },
+              },
+            ],
+          },
+        });
+      }
     },
   },
 };

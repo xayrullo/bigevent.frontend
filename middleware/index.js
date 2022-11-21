@@ -1,5 +1,4 @@
 export const routeOption = (route, key, value) => {
-  console.log("loremdfad a");
   return route.matched.some((m) => {
     if (process.client) {
       // Client
@@ -18,7 +17,6 @@ export const routeOption = (route, key, value) => {
 };
 
 export const getMatchedComponents = (route, matches = false) => {
-  console.log("aaaaaa");
   return [].concat.apply(
     [],
     route.matched.map(function (m, index) {
@@ -31,7 +29,6 @@ export const getMatchedComponents = (route, matches = false) => {
 };
 
 export function normalizePath(path = "") {
-  console.log("bbbbbb");
   // Remove query string
   let result = path.split("?")[0];
 
@@ -44,7 +41,6 @@ export function normalizePath(path = "") {
 }
 
 export default function (ctx) {
-  console.log("ctx: ", ctx);
   if (!process.client) {
     return;
   }

@@ -124,9 +124,9 @@ export default {
             data: this.auth,
           })
           .then(async (res) => {
-            if (this.$route.query.from) {
-              this.$router.push(this.$route.query.from);
-            }
+            // if (this.$route.query.from) {
+            //   this.$router.push(this.$route.query.from);
+            // }
             // this.afterLoginProcess()
           });
       } catch (e) {
