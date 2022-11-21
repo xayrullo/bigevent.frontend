@@ -108,6 +108,7 @@
   <script>
 import { mapGetters, mapState } from "vuex";
 export default {
+  auth: false,
   data() {
     return {
       routes: [{ path: "company", name: "Companies" }],

@@ -8,6 +8,6 @@
 <script>
 export default {
   auth: false,
-  middleware: "auth-redirect",
+  // middleware: "auth-redirect",
 };
 </script>

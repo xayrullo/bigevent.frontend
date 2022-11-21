@@ -43,8 +43,9 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState } from "vuex";
 export default {
+  auth: false,
   asyncData({ store }) {
     store.dispatch("company/getCompanies", { populate: "*" });
   },
@@ -53,11 +54,11 @@ export default {
   },
   computed: {
     ...mapState({
-      companies: state => state.company.companies
+      companies: (state) => state.company.companies,
     }),
     ...mapGetters({
       // companies: "company/getCompanies"
-    })
-  }
+    }),
+  },
 };
 </script>

@@ -22,6 +22,7 @@
   <script>
 import { mapGetters } from "vuex";
 export default {
+  auth: false,
   components: {},
   asyncData({ store, route }) {
     store.dispatch("blog/getBlogDetail", {
@@ -33,9 +34,7 @@ export default {
   },
   data() {
     return {
-      routes: [
-        { path: 'blog', name: 'Blog' }
-      ]
+      routes: [{ path: "blog", name: "Blog" }],
     };
   },
   computed: {

@@ -161,6 +161,7 @@ import quickviewModel from "~/components/widgets/quickview";
 import compareModel from "~/components/widgets/compare-popup";
 import cartModel from "~/components/cart-model/cart-modal-popup";
 export default {
+  auth: false,
   components: {
     quickviewModel,
     compareModel,

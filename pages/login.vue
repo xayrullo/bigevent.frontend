@@ -11,11 +11,9 @@
               <ValidationObserver v-slot="{ invalid }">
                 <form class="theme-form" @submit.prevent="onSubmit">
                   <div class="form-group">
-                    <label for="email">{{
-                      "Enter email or phone number"
-                    }}</label>
+                    <label for="email">{{ "Enter email" }}</label>
                     <ValidationProvider
-                      rules="required|phoneOrEmail"
+                      rules="required|email"
                       v-slot="{ errors }"
                       name="email"
                     >
@@ -24,7 +22,7 @@
                         class="form-control"
                         id="email"
                         v-model="auth.identifier"
-                        :placeholder="'Enter email or phone number'"
+                        :placeholder="'Enter email'"
                         name="email"
                       />
                       <span class="validate-error">{{ errors[0] }}</span>
@@ -98,21 +96,21 @@ export default {
         identifier: "",
         password: "",
       },
-      isEmail: false,
+      isEmail: true,
       isPhone: false,
       isPhoneOtpPending: false,
     };
   },
   watch: {
     "auth.identifier"() {
-      if (EMAILREG.test(this.auth.identifier)) {
-        this.isPhone = false;
-        this.isEmail = true;
-      } else {
-        this.isEmail = false;
-        this.isPhone = false;
-      }
-      this.isPhoneOtpPending = false;
+      // if (EMAILREG.test(this.auth.identifier)) {
+      //   this.isPhone = false;
+      //   this.isEmail = true;
+      // } else {
+      //   this.isEmail = false;
+      //   this.isPhone = false;
+      // }
+      // this.isPhoneOtpPending = false;
     },
   },
   methods: {
@@ -126,6 +124,9 @@ export default {
             data: this.auth,
           })
           .then(async (res) => {
+            if (this.$route.query.from) {
+              this.$router.push(this.$route.query.from);
+            }
             // this.afterLoginProcess()
           });
       } catch (e) {

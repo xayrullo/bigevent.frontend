@@ -24,7 +24,6 @@ export default {
     script: [{ src: "https://checkout.stripe.com/checkout.js" }],
   },
 
-  router: {},
   /*
    ** Customize the progress-bar color
    */
@@ -49,6 +48,7 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
+    "@nuxtjs/sentry",
     "bootstrap-vue/nuxt",
     "@nuxtjs/axios",
     "vue-scrollto/nuxt",
@@ -102,6 +102,11 @@ export default {
   },
   generate: {
     fallback: true,
+  },
+  router: {
+    // mode: 'hash',
+    middleware: ["auth"],
+    prefetchLinks: false,
   },
   /*
    ** Build configuration

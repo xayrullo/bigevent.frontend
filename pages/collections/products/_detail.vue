@@ -282,6 +282,7 @@ import { mapState, mapGetters } from "vuex";
 import Timer from "~/components/widgets/timer";
 // import relatedProduct from "~/components/widgets/related-products";
 export default {
+  auth: false,
   components: {
     Timer,
     // relatedProduct,

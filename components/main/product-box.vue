@@ -55,7 +55,7 @@
             @click="addToWishlist(product)"
           ></i>
         </a>
-        <a
+        <!-- <a
           href="javascript:void(0)"
           title="Quick View"
           @click="showQuickview(product)"
@@ -72,7 +72,7 @@
           variant="primary"
         >
           <i class="ti-reload" aria-hidden="true"></i>
-        </a>
+        </a> -->
       </div>
     </div>
     <div class="product-detail">

@@ -65,6 +65,7 @@ import Services from "./shop/fashion/components/services";
 import LogoSlider from "./shop/fashion/components/logo_slider";
 
 export default {
+  auth: false,
   components: {
     Companies,
     Slider,

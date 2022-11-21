@@ -15,7 +15,7 @@
         <div class="col-lg-6 text-right">
           <ul class="header-dropdown">
             <li class="mobile-wishlist">
-              <nuxt-link :to="{ path: '/page/account/wishlist' }">
+              <nuxt-link :to="{ path: '/wishlist' }">
                 <i class="fa fa-heart" aria-hidden="true"></i>
               </nuxt-link>
             </li>
