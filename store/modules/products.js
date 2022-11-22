@@ -90,6 +90,10 @@ const mutations = {
   ADD_TO_WISHLIST(state, payload) {
     state.wishProducts.push({ ...payload });
   },
+  REMOVE_FROM_WISHLIST(state, payload) {
+    const index = state.wishProducts.indexOf(payload);
+    state.wishProducts.splice(index, 1);
+  },
   changeCurrency: (state, payload) => {
     state.currency = payload;
   },
@@ -103,7 +107,7 @@ const mutations = {
       });
     }
   },
-  removeWishlistItem: (state, payload) => {
+  removeWishlistItem(state, payload) {
     const index = state.wishlist.indexOf(payload);
     state.wishlist.splice(index, 1);
   },
@@ -257,8 +261,24 @@ const actions = {
       });
     }
   },
-  removeWishlistItem: (context, payload) => {
-    context.commit("removeWishlistItem", payload);
+  removeWishlistItem(context, payload) {
+    if (this.$auth.loggedIn) {
+      return new Promise((resolve, reject) => {
+        this.$axios
+          .$delete(`wishlists/${payload.id}`)
+          .then((res) => {
+            Vue.prototype.$snotify.error(
+              "Product is successfully removed from your wishlist."
+            );
+            context.commit("REMOVE_FROM_WISHLIST", payload);
+            resolve(res);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    }
+    context.commit("REMOVE_FROM_WISHLIST", payload);
   },
   addToCompare: (context, payload) => {
     context.commit("addToCompare", payload);

@@ -42,7 +42,7 @@ export default {
       if (this.$auth.loggedIn) {
         await this.$store.dispatch("products/getWishProducts", {
           populate:
-            "product, product.brand, product.country, product.colors, product.sizes, product.direction, product.company",
+            "product, product.brand, product.country, product.colors, product.sizes, product.direction, product.company, product.media, product.country.flag",
           filters: {
             $and: [
               {

@@ -48,7 +48,7 @@
         >
           <i class="ti-shopping-cart"></i>
         </button>
-        <a href="javascript:void(0)" title="Wishlist">
+        <a v-if="$auth.loggedIn" href="javascript:void(0)" title="Wishlist">
           <i
             class="ti-heart"
             aria-hidden="true"

@@ -15,67 +15,57 @@
                   <th scope="col">image</th>
                   <th scope="col">product name</th>
                   <th scope="col">price</th>
-                  <th scope="col">availability</th>
+                  <th scope="col">created country</th>
                   <th scope="col">action</th>
                 </tr>
               </thead>
               <tbody v-for="(item, index) in wishlist" :key="index">
                 <tr>
                   <td>
-                    <a href="#">
-                      <img :src="getImgUrl(item.images[0].src)" alt="" />
-                    </a>
+                    <nuxt-link
+                      :to="{ path: `/collections/products/${item.id}` }"
+                      v-if="item.attributes.media.data"
+                    >
+                      <img
+                        :src="
+                          $tools.getFileUrl(
+                            item.attributes.media.data[0].attributes.formats
+                              .thumbnail.url
+                          )
+                        "
+                        :alt="item.attributes.title"
+                      />
+                    </nuxt-link>
                   </td>
                   <td>
-                    <a href="#">{{ item.title }}</a>
-                    <div class="mobile-cart-content row">
-                      <div class="col-xs-3">
-                        <p>in stock</p>
-                      </div>
-                      <div class="col-xs-3">
-                        <h2 class="td-color">
-                          {{ (item.price * curr.curr) | currency(curr.symbol) }}
-                        </h2>
-                      </div>
-                      <div class="col-xs-3">
-                        <h2 class="td-color">
-                          <a href="#" class="icon mr-1">
-                            <i
-                              class="ti-close"
-                              @click="removeWishlistItem(item)"
-                            ></i>
-                          </a>
-                          <a href="#" class="cart">
-                            <i
-                              class="ti-shopping-cart"
-                              @click="addToCart(item)"
-                            ></i>
-                          </a>
-                        </h2>
-                      </div>
-                    </div>
+                    <nuxt-link
+                      :to="{ path: `/collections/products/${item.id}` }"
+                      >{{ item.attributes.title }}</nuxt-link
+                    >
                   </td>
                   <td>
                     <h2>
-                      {{ (item.price * curr.curr) | currency(curr.symbol) }}
+                      {{ $tools.priceFormat(item.attributes.price) + " sum" }}
                     </h2>
                   </td>
                   <td>
-                    <p>in stock</p>
+                    <img
+                      width="80"
+                      height="50"
+                      :src="
+                        $tools.getFileUrl(
+                          item.attributes.country.data.attributes.flag.data
+                            .attributes.url
+                        )
+                      "
+                      :alt="item.attributes.country.data.attributes.name"
+                    />
                   </td>
                   <td>
-                    <a
-                      href="javascript:void(0)"
-                      class="icon mr-3"
-                      @click="removeWishlistItem(item)"
-                    >
+                    <a class="icon mr-3" @click="removeWishlistItem(item)">
                       <i class="ti-close"></i>
                     </a>
-                    <a
-                      href="javascript:void(0)"
-                      class="cart"
-                      @click="addToCart(item)"
-                    >
+                    <a class="cart" @click="addToCart(item)">
                       <i class="ti-shopping-cart"></i>
                     </a>
                   </td>
