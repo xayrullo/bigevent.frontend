@@ -1,7 +1,11 @@
 <template>
   <div>
-    <div id="cart_side" class="add_to_cart top" :class="{ openSide:openCart }">
-      <a href="javascript:void(0)" class="overlay" v-on:click="closeCart(openCart)"></a>
+    <div id="cart_side" class="add_to_cart top" :class="{ openSide: openCart }">
+      <a
+        href="javascript:void(0)"
+        class="overlay"
+        v-on:click="closeCart(openCart)"
+      ></a>
       <div class="cart-inner">
         <div class="cart_top">
           <h3>my cart</h3>
@@ -13,8 +17,8 @@
         </div>
         <div class="cart_media" v-if="cart.length">
           <ul class="cart_product">
-            <li v-for="(item,index) in cart" :key="index">
-              <div class="media">
+            <li v-for="(item, index) in cart" :key="index">
+              <!-- <div class="media">
                 <nuxt-link :to="{ path: '/product/sidebar/'+item.id}">
                   <img alt class="mr-3" :src='getImgUrl(item.images[0].src)'>
                 </nuxt-link>
@@ -26,9 +30,9 @@
                     <span>{{item.quantity}} x {{ item.price * curr.curr | currency(curr.symbol) }}</span>
                   </h4>
                 </div>
-              </div>
+              </div> -->
               <div class="close-circle">
-                <a href="javascript:void(0)" @click='removeCartItem(item)'>
+                <a href="javascript:void(0)" @click="removeCartItem(item)">
                   <i class="ti-trash" aria-hidden="true"></i>
                 </a>
               </div>
@@ -39,16 +43,24 @@
               <div class="total">
                 <h5>
                   subtotal :
-                  <span>{{ cartTotal * curr.curr | currency(curr.symbol) }}</span>
+                  <span>{{
+                    (cartTotal * curr.curr) | currency(curr.symbol)
+                  }}</span>
                 </h5>
               </div>
             </li>
             <li>
               <div class="buttons">
-                <nuxt-link :to="{ path: '/page/account/cart'}" :class="'btn btn-solid btn-xs view-cart'">
+                <nuxt-link
+                  :to="{ path: '/page/account/cart' }"
+                  :class="'btn btn-solid btn-xs view-cart'"
+                >
                   view cart
                 </nuxt-link>
-                <nuxt-link :to="{ path: '/page/account/checkout'}" :class="'btn btn-solid btn-xs checkout'">
+                <nuxt-link
+                  :to="{ path: '/page/account/checkout' }"
+                  :class="'btn btn-solid btn-xs checkout'"
+                >
                   checkout
                 </nuxt-link>
               </div>
@@ -56,45 +68,47 @@
           </ul>
         </div>
         <div class="col-sm-12 empty-cart-cls text-left" v-if="!cart.length">
-              <h4 class="mt-3">
-                <strong>Your Cart is Empty</strong>
-              </h4>
-              <nuxt-link :to="{ path: '/'}" class="btn btn-solid">continue shopping</nuxt-link>
-            </div>
+          <h4 class="mt-3">
+            <strong>Your Cart is Empty</strong>
+          </h4>
+          <nuxt-link :to="{ path: '/' }" class="btn btn-solid"
+            >continue shopping</nuxt-link
+          >
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters } from "vuex";
 export default {
-  props: ['openCart'],
+  props: ["openCart"],
   computed: {
     ...mapState({
-      currency: state => state.products.currency
+      currency: (state) => state.products.currency,
     }),
     ...mapGetters({
-      cart: 'cart/cartItems',
-      cartTotal: 'cart/cartTotalAmount',
-      curr: 'products/changeCurrency'
-    })
+      cart: "cart/cartItems",
+      cartTotal: "cart/cartTotalAmount",
+      curr: "products/changeCurrency",
+    }),
   },
   methods: {
     // Get Image Url
     getImgUrl(path) {
-      return require('@/assets/images/' + path)
+      return require("@/assets/images/" + path);
     },
     closeCart(val) {
-      val = false
-      this.$emit('closeCart', val)
+      val = false;
+      this.$emit("closeCart", val);
     },
     removeCartItem: function (product) {
-      this.$store.dispatch('cart/removeCartItem', product)
+      this.$store.dispatch("cart/removeCartItem", product);
     },
     updateCurrency: function (currency, currSymbol) {
-      this.currencyChange = { curr: currency, symbol: currSymbol }
-      this.$store.dispatch('products/changeCurrency', this.currencyChange)
-    }
-  }
-}
+      this.currencyChange = { curr: currency, symbol: currSymbol };
+      this.$store.dispatch("products/changeCurrency", this.currencyChange);
+    },
+  },
+};
 </script>

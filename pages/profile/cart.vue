@@ -1,7 +1,6 @@
 <template>
   <div>
-    <Header />
-    <Breadcrumbs title="Cart" />
+    <breadcrumbs title="Cart" />
     <section class="cart-section section-b-space">
       <div class="container">
         <div class="row">
@@ -21,14 +20,33 @@
                 </tr>
               </thead>
               <tbody v-for="(item, index) in cart" :key="index">
-                <!-- <tr>
+                <tr>
                   <td>
-                    <nuxt-link :to="{ path: '/product/sidebar/'+item.id}">
-                      <img :src="getImgUrl(item.images[0].src)" alt />
+                    <nuxt-link
+                      v-if="item.attributes.media.data"
+                      :to="{ path: '/collections/products/' + item.id }"
+                    >
+                      <img
+                        :src="
+                          $tools.getFileUrl(
+                            item.attributes.media.data[0].attributes.url
+                          )
+                        "
+                        alt
+                      />
+                    </nuxt-link>
+                    <nuxt-link
+                      v-else
+                      :to="{ path: '/collections/products/' + item.id }"
+                    >
+                      <img :src="$tools.getImgUrl('1.jpg')" alt />
                     </nuxt-link>
                   </td>
                   <td>
-                    <nuxt-link :to="{ path: '/product/sidebar/'+item.id}">{{item.title}}</nuxt-link>
+                    <nuxt-link
+                      :to="{ path: '/collections/products/' + item.id }"
+                      >{{ item.attributes.title }}</nuxt-link
+                    >
                     <div class="mobile-cart-content row">
                       <div class="col-xs-3">
                         <div class="qty-box">
@@ -65,7 +83,9 @@
                         </div>
                       </div>
                       <div class="col-xs-3">
-                        <h2 class="td-color">{{ item.price * curr.curr | currency(curr.symbol) }}</h2>
+                        <h2 class="td-color">
+                          {{ $tools.priceFormat(item.attributes.price) }} sum
+                        </h2>
                       </div>
                       <div class="col-xs-3">
                         <h2 class="td-color">
@@ -77,7 +97,7 @@
                     </div>
                   </td>
                   <td>
-                    <h2>{{ item.price * curr.curr | currency(curr.symbol) }}</h2>
+                    <h2>{{ $tools.priceFormat(item.attributes.price) }} sum</h2>
                   </td>
                   <td>
                     <div class="qty-box">
@@ -97,8 +117,8 @@
                           type="text"
                           name="quantity"
                           class="form-control input-number"
-                          :disabled="item.quantity > item.stock"
-                          v-model="item.quantity"
+                          :disabled="item.qty > item.stock"
+                          v-model="item.qty"
                         />
                         <span class="input-group-prepend">
                           <button
@@ -120,11 +140,11 @@
                     </a>
                   </td>
                   <td>
-                    <h2
-                      class="td-color"
-                    >{{ (item.price * curr.curr) * item.quantity | currency(curr.symbol) }}</h2>
+                    <h2 class="td-color">
+                      {{ $tools.priceFormat(item.attributes.price) }} sum
+                    </h2>
                   </td>
-                </tr> -->
+                </tr>
               </tbody>
             </table>
             <table
@@ -134,10 +154,8 @@
               <tfoot>
                 <tr>
                   <td>total price :</td>
-                  <td>
-                    <h2>
-                      {{ (cartTotal * curr.curr) | currency(curr.symbol) }}
-                    </h2>
+                  <td style="min-width: 300px">
+                    <h2>{{ $tools.priceFormat(cartTotal) }} sum</h2>
                   </td>
                 </tr>
               </tfoot>
@@ -179,37 +197,29 @@
         </div>
       </div>
     </section>
-    <Footer />
   </div>
 </template>
-<script>
+  <script>
 import { mapGetters } from "vuex";
-import Header from "../../../components/header/header1";
-import Footer from "../../../components/footer/footer1";
-import Breadcrumbs from "../../../components/widgets/breadcrumbs";
 export default {
+  auth: false,
   data() {
     return {
       counter: 1,
     };
   },
-  components: {
-    Header,
-    Footer,
-    Breadcrumbs,
-  },
+  components: {},
   computed: {
     ...mapGetters({
       cart: "cart/cartItems",
       cartTotal: "cart/cartTotalAmount",
-      curr: "products/changeCurrency",
     }),
   },
   methods: {
     getImgUrl(path) {
       return require("@/assets/images/" + path);
     },
-    removeCartItem: function (product) {
+    removeCartItem(product) {
       this.$store.dispatch("cart/removeCartItem", product);
     },
     increment(product, qty = 1) {
@@ -227,3 +237,4 @@ export default {
   },
 };
 </script>
+  

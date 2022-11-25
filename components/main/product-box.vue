@@ -153,10 +153,8 @@ export default {
     getImgUrl(path) {
       return require("@/assets/images/" + path);
     },
-    addToCart: function (product) {
-      this.cartval = true;
-      this.cartProduct = product;
-      this.$emit("opencartmodel", this.cartval, this.cartProduct);
+    addToCart(product) {
+      this.$snotify.success("Successfully added to cart");
       this.$store.dispatch("cart/addToCart", product);
     },
     addToWishlist: function (product) {

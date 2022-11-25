@@ -93,22 +93,41 @@
           <ul class="show-div shopping-cart" v-if="cart.length">
             <li v-for="(item, index) in cart" :key="index">
               <div class="media">
-                <nuxt-link :to="{ path: '/product/sidebar/' + item.id }">
-                  <img alt class="mr-3" :src="getImgUrl(item.images[0].src)" />
+                <nuxt-link
+                  v-if="item.attributes.media.data"
+                  :to="{ path: '/collections/products/' + item.id }"
+                >
+                  <img
+                    alt
+                    class="mr-3"
+                    :src="
+                      $tools.getFileUrl(
+                        item.attributes.media.data[0].attributes.url
+                      )
+                    "
+                  />
+                </nuxt-link>
+                <nuxt-link
+                  v-else
+                  :to="{ path: '/collections/products/' + item.id }"
+                >
+                  <img alt class="mr-3" :src="$tools.getImgUrl('1.jpg')" />
                 </nuxt-link>
                 <div class="media-body">
-                  <nuxt-link :to="{ path: '/product/sidebar/' + item.id }">
-                    <h4>{{ item.title }}</h4>
+                  <nuxt-link :to="{ path: '/collections/products/' + item.id }">
+                    <h4>{{ item.attributes.title }}</h4>
                   </nuxt-link>
                   <h4>
-                    <span
-                      >{{ item.quantity }} x {{ item.price | currency }}</span
-                    >
+                    <span>
+                      {{ item.qty }} x
+                      {{ $tools.priceFormat(item.attributes.price) }}
+                      sum
+                    </span>
                   </h4>
                 </div>
               </div>
               <div class="close-circle">
-                <a href="#" @click="removeCartItem(item)">
+                <a @click="removeCartItem(item)">
                   <i class="fa fa-times" aria-hidden="true"></i>
                 </a>
               </div>
@@ -117,16 +136,13 @@
               <div class="total">
                 <h5>
                   subtotal :
-                  <span>{{ cartTotal | currency }}</span>
+                  <span>{{ $tools.priceFormat(cartTotal) }} sum</span>
                 </h5>
               </div>
             </li>
             <li>
               <div class="buttons">
-                <nuxt-link
-                  :to="{ path: '/page/account/cart' }"
-                  :class="'view-cart'"
-                >
+                <nuxt-link :to="{ path: '/profile/cart' }" :class="'view-cart'">
                   view cart
                 </nuxt-link>
                 <nuxt-link
@@ -176,7 +192,7 @@ export default {
     searchProduct() {
       this.$store.dispatch("products/searchProduct", this.searchString);
     },
-    removeCartItem: function (product) {
+    removeCartItem(product) {
       this.$store.dispatch("cart/removeCartItem", product);
     },
     updateCurrency: function (currency, currSymbol) {

@@ -1,83 +1,79 @@
-import products from '../../data/products'
+import products from "../../data/products";
 
 const state = {
   products: products.data,
-  cart: []
-}
+  cart: [],
+};
 // getters
 const getters = {
   cartItems: (state) => {
-    return state.cart
+    return state.cart;
   },
   cartTotalAmount: (state) => {
     return state.cart.reduce((total, product) => {
-      return total + (product.price * product.quantity)
-    }, 0)
-  }
-}
+      return total + product.attributes.price * product.qty;
+    }, 0);
+  },
+};
 // mutations
 const mutations = {
-  addToCart: (state, payload) => {
-    const product = state.products.find(item => item.id === payload.id)
-    const cartItems = state.cart.find(item => item.id === payload.id)
-    const qty = payload.quantity ? payload.quantity : 1
-    if (cartItems) {
-      cartItems.quantity = qty
-    } else {
-      state.cart.push({
-        ...product,
-        quantity: qty
-      })
-    }
-    product.stock--
+  ADD_TO_CART(state, payload) {
+    state.cart.push(payload);
+  },
+  REMOVE_CART_ITEM(state, payload) {
+    const index = state.cart.indexOf(payload);
+    state.cart.splice(index, 1);
   },
   updateCartQuantity: (state, payload) => {
     // Calculate Product stock Counts
     function calculateStockCounts(product, quantity) {
-      const qty = product.quantity + quantity
-      const stock = product.stock
+      const qty = product.quantity + quantity;
+      const stock = product.stock;
       if (stock < qty) {
-        return false
+        return false;
       }
-      return true
+      return true;
     }
     state.cart.find((items, index) => {
       if (items.id === payload.product.id) {
-        const qty = state.cart[index].quantity + payload.qty
-        const stock = calculateStockCounts(state.cart[index], payload.qty)
+        const qty = state.cart[index].quantity + payload.qty;
+        const stock = calculateStockCounts(state.cart[index], payload.qty);
         if (qty !== 0 && stock) {
-          state.cart[index].quantity = qty
+          state.cart[index].quantity = qty;
         } else {
           // state.cart.push({
           //   ...product,
           //   quantity: qty
           // })
         }
-        return true
+        return true;
       }
-    })
+    });
   },
   removeCartItem: (state, payload) => {
-    const index = state.cart.indexOf(payload)
-    state.cart.splice(index, 1)
-  }
-}
+    const index = state.cart.indexOf(payload);
+    state.cart.splice(index, 1);
+  },
+};
 // actions
 const actions = {
   addToCart: (context, payload) => {
-    context.commit('addToCart', payload)
+    const { commit } = context;
+    const product = { ...payload };
+    const qty = payload.quantity ? payload.quantity : 1;
+    commit("ADD_TO_CART", { ...product, qty });
   },
   updateCartQuantity: (context, payload) => {
-    context.commit('updateCartQuantity', payload)
+    context.commit("updateCartQuantity", payload);
   },
   removeCartItem: (context, payload) => {
-    context.commit('removeCartItem', payload)
-  }
-}
+    context.commit("REMOVE_CART_ITEM", payload);
+  },
+};
 export default {
   namespaced: true,
   state,
   getters,
   actions,
-  mutations
-}
+  mutations,
+};
