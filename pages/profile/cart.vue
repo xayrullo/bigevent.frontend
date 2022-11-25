@@ -189,7 +189,7 @@
           </div>
           <div class="col-6">
             <nuxt-link
-              :to="{ path: '/page/account/checkout' }"
+              :to="{ path: '/profile/checkout' }"
               :class="'btn btn-solid'"
               >check out</nuxt-link
             >

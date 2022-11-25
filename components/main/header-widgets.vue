@@ -146,7 +146,7 @@
                   view cart
                 </nuxt-link>
                 <nuxt-link
-                  :to="{ path: '/page/account/checkout' }"
+                  :to="{ path: '/profile/checkout' }"
                   :class="'checkout'"
                 >
                   checkout
