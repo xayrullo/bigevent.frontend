@@ -8,11 +8,7 @@
       <div class="front">
         <nuxt-link :to="{ path: '/collections/products/' + product.id }">
           <img
-            :src="
-              $tools.getFileUrl(
-                imageSrc.id ? imageSrc.url : product.media[0].url
-              )
-            "
+            :src="$tools.getFileUrl(imageSrc.url)"
             :id="product.id"
             class="bg-img"
             height="500"
@@ -24,7 +20,7 @@
       </div>
       <ul class="product-thumb-list">
         <li
-          v-for="(image, index) in product.media.slice(0, 3)"
+          v-for="(image, index) in media.slice(0, 3)"
           class="grid_thumb_img"
           :class="{ active: imageSrc.id === image.id }"
           :key="index"
@@ -36,7 +32,7 @@
         </li>
       </ul>
       <div class="cart-info cart-wrap">
-        <button
+        <!-- <button
           data-toggle="modal"
           data-target="#addtocart"
           title="Add to cart"
@@ -45,7 +41,7 @@
           variant="primary"
         >
           <i class="ti-shopping-cart"></i>
-        </button>
+        </button> -->
         <a v-if="$auth.loggedIn" href="javascript:void(0)" title="Wishlist">
           <i
             class="ti-heart"
@@ -93,15 +89,16 @@
       <h4 v-else>
         {{ $tools.priceFormat(product.price) | currency }}
       </h4>
-      <ul class="color-variant" v-if="product.isColor">
+      <!-- <ul class="color-variant" v-if="product.isColor"> -->
+      <ul class="color-variant">
         <li
-          v-for="(variant, variantIndex) in Color(product.colors)"
+          v-for="(variant, variantIndex) in Color(product.warehouse)"
           :key="variantIndex"
         >
           <a
-            @click="productColorchange(variant, product)"
+            @click="productColorchange(variant, product.warehouse)"
             :class="[variant]"
-            v-bind:style="{ 'background-color': variant.code }"
+            v-bind:style="{ 'background-color': variant }"
           ></a>
         </li>
       </ul>
@@ -120,6 +117,7 @@ export default {
   data() {
     return {
       imageSrc: {},
+      media: [],
       quickviewProduct: {},
       compareProduct: {},
       cartProduct: {},
@@ -138,6 +136,10 @@ export default {
     currency(price) {
       return price + " sum";
     },
+  },
+  mounted() {
+    this.media = this.product.warehouse[0].media;
+    this.imageSrc = this.media[0];
   },
   computed: {
     ...mapState({
@@ -175,23 +177,20 @@ export default {
       );
       this.$store.dispatch("products/addToCompare", product);
     },
-    Color(colors) {
+    Color(warehouse) {
       const uniqColor = [];
-      for (let i = 0; i < colors.length; i++) {
-        if (uniqColor.indexOf(colors[i].code) === -1) {
-          uniqColor.push(colors[i].code);
+      for (let i = 0; i < warehouse.length; i++) {
+        if (uniqColor.indexOf(warehouse[i].color.code) === -1) {
+          uniqColor.push(warehouse[i].color.code);
         }
       }
       return uniqColor;
     },
-    productColorchange(color, product) {
-      product.colors.map((item) => {
-        if (item.code === color.code) {
-          product.media.map((img) => {
-            if (img.code === item.code) {
-              this.imageSrc = img;
-            }
-          });
+    productColorchange(colorCode, warehouse) {
+      warehouse.map((item) => {
+        if (item.color.code === colorCode) {
+          this.media = item.media;
+          this.imageSrc = this.media[0];
         }
       });
     },

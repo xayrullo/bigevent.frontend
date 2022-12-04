@@ -194,6 +194,15 @@ export default {
           ? route.query.pageSize
           : store.state.products.pagination.pageSize,
       },
+      filters: {
+        $and: [
+          {
+            warehouse: {
+              $notNull: true,
+            },
+          },
+        ],
+      },
     });
   },
   computed: {
