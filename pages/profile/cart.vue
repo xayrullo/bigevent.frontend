@@ -23,17 +23,10 @@
                 <tr>
                   <td>
                     <nuxt-link
-                      v-if="item.attributes.media.data"
+                      v-if="item.media"
                       :to="{ path: '/collections/products/' + item.id }"
                     >
-                      <img
-                        :src="
-                          $tools.getFileUrl(
-                            item.attributes.media.data[0].attributes.url
-                          )
-                        "
-                        alt
-                      />
+                      <img :src="$tools.getFileUrl(item.media[0].url)" alt />
                     </nuxt-link>
                     <nuxt-link
                       v-else
@@ -45,7 +38,7 @@
                   <td>
                     <nuxt-link
                       :to="{ path: '/collections/products/' + item.id }"
-                      >{{ item.attributes.title }}</nuxt-link
+                      >{{ item.title }}</nuxt-link
                     >
                     <div class="mobile-cart-content row">
                       <div class="col-xs-3">
@@ -84,7 +77,7 @@
                       </div>
                       <div class="col-xs-3">
                         <h2 class="td-color">
-                          {{ $tools.priceFormat(item.attributes.price) }} sum
+                          {{ $tools.priceFormat(item.price) }} sum
                         </h2>
                       </div>
                       <div class="col-xs-3">
@@ -97,7 +90,7 @@
                     </div>
                   </td>
                   <td>
-                    <h2>{{ $tools.priceFormat(item.attributes.price) }} sum</h2>
+                    <h2>{{ $tools.priceFormat(item.price) }} sum</h2>
                   </td>
                   <td>
                     <div class="qty-box">
@@ -141,7 +134,7 @@
                   </td>
                   <td>
                     <h2 class="td-color">
-                      {{ $tools.priceFormat(item.attributes.price) }} sum
+                      {{ $tools.priceFormat(item.price) }} sum
                     </h2>
                   </td>
                 </tr>

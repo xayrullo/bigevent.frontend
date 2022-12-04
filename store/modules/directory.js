@@ -24,7 +24,7 @@ const getters = {
   },
   getGenders(state) {
     return state.genders.map((gen) => {
-      return { id: gen.id, name: gen.attributes.name };
+      return { id: gen.id, name: gen.name };
     });
   },
 };
@@ -54,7 +54,7 @@ const actions = {
       this.$axios
         .$get(`directions`, { params: payload })
         .then((res) => {
-          const _res = res.data || res;
+          const _res = res.results || res;
           commit("SET_DIRECTIONS", _res);
           resolve(_res);
         })
@@ -74,7 +74,7 @@ const actions = {
         this.$axios
           .get(`/genders`, { params: data })
           .then((res) => {
-            const _res = res.data || res;
+            const _res = res.results || res;
             commit("SET_GENDERS", _res.data);
             resolve(_res.data);
           })

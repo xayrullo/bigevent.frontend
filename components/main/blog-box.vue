@@ -4,7 +4,7 @@
       <div class="classic-effect">
         <div>
           <img
-            :src="$tools.getFileUrl(data.attributes.image.data.attributes.url)"
+            :src="$tools.getFileUrl(data.image.url)"
             :height="500"
             alt
             style="object-fit: cover; position: static; width: 100%"
@@ -14,8 +14,8 @@
       </div>
     </div>
     <div class="blog-details text-left">
-      <p>{{ data.attributes.title }}</p>
-      <div class="mt-2">{{ data.attributes.description | textWrap }}</div>
+      <p>{{ data.title }}</p>
+      <div class="mt-2">{{ data.description | textWrap }}</div>
     </div>
   </nuxt-link>
 </template>

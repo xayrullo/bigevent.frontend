@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumbs :title="product.attributes.title" />
+    <breadcrumbs :title="product.title" />
     <section>
       <div class="collection-wrapper productdetail">
         <div class="container">
@@ -10,14 +10,14 @@
                 <div class="swiper-wrapper">
                   <div
                     class="swiper-slide"
-                    v-for="(product, index) in product.attributes.media.data"
+                    v-for="(product, index) in product.media"
                     :key="index"
                   >
                     <img
-                      :src="$tools.getFileUrl(product.attributes.url)"
+                      :src="$tools.getFileUrl(product.url)"
                       :id="product.id"
                       class="img-fluid bg-img"
-                      :alt="product.attributes.name"
+                      :alt="product.name"
                     />
                   </div>
                 </div>
@@ -28,15 +28,14 @@
                     <div class="swiper-wrapper">
                       <div
                         class="swiper-slide"
-                        v-for="(product, index) in product.attributes.media
-                          .data"
+                        v-for="(product, index) in product.media"
                         :key="index"
                       >
                         <img
-                          :src="$tools.getFileUrl(product.attributes.url)"
+                          :src="$tools.getFileUrl(product.url)"
                           :id="product.id"
                           class="img-fluid bg-img"
-                          :alt="product.attributes.name"
+                          :alt="product.name"
                           @click="slideTo(index)"
                         />
                       </div>
@@ -47,33 +46,31 @@
             </div>
             <div class="col-lg-6 rtl-text">
               <div class="product-right">
-                <h2>{{ product.attributes.title }}</h2>
-                <h4 v-if="product.attributes.isSale">
-                  <del>{{ $tools.priceFormat(product.attributes.price) }}</del>
-                  <span>{{ product.attributes.discount }}% off</span>
+                <h2>{{ product.title }}</h2>
+                <h4 v-if="product.isSale">
+                  <del>{{ $tools.priceFormat(product.price) }}</del>
+                  <span>{{ product.discount }}% off</span>
                 </h4>
-                <h3 v-if="product.attributes.isSale">
+                <h3 v-if="product.isSale">
                   {{ discountedPrice(product) }}
                 </h3>
                 <h3 v-else>
-                  {{ $tools.priceFormat(product.attributes.price) }}
+                  {{ $tools.priceFormat(product.price) }}
                 </h3>
                 <ul class="color-variant">
                   <li
                     v-bind:class="{ active: activeColor == variant }"
-                    v-for="(variant, variantIndex) in Color(
-                      product.attributes.colors
-                    )"
+                    v-for="(variant, variantIndex) in Color(product.colors)"
                     :key="variantIndex"
                   >
                     <a
                       :class="[variant]"
                       v-bind:style="{
-                        'background-color': color.attributes.code,
+                        'background-color': color.code,
                       }"
                       @click="
                         sizeVariant(
-                          product.attributes.colors[variantIndex].id,
+                          product.colors[variantIndex].id,
                           variantIndex,
                           variant
                         )
@@ -81,10 +78,9 @@
                     ></a>
                   </li>
                 </ul>
-                <div class="pro_inventory" v-if="product.attributes.stock < 8">
+                <div class="pro_inventory" v-if="product.stock < 8">
                   <p class="active">
-                    Hurry! We have only {{ product.attributes.stock }} product
-                    in stock.
+                    Hurry! We have only {{ product.stock }} product in stock.
                   </p>
                   <div class="inventory-scroll">
                     <span style="width: 95%"></span>
@@ -115,16 +111,10 @@
                       </li>
                     </ul>
                   </div>
-                  <h5
-                    class="avalibility"
-                    v-if="counter <= product.attributes.stock"
-                  >
+                  <h5 class="avalibility" v-if="counter <= product.stock">
                     <span>In Stock</span>
                   </h5>
-                  <h5
-                    class="avalibility"
-                    v-if="counter > product.attributes.stock"
-                  >
+                  <h5 class="avalibility" v-if="counter > product.stock">
                     <span>Out of Stock</span>
                   </h5>
                   <h6 class="product-title">quantity</h6>
@@ -145,7 +135,7 @@
                         type="text"
                         name="quantity"
                         class="form-control input-number"
-                        :disabled="counter > product.attributes.stock"
+                        :disabled="counter > product.stock"
                         v-model="counter"
                       />
                       <span class="input-group-prepend">
@@ -168,7 +158,7 @@
                       class="btn btn-solid"
                       title="Add to cart"
                       @click="addToCart(product, counter)"
-                      :disabled="counter > product.attributes.stock"
+                      :disabled="counter > product.stock"
                     >
                       Add To Cart
                     </button>
@@ -177,7 +167,7 @@
                     class="btn btn-solid"
                     title="buy now"
                     @click="buyNow(product, counter)"
-                    :disabled="counter > product.attributes.stock"
+                    :disabled="counter > product.stock"
                   >
                     Buy Now
                   </button>
@@ -185,9 +175,7 @@
                 <div class="border-product">
                   <h6 class="product-title">product details</h6>
                   <p>
-                    {{
-                      product.attributes.description.substring(0, 200) + "...."
-                    }}
+                    {{ product.description.substring(0, 200) + "...." }}
                   </p>
                 </div>
                 <div class="border-product">
@@ -220,11 +208,11 @@
           <div class="col-sm-12 col-lg-12">
             <b-tabs card>
               <b-tab title="Description" active>
-                <b-card-text>{{ product.attributes.description }}</b-card-text>
+                <b-card-text>{{ product.description }}</b-card-text>
               </b-tab>
               <b-tab title="Details">
                 <b-card-text>
-                  {{ product.attributes.description }}
+                  {{ product.description }}
                   <div class="single-product-tables">
                     <table>
                       <tbody>
@@ -352,17 +340,15 @@ export default {
       this.$store.dispatch("products/addToWishlist", product);
     },
     discountedPrice(product) {
-      const price =
-        product.attributes.price -
-        (product.attributes.price * product.attributes.discount) / 100;
+      const price = product.price - (product.price * product.discount) / 100;
       return price;
     },
     // Display Unique Color
     Color(variants) {
       const uniqColor = [];
       for (let i = 0; i < variants.length; i++) {
-        if (uniqColor.indexOf(variants[i].attributes.code) === -1) {
-          uniqColor.push(variants[i].attributes.code);
+        if (uniqColor.indexOf(variants[i].code) === -1) {
+          uniqColor.push(variants[i].code);
         }
       }
       this.stock();
@@ -400,19 +386,19 @@ export default {
       this.swiper.slideTo(slideId, 1000, false);
       this.size = [];
       this.activeColor = color;
-      // this.product.attributes.colors.filter((item) => {
+      // this.product.colors.filter((item) => {
       //   if (id === item.id) {
       //     this.size.push(item);
       //   }
       // });
     },
     stock() {
-      // this.product.attributes.colors.filter((item) => {
+      // this.product.colors.filter((item) => {
       //   if (
-      //     this.activeColor === item.attributes.code &&
-      //     this.selectedSize === item.attributes.size
+      //     this.activeColor === item.code &&
+      //     this.selectedSize === item.size
       //   ) {
-      //     this.qty = item.attributes.qty;
+      //     this.qty = item.qty;
       //   }
       // });
     },

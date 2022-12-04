@@ -2,14 +2,16 @@ import Vue from "vue";
 
 const tools = {
   priceFormat(price) {
-    let strPrice = price.toString();
-    let strArr = [];
-    while (strPrice.length > 3) {
-      strArr.push(strPrice.slice(strPrice.length - 3, strPrice.length));
-      strPrice = strPrice.slice(0, strPrice.length - 3);
+    if (price) {
+      let strPrice = price.toString();
+      let strArr = [];
+      while (strPrice.length > 3) {
+        strArr.push(strPrice.slice(strPrice.length - 3, strPrice.length));
+        strPrice = strPrice.slice(0, strPrice.length - 3);
+      }
+      strArr.push(strPrice);
+      return strArr.reverse().join(" ");
     }
-    strArr.push(strPrice);
-    return strArr.reverse().join(" ");
   },
   phoneFormatter(phone) {
     phone = phone.includes("+") > 0 ? phone.substring(1) : phone;

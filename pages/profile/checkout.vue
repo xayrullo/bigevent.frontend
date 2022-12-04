@@ -22,7 +22,7 @@
                         >
                           <input
                             type="text"
-                            v-model="user.firstName"
+                            v-model="user.firstname"
                             name="First name"
                           />
                           <span class="validate-error">{{ errors[0] }}</span>
@@ -37,15 +37,15 @@
                         >
                           <input
                             type="text"
-                            v-model="user.lastName"
+                            v-model="user.lastname"
                             name="Last name"
                           />
                           <span class="validate-error">{{ errors[0] }}</span>
                         </ValidationProvider>
                       </div>
-                      <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group col-md-12 col-sm-12 col-xs-12">
                         <ValidationProvider
-                          rules="required|digits:10"
+                          rules="required|phone"
                           v-slot="{ errors }"
                           name="phone Number"
                         >
@@ -58,93 +58,13 @@
                           <span class="validate-error">{{ errors[0] }}</span>
                         </ValidationProvider>
                       </div>
-                      <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                        <div class="field-label">Email Address</div>
-                        <ValidationProvider
-                          rules="required|email"
-                          v-slot="{ errors }"
-                          name="Email"
-                        >
-                          <input
-                            type="text"
-                            v-model="user.email"
-                            name="Email Address"
-                          />
-                          <span class="validate-error">{{ errors[0] }}</span>
-                        </ValidationProvider>
-                      </div>
-                      <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                        <div class="field-label">Country</div>
-                        <select>
-                          <option>India</option>
-                          <option selected>South Africa</option>
-                          <option>United State</option>
-                          <option>Australia</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                        <div class="field-label">Address</div>
-                        <ValidationProvider
-                          rules="required"
-                          v-slot="{ errors }"
-                          name="Address"
-                        >
-                          <input
-                            type="text"
-                            v-model="user.address"
-                            name="Address"
-                          />
-                          <span class="validate-error">{{ errors[0] }}</span>
-                        </ValidationProvider>
-                      </div>
-                      <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                        <div class="field-label">Town/City</div>
-                        <ValidationProvider
-                          rules="required"
-                          v-slot="{ errors }"
-                          name="City"
-                        >
-                          <input type="text" v-model="user.city" name="City" />
-                          <span class="validate-error">{{ errors[0] }}</span>
-                        </ValidationProvider>
-                      </div>
-                      <div class="form-group col-md-12 col-sm-6 col-xs-12">
-                        <div class="field-label">State / County</div>
-                        <ValidationProvider
-                          rules="required"
-                          v-slot="{ errors }"
-                          name="State"
-                        >
-                          <input
-                            type="text"
-                            v-model="user.state"
-                            name="State"
-                          />
-                          <span class="validate-error">{{ errors[0] }}</span>
-                        </ValidationProvider>
-                      </div>
-                      <div class="form-group col-md-12 col-sm-6 col-xs-12">
-                        <div class="field-label">Postal Code</div>
-                        <ValidationProvider
-                          rules="required"
-                          v-slot="{ errors }"
-                          name="Postal Code"
-                        >
-                          <input
-                            type="text"
-                            v-model="user.pincode"
-                            name="Postal Code"
-                          />
-                          <span class="validate-error">{{ errors[0] }}</span>
-                        </ValidationProvider>
-                      </div>
                       <div
                         class="
                           form-group
                           col-lg-12 col-md-12 col-sm-12 col-xs-12
                         "
                       >
-                        <nuxt-link :to="{ path: '/page/account/register' }"
+                        <nuxt-link :to="{ path: '/register' }"
                           >Create an Account?</nuxt-link
                         >
                       </div>
@@ -160,110 +80,33 @@
                           </div>
                         </div>
                         <ul class="qty" v-if="cart.length">
-                          <!-- <li v-for="(item,index) in cart" :key="index">
-                            {{ item.title | uppercase }} X {{ item.quantity }}
-                            <span>{{ (item.price * curr.curr) * item.quantity | currency(curr.symbol) }}</span>
-                          </li> -->
+                          <li v-for="(item, index) in cart" :key="index">
+                            {{ item.title | uppercase }} X
+                            {{ item.qty }}
+                            <span>{{
+                              $tools.priceFormat(item.price * item.qty)
+                            }}</span>
+                          </li>
                         </ul>
                         <ul class="sub-total">
                           <li>
                             Subtotal
                             <span class="count">{{
-                              (cartTotal * curr.curr) | currency(curr.symbol)
+                              $tools.priceFormat(cartTotal)
                             }}</span>
-                          </li>
-                          <li>
-                            Shipping
-                            <div class="shipping">
-                              <div class="shopping-option">
-                                <input
-                                  type="checkbox"
-                                  name="free-shipping"
-                                  id="free-shipping"
-                                />
-                                <label for="free-shipping">Free Shipping</label>
-                              </div>
-                              <div class="shopping-option">
-                                <input
-                                  type="checkbox"
-                                  name="local-pickup"
-                                  id="local-pickup"
-                                />
-                                <label for="local-pickup">Local Pickup</label>
-                              </div>
-                            </div>
                           </li>
                         </ul>
                         <ul class="sub-total">
                           <li>
                             Total
                             <span class="count">{{
-                              (cartTotal * curr.curr) | currency(curr.symbol)
+                              $tools.priceFormat(cartTotal)
                             }}</span>
                           </li>
                         </ul>
                       </div>
                       <div class="payment-box">
-                        <div class="upper-box">
-                          <div class="payment-options">
-                            <ul>
-                              <li>
-                                <div class="radio-option">
-                                  <input
-                                    type="radio"
-                                    name="payment-group"
-                                    id="payment-1"
-                                    checked="checked"
-                                    v-model="payment"
-                                    :value="false"
-                                  />
-                                  <label for="payment-1">
-                                    Stripe
-                                    <span class="small-text"
-                                      >Please send a check to Store Name, Store
-                                      Street, Store Town, Store State / County,
-                                      Store Postcode.</span
-                                    >
-                                  </label>
-                                </div>
-                              </li>
-                              <li>
-                                <div class="radio-option paypal">
-                                  <input
-                                    type="radio"
-                                    :value="true"
-                                    v-model="payment"
-                                    name="payment-group"
-                                    id="payment-3"
-                                  />
-                                  <label for="payment-3">
-                                    PayPal
-                                    <span class="image">
-                                      <img
-                                        :src="$tools.getImgUrl('paypal.png')"
-                                        alt
-                                      />
-                                    </span>
-                                  </label>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
                         <div class="text-right">
-                          <no-ssr>
-                            <paypal-checkout
-                              :amount="getamt()"
-                              currency="USD"
-                              :client="paypal"
-                              :env="environment"
-                              :button-style="button_style"
-                              v-if="payment"
-                              v-on:payment-authorized="onPaymentComplete"
-                              v-on:payment-cancelled="onCancelled()"
-                            >
-                            </paypal-checkout>
-                          </no-ssr>
                           <button
                             type="submit"
                             @click="order()"
@@ -287,16 +130,9 @@
   </div>
 </template>
   <script>
-import {
-  ValidationProvider,
-  ValidationObserver,
-} from "vee-validate/dist/vee-validate.full.esm";
 import { mapGetters } from "vuex";
 export default {
-  components: {
-    ValidationProvider,
-    ValidationObserver,
-  },
+  components: {},
   computed: {
     ...mapGetters({
       cart: "cart/cartItems",
@@ -307,14 +143,12 @@ export default {
   data() {
     return {
       user: {
-        firstName: "",
-        lastName: "",
+        firstname: "",
+        lastname: "",
         phone: "",
-        email: "",
-        address: "",
-        city: "",
-        state: "",
-        pincode: "",
+        paymentType: "",
+        address: null,
+        comment: "",
       },
       isLogin: false,
       paypal: {
@@ -330,6 +164,11 @@ export default {
       },
       amtchar: "",
     };
+  },
+  mounted() {
+    this.user.firstname = this.$auth.user.firstname;
+    this.user.lastname = this.$auth.user.lastname;
+    this.user.phone = this.$auth.user.phone;
   },
   methods: {
     order() {

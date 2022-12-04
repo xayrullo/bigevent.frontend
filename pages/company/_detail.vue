@@ -4,7 +4,7 @@
     <section class="blog-detail-page section-b-space ratio2_3 pt-0">
       <div class="container">
         <div class="top-banner-wrapper">
-          <a v-if="company.attributes.banner" href="#">
+          <a v-if="company.banner" href="#">
             <img
               :src="$tools.getImgUrl('mega-menu/2.jpg')"
               class="img-fluid"
@@ -12,16 +12,13 @@
             />
           </a>
           <div class="top-banner-content small-section">
-            <h4>{{ company.attributes.name }}</h4>
-            <!-- <h5>{{ company.attributes.description }}</h5> -->
-            <p>{{ company.attributes.description }}</p>
+            <h4>{{ company.name }}</h4>
+            <!-- <h5>{{ company.description }}</h5> -->
+            <p>{{ company.description }}</p>
           </div>
         </div>
         <div
-          v-if="
-            company.attributes.directions.data &&
-            company.attributes.directions.data.length > 1
-          "
+          v-if="company.directions && company.directions.length > 1"
           class="container category-button"
         >
           <section class="section-b-space border-section border-bottom-0">
@@ -36,14 +33,14 @@
               </div>
               <div
                 class="col"
-                v-for="(cat, index) in company.attributes.directions.data"
+                v-for="(cat, index) in company.directions"
                 :key="index"
               >
                 <a
                   class="btn btn-outline btn-block"
                   :class="{ active: $route.query.direction == cat.id }"
                   @click="changeByDirection(cat)"
-                  >{{ cat.attributes.title }}</a
+                  >{{ cat.title }}</a
                 >
               </div>
             </div>

@@ -11,7 +11,7 @@ const getters = {
   },
   cartTotalAmount: (state) => {
     return state.cart.reduce((total, product) => {
-      return total + product.attributes.price * product.qty;
+      return total + product.price * product.qty;
     }, 0);
   },
 };

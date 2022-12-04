@@ -10,9 +10,7 @@
           <img
             :src="
               $tools.getFileUrl(
-                imageSrc.id
-                  ? imageSrc.attributes.url
-                  : product.attributes.media.data[0].attributes.url
+                imageSrc.id ? imageSrc.url : product.media[0].url
               )
             "
             :id="product.id"
@@ -20,20 +18,20 @@
             height="500"
             width="320"
             style="object-fit: cover"
-            :alt="product.attributes.name"
+            :alt="product.name"
           />
         </nuxt-link>
       </div>
       <ul class="product-thumb-list">
         <li
-          v-for="(image, index) in product.attributes.media.data.slice(0, 3)"
+          v-for="(image, index) in product.media.slice(0, 3)"
           class="grid_thumb_img"
           :class="{ active: imageSrc.id === image.id }"
           :key="index"
           @click="productVariantChange(image)"
         >
           <a href="javascript:void(0);">
-            <img :src="$tools.getFileUrl(image.attributes.url)" />
+            <img :src="$tools.getFileUrl(image.url)" />
           </a>
         </li>
       </ul>
@@ -79,31 +77,31 @@
       <div class="rating">
         <star-rating
           :star-size="15"
-          :rating="product.attributes.rate"
+          :rating="product.rate"
           :increment="0.01"
           :read-only="true"
         />
       </div>
       <nuxt-link :to="{ path: 'products/' + product.id }">
-        <h6>{{ product.attributes.title }}</h6>
+        <h6>{{ product.title }}</h6>
       </nuxt-link>
-      <p>{{ product.attributes.description }}</p>
-      <h4 v-if="product.attributes.isSale">
+      <p>{{ product.description }}</p>
+      <h4 v-if="product.isSale">
         {{ discountedPrice(product) | currency }}
-        <del>{{ product.attributes.price | currency }}</del>
+        <del>{{ product.price | currency }}</del>
       </h4>
       <h4 v-else>
-        {{ $tools.priceFormat(product.attributes.price) | currency }}
+        {{ $tools.priceFormat(product.price) | currency }}
       </h4>
-      <ul class="color-variant" v-if="product.attributes.isColor">
+      <ul class="color-variant" v-if="product.isColor">
         <li
-          v-for="(variant, variantIndex) in Color(product.attributes.colors)"
+          v-for="(variant, variantIndex) in Color(product.colors)"
           :key="variantIndex"
         >
           <a
             @click="productColorchange(variant, product)"
             :class="[variant]"
-            v-bind:style="{ 'background-color': variant.attributes.code }"
+            v-bind:style="{ 'background-color': variant.code }"
           ></a>
         </li>
       </ul>
@@ -180,17 +178,17 @@ export default {
     Color(colors) {
       const uniqColor = [];
       for (let i = 0; i < colors.length; i++) {
-        if (uniqColor.indexOf(colors[i].attributes.code) === -1) {
-          uniqColor.push(colors[i].attributes.code);
+        if (uniqColor.indexOf(colors[i].code) === -1) {
+          uniqColor.push(colors[i].code);
         }
       }
       return uniqColor;
     },
     productColorchange(color, product) {
-      product.attributes.colors.map((item) => {
-        if (item.attributes.code === color.attributes.code) {
-          product.attributes.media.data.map((img) => {
-            if (img.attributes.code === item.attributes.code) {
+      product.colors.map((item) => {
+        if (item.code === color.code) {
+          product.media.map((img) => {
+            if (img.code === item.code) {
               this.imageSrc = img;
             }
           });

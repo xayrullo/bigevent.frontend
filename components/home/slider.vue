@@ -13,8 +13,7 @@
               <div
                 class="home p-left text-left"
                 v-bind:style="{
-                  'background-image':
-                    'url(' + getBgImage(item.attributes) + ')',
+                  'background-image': 'url(' + getBgImage(item) + ')',
                 }"
               >
                 <div class="container">
@@ -22,11 +21,11 @@
                     <div class="col">
                       <div class="slider-contain">
                         <div>
-                          <h1>{{ item.attributes.title }}</h1>
-                          <h4>{{ item.attributes.description }}</h4>
+                          <h1>{{ item.title }}</h1>
+                          <h4>{{ item.description }}</h4>
                           <nuxt-link
                             :to="{
-                              path: `/collections/${item.attributes.link}`,
+                              path: `/collections/${item.link}`,
                             }"
                             class="btn btn-solid"
                             >Shop new collection</nuxt-link
@@ -95,8 +94,8 @@ export default {
   },
   methods: {
     getBgImage(item) {
-      return item.banner.data
-        ? this.$tools.getFileUrl(item.banner.data.attributes.url)
+      return item.banner
+        ? this.$tools.getFileUrl(item.banner.url)
         : this.$tools.getImgUrl("beauty/banner2.jpg");
     },
   },

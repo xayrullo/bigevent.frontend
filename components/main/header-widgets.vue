@@ -94,17 +94,13 @@
             <li v-for="(item, index) in cart" :key="index">
               <div class="media">
                 <nuxt-link
-                  v-if="item.attributes.media.data"
+                  v-if="item.media"
                   :to="{ path: '/collections/products/' + item.id }"
                 >
                   <img
                     alt
                     class="mr-3"
-                    :src="
-                      $tools.getFileUrl(
-                        item.attributes.media.data[0].attributes.url
-                      )
-                    "
+                    :src="$tools.getFileUrl(item.media[0].url)"
                   />
                 </nuxt-link>
                 <nuxt-link
@@ -115,12 +111,12 @@
                 </nuxt-link>
                 <div class="media-body">
                   <nuxt-link :to="{ path: '/collections/products/' + item.id }">
-                    <h4>{{ item.attributes.title }}</h4>
+                    <h4>{{ item.title }}</h4>
                   </nuxt-link>
                   <h4>
                     <span>
                       {{ item.qty }} x
-                      {{ $tools.priceFormat(item.attributes.price) }}
+                      {{ $tools.priceFormat(item.price) }}
                       sum
                     </span>
                   </h4>

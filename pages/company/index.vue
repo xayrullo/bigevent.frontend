@@ -17,10 +17,8 @@
                     <div>
                       <img
                         :src="
-                          item.attributes.logo.data
-                            ? $tools.getFileUrl(
-                                item.attributes.logo.data.attributes.url
-                              )
+                          item.logo
+                            ? $tools.getFileUrl(item.logo.url)
                             : $tools.getImgUrl('logos/2.png')
                         "
                         class="bg-img"
@@ -30,8 +28,8 @@
                         alt
                       />
                     </div>
-                    <h4>{{ item.attributes.name }}</h4>
-                    <h6>{{ $tools.phoneFormatter(item.attributes.phone) }}</h6>
+                    <h4>{{ item.name }}</h4>
+                    <h6>{{ $tools.phoneFormatter(item.phone) }}</h6>
                   </nuxt-link>
                 </div>
               </div>

@@ -17,10 +17,8 @@
                         <div>
                           <img
                             :src="
-                              company.attributes.logo.data
-                                ? $tools.getFileUrl(
-                                    company.attributes.logo.data.attributes.url
-                                  )
+                              company.logo
+                                ? $tools.getFileUrl(company.logo.url)
                                 : $tools.getImgUrl('logos/2.png')
                             "
                             width="100"

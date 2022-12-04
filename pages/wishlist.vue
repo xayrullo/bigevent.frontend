@@ -24,41 +24,33 @@
                   <td>
                     <nuxt-link
                       :to="{ path: `/collections/products/${item.id}` }"
-                      v-if="item.attributes.media.data"
+                      v-if="item.media"
                     >
                       <img
                         :src="
-                          $tools.getFileUrl(
-                            item.attributes.media.data[0].attributes.formats
-                              .thumbnail.url
-                          )
+                          $tools.getFileUrl(item.media[0].formats.thumbnail.url)
                         "
-                        :alt="item.attributes.title"
+                        :alt="item.title"
                       />
                     </nuxt-link>
                   </td>
                   <td>
                     <nuxt-link
                       :to="{ path: `/collections/products/${item.id}` }"
-                      >{{ item.attributes.title }}</nuxt-link
+                      >{{ item.title }}</nuxt-link
                     >
                   </td>
                   <td>
                     <h2>
-                      {{ $tools.priceFormat(item.attributes.price) + " sum" }}
+                      {{ $tools.priceFormat(item.price) + " sum" }}
                     </h2>
                   </td>
                   <td>
                     <img
                       width="80"
                       height="50"
-                      :src="
-                        $tools.getFileUrl(
-                          item.attributes.country.data.attributes.flag.data
-                            .attributes.url
-                        )
-                      "
-                      :alt="item.attributes.country.data.attributes.name"
+                      :src="$tools.getFileUrl(item.country.flag.url)"
+                      :alt="item.country.name"
                     />
                   </td>
                   <td>

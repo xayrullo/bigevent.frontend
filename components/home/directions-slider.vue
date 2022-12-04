@@ -20,13 +20,11 @@
           <div class="product-box">
             <div class="img-wrapper">
               <div class="front">
-                <nuxt-link :to="`/collections/${direction.attributes.link}`">
+                <nuxt-link :to="`/collections/${direction.link}`">
                   <img
                     :src="
-                      direction.attributes.image.data
-                        ? $tools.getFileUrl(
-                            direction.attributes.image.data.attributes.url
-                          )
+                      direction.image
+                        ? $tools.getFileUrl(direction.image.url)
                         : $tools.getImgUrl('1.jpg')
                     "
                     :id="direction.id"
@@ -38,8 +36,8 @@
               </div>
             </div>
             <div class="product-detail mt-2">
-              <nuxt-link :to="`/collections/${direction.attributes.link}`">
-                <h5>{{ direction.attributes.title }}</h5>
+              <nuxt-link :to="`/collections/${direction.link}`">
+                <h5>{{ direction.title }}</h5>
               </nuxt-link>
             </div>
           </div>

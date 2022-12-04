@@ -84,7 +84,7 @@ const mutations = {
   },
   SET_WISH_PRODUCTS(state, payload) {
     state.wishProducts = payload.map((product) => {
-      return product.attributes.product.data;
+      return product.product;
     });
   },
   ADD_TO_WISHLIST(state, payload) {
@@ -154,7 +154,7 @@ const actions = {
           //   pageSize: state.pagination.pageSize,
           //   pageCount: res.meta.pagination.pageCount,
           // });
-          const _res = res.data || res;
+          const _res = res.results || res;
           commit("SET_WISH_PRODUCTS", _res);
           resolve(_res);
         })
@@ -173,12 +173,12 @@ const actions = {
         .$get(`products`, { params: payload })
         .then((res) => {
           commit("SET_PAGINATION", {
-            page: res.meta.pagination.page || state.pagination.page,
-            total: res.meta.pagination.total,
+            page: res.pagination.page || state.pagination.page,
+            total: res.pagination.total,
             pageSize: state.pagination.pageSize,
-            pageCount: res.meta.pagination.pageCount,
+            pageCount: res.pagination.pageCount,
           });
-          const _res = res.data || res;
+          const _res = res.results || res;
           commit("SET_PRODUCTS", _res);
           resolve(_res);
         })
@@ -196,7 +196,7 @@ const actions = {
       this.$axios
         .$get(`products`, { params: payload })
         .then((res) => {
-          const _res = res.data || res;
+          const _res = res.results || res;
           commit("SET_SPECIAL_PRODUCTS", _res);
           resolve(_res);
         })
