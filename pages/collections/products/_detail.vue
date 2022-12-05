@@ -10,11 +10,11 @@
                 <div class="swiper-wrapper">
                   <div
                     class="swiper-slide"
-                    v-for="(product, index) in product.media"
+                    v-for="(image, index) in warehouse.media"
                     :key="index"
                   >
                     <img
-                      :src="$tools.getFileUrl(product.url)"
+                      :src="$tools.getFileUrl(image.url)"
                       :id="product.id"
                       class="img-fluid bg-img"
                       :alt="product.name"
@@ -28,14 +28,14 @@
                     <div class="swiper-wrapper">
                       <div
                         class="swiper-slide"
-                        v-for="(product, index) in product.media"
+                        v-for="(image, index) in warehouse.media"
                         :key="index"
                       >
                         <img
-                          :src="$tools.getFileUrl(product.url)"
-                          :id="product.id"
+                          :src="$tools.getFileUrl(image.url)"
+                          :id="image.id"
                           class="img-fluid bg-img"
-                          :alt="product.name"
+                          :alt="image.name"
                           @click="slideTo(index)"
                         />
                       </div>
@@ -59,22 +59,19 @@
                 </h3>
                 <ul class="color-variant">
                   <li
-                    v-bind:class="{ active: activeColor == variant }"
-                    v-for="(variant, variantIndex) in Color(product.colors)"
+                    v-bind:class="{
+                      active:
+                        warehouse.color && warehouse.color.code == variant,
+                    }"
+                    v-for="(variant, variantIndex) in Color(product.warehouse)"
                     :key="variantIndex"
                   >
                     <a
                       :class="[variant]"
                       v-bind:style="{
-                        'background-color': color.code,
+                        'background-color': variant,
                       }"
-                      @click="
-                        sizeVariant(
-                          product.colors[variantIndex].id,
-                          variantIndex,
-                          variant
-                        )
-                      "
+                      @click="sizeVariant(variant, product.warehouse)"
                     ></a>
                   </li>
                 </ul>
@@ -89,32 +86,41 @@
                 <div class="product-description border-product">
                   <h6 class="product-title size-text">
                     select size
-                    <span>
+                    <!-- <span>
                       <a href="javascript:void(0)" v-b-modal.modal-1
                         >size chart</a
                       >
-                    </span>
+                    </span> -->
                   </h6>
                   <div class="size-box">
                     <ul>
                       <li
                         class="product-title"
-                        v-bind:class="{ active: selectedSize == size }"
-                        v-for="(size, index) in size"
+                        v-bind:class="{
+                          active: checkout.size === size.size.id,
+                        }"
+                        v-for="(size, index) in warehouse.sizes"
                         :key="index"
                       >
                         <a
+                          v-if="size.stock > 0"
                           href="javascript:void(0)"
                           @click="changeSizeVariant(size)"
-                          >{{ size }}</a
+                          >{{ size.size.name }}</a
                         >
                       </li>
                     </ul>
                   </div>
-                  <h5 class="avalibility" v-if="counter <= product.stock">
+                  <h5
+                    class="avalibility"
+                    v-if="checkout.quantity <= product.stock"
+                  >
                     <span>In Stock</span>
                   </h5>
-                  <h5 class="avalibility" v-if="counter > product.stock">
+                  <h5
+                    class="avalibility"
+                    v-if="checkout.quantity > product.stock"
+                  >
                     <span>Out of Stock</span>
                   </h5>
                   <h6 class="product-title">quantity</h6>
@@ -135,8 +141,8 @@
                         type="text"
                         name="quantity"
                         class="form-control input-number"
-                        :disabled="counter > product.stock"
-                        v-model="counter"
+                        :disabled="checkout.quantity > selectedSize.stock"
+                        v-model="checkout.quantity"
                       />
                       <span class="input-group-prepend">
                         <button
@@ -157,8 +163,8 @@
                     <button
                       class="btn btn-solid"
                       title="Add to cart"
-                      @click="addToCart(product, counter)"
-                      :disabled="counter > product.stock"
+                      @click="addToCart(product)"
+                      :disabled="checkout.quantity > selectedSize.stock"
                     >
                       Add To Cart
                     </button>
@@ -166,8 +172,8 @@
                   <button
                     class="btn btn-solid"
                     title="buy now"
-                    @click="buyNow(product, counter)"
-                    :disabled="counter > product.stock"
+                    @click="buyNow(product)"
+                    :disabled="checkout.quantity > selectedSize.stock"
                   >
                     Buy Now
                   </button>
@@ -181,7 +187,7 @@
                 <div class="border-product">
                   <h6 class="product-title">share it</h6>
                   <div class="product-icon">
-                    <form class="d-inline-block">
+                    <div class="d-inline-block">
                       <button
                         class="wishlist-btn"
                         @click="addToWishlist(product)"
@@ -189,13 +195,9 @@
                         <i class="fa fa-heart"></i>
                         <span class="title-font">Add To WishList</span>
                       </button>
-                    </form>
+                    </div>
                   </div>
                 </div>
-                <!-- <div class="border-product">
-                  <h6 class="product-title">Time Reminder</h6>
-                  <Timer date="December 20, 2020" />
-                </div> -->
               </div>
             </div>
           </div>
@@ -212,46 +214,16 @@
               </b-tab>
               <b-tab title="Details">
                 <b-card-text>
-                  {{ product.description }}
-                  <div class="single-product-tables">
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td>Febric</td>
-                          <td>Chiffon</td>
-                        </tr>
-                        <tr>
-                          <td>Color</td>
-                          <td>Red</td>
-                        </tr>
-                        <tr>
-                          <td>Material</td>
-                          <td>Crepe printed</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td>Length</td>
-                          <td>50 Inches</td>
-                        </tr>
-                        <tr>
-                          <td>Size</td>
-                          <td>S, M, L .XXL</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                  <div v-html="product.context"></div>
                 </b-card-text>
               </b-tab>
-              <b-tab title="Video">
+              <b-tab v-if="product.video" title="Video">
                 <b-card-text>
                   <div class="mt-3 text-center">
                     <iframe
                       width="560"
                       height="315"
-                      src="https://www.youtube.com/embed/BUWzX78Ye_8"
+                      :src="product.video"
                       allow="autoplay; encrypted-media"
                       allowfullscreen
                     ></iframe>
@@ -285,13 +257,13 @@ export default {
   },
   data() {
     return {
-      counter: 1,
-      activeColor: "",
-      selectedSize: "",
-      qty: "",
-      size: [],
-      productTYpe: "",
-      productId: "",
+      warehouse: {},
+      checkout: {
+        size: null,
+        color: null,
+        quantity: 1,
+      },
+      selectedSize: {},
       swiperOption: {
         slidesPerView: 1,
         spaceBetween: 20,
@@ -312,43 +284,38 @@ export default {
     }),
     ...mapGetters({
       curr: "products/changeCurrency",
-      // product: "products/getProduct"
     }),
-    getDetail: function () {
-      return this.$store.getters["products/getProduct"];
-    },
-    // product: function () {
-    //   return this.$store.getters["products/getProduct"];
-    // },
     swiper() {
       return this.$refs.mySwiper.swiper;
     },
   },
   mounted() {
-    // For displaying default color and size on pageload
-    // this.uniqColor = this.getDetail.variants[0].color;
-    // this.sizeVariant(this.getDetail.variants[0].image_id);
-    // // Active default color
-    // this.activeColor = this.uniqColor;
-    // this.changeSizeVariant(this.getDetail.variants[0].size);
+    if (this.product.warehouse.length) {
+      this.warehouse = this.product.warehouse[0];
+      this.checkout.color = this.product.warehouse[0].color.id;
+      this.checkout.size = this.product.warehouse[0].sizes[0].size.id;
+      this.selectedSize = this.product.warehouse[0].sizes[0];
+    }
   },
   methods: {
     priceCurrency: function () {
       this.$store.dispatch("products/changeCurrency");
     },
-    addToWishlist: function (product) {
-      this.$store.dispatch("products/addToWishlist", product);
+    addToWishlist() {
+      this.$store.dispatch("products/addToWishlist", {
+        data: this.product,
+      });
     },
     discountedPrice(product) {
       const price = product.price - (product.price * product.discount) / 100;
       return price;
     },
     // Display Unique Color
-    Color(variants) {
+    Color(warehouse) {
       const uniqColor = [];
-      for (let i = 0; i < variants.length; i++) {
-        if (uniqColor.indexOf(variants[i].code) === -1) {
-          uniqColor.push(variants[i].code);
+      for (let i = 0; i < warehouse.length; i++) {
+        if (uniqColor.indexOf(warehouse[i].color.code) === -1) {
+          uniqColor.push(warehouse[i].color.code);
         }
       }
       this.stock();
@@ -366,14 +333,16 @@ export default {
     },
     // Item Count
     increment() {
-      this.counter++;
+      if (this.checkout.quantity < this.selectedSize.stock)
+        this.checkout.quantity++;
     },
     decrement() {
-      if (this.counter > 1) this.counter--;
+      if (this.checkout.quantity > 1) this.checkout.quantity--;
     },
     // Change size variant
-    changeSizeVariant(variant) {
-      this.selectedSize = variant;
+    changeSizeVariant(data) {
+      this.checkout.size = data.size.id;
+      this.selectedSize = data;
       this.stock();
     },
     getImgUrl(path) {
@@ -382,26 +351,15 @@ export default {
     slideTo(id) {
       this.swiper.slideTo(id, 1000, false);
     },
-    sizeVariant(id, slideId, color) {
-      this.swiper.slideTo(slideId, 1000, false);
-      this.size = [];
-      this.activeColor = color;
-      // this.product.colors.filter((item) => {
-      //   if (id === item.id) {
-      //     this.size.push(item);
-      //   }
-      // });
+    sizeVariant(colorCode, warehouse) {
+      warehouse.map((item) => {
+        if (item.color.code === colorCode) {
+          this.warehouse = item;
+          this.checkout.color = item.color.id;
+        }
+      });
     },
-    stock() {
-      // this.product.colors.filter((item) => {
-      //   if (
-      //     this.activeColor === item.code &&
-      //     this.selectedSize === item.size
-      //   ) {
-      //     this.qty = item.qty;
-      //   }
-      // });
-    },
+    stock() {},
   },
 };
 </script>
