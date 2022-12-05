@@ -1,9 +1,14 @@
 <template>
-    <div v-show="isScrolled" class="tap-top top-cls" @click="backToTop" v-scroll-to="'#body-content'">
-      <div>
-          <i class="fa fa-angle-double-up"></i>
-      </div>
+  <div
+    v-show="isScrolled"
+    class="tap-top top-cls"
+    @click="backToTop"
+    v-scroll-to="'#body-content'"
+  >
+    <div>
+      <i class="fa fa-angle-double-up" style="font-size: 32px"></i>
     </div>
+  </div>
 </template>
 <script>
 export default {

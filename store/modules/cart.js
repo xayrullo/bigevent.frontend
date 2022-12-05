@@ -1,5 +1,5 @@
 import products from "../../data/products";
-
+import Vue from "vue";
 const state = {
   products: products.data,
   cart: [],
@@ -57,11 +57,20 @@ const mutations = {
 };
 // actions
 const actions = {
-  addToCart: (context, payload) => {
+  addToCart(context, payload) {
+    const product = context.state.cart.find((item) => item.id === payload.id);
+    if (product) {
+      Vue.prototype.$snotify.warning(
+        "You have already added this item to your cart."
+      );
+      return;
+    }
     const { commit } = context;
-    const product = { ...payload };
     const qty = payload.quantity ? payload.quantity : 1;
-    commit("ADD_TO_CART", { ...product, qty });
+    Vue.prototype.$snotify.success(
+      "Product is successfully added to your cart."
+    );
+    commit("ADD_TO_CART", { ...payload, qty });
   },
   updateCartQuantity: (context, payload) => {
     context.commit("updateCartQuantity", payload);

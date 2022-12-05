@@ -94,13 +94,13 @@
             <li v-for="(item, index) in cart" :key="index">
               <div class="media">
                 <nuxt-link
-                  v-if="item.media"
+                  v-if="item.warehouse && item.warehouse[0].media.length"
                   :to="{ path: '/collections/products/' + item.id }"
                 >
                   <img
                     alt
                     class="mr-3"
-                    :src="$tools.getFileUrl(item.media[0].url)"
+                    :src="$tools.getFileUrl(item.warehouse[0].media[0].url)"
                   />
                 </nuxt-link>
                 <nuxt-link

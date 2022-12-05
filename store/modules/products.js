@@ -83,9 +83,7 @@ const mutations = {
     state.pagination = payload;
   },
   SET_WISH_PRODUCTS(state, payload) {
-    state.wishProducts = payload.map((product) => {
-      return product.product;
-    });
+    state.wishProducts = payload;
   },
   ADD_TO_WISHLIST(state, payload) {
     state.wishProducts.push({ ...payload });
@@ -231,7 +229,7 @@ const actions = {
   },
   addToWishlist(context, payload) {
     const product = context.state.wishProducts.find(
-      (item) => item.id === payload.data.id
+      (item) => item.product.id === payload.data.id
     );
     if (product) {
       Vue.prototype.$snotify.warning(

@@ -159,7 +159,7 @@
                   </div>
                 </div>
                 <div class="product-buttons">
-                  <nuxt-link :to="{ path: '/page/account/cart' }">
+                  <nuxt-link :to="{ path: '/profile/cart' }">
                     <button
                       class="btn btn-solid"
                       title="Add to cart"
@@ -322,8 +322,7 @@ export default {
       return uniqColor;
     },
     // add to cart
-    addToCart: function (product, qty) {
-      product.quantity = qty || 1;
+    addToCart(product, qty) {
       this.$store.dispatch("cart/addToCart", product);
     },
     buyNow: function (product, qty) {

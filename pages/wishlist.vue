@@ -23,34 +23,39 @@
                 <tr>
                   <td>
                     <nuxt-link
-                      :to="{ path: `/collections/products/${item.id}` }"
-                      v-if="item.media"
+                      :to="{ path: `/collections/products/${item.product.id}` }"
+                      v-if="
+                        item.product.warehouse && item.product.warehouse.length
+                      "
                     >
                       <img
                         :src="
-                          $tools.getFileUrl(item.media[0].formats.thumbnail.url)
+                          $tools.getFileUrl(
+                            item.product.warehouse[0].media[0].formats.thumbnail
+                              .url
+                          )
                         "
-                        :alt="item.title"
+                        :alt="item.product.title"
                       />
                     </nuxt-link>
                   </td>
                   <td>
                     <nuxt-link
-                      :to="{ path: `/collections/products/${item.id}` }"
-                      >{{ item.title }}</nuxt-link
+                      :to="{ path: `/collections/products/${item.product.id}` }"
+                      >{{ item.product.title }}</nuxt-link
                     >
                   </td>
                   <td>
                     <h2>
-                      {{ $tools.priceFormat(item.price) + " sum" }}
+                      {{ $tools.priceFormat(item.product.price) + " sum" }}
                     </h2>
                   </td>
                   <td>
                     <img
                       width="80"
                       height="50"
-                      :src="$tools.getFileUrl(item.country.flag.url)"
-                      :alt="item.country.name"
+                      :src="$tools.getFileUrl(item.product.country.flag.url)"
+                      :alt="item.product.country.name"
                     />
                   </td>
                   <td>
@@ -119,8 +124,8 @@ export default {
     removeWishlistItem: function (product) {
       this.$store.dispatch("products/removeWishlistItem", product);
     },
-    addToCart: function (product) {
-      this.$store.dispatch("cart/addToCart", product);
+    addToCart: function (item) {
+      this.$store.dispatch("cart/addToCart", item.product);
     },
   },
 };

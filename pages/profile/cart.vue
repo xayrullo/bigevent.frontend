@@ -23,10 +23,13 @@
                 <tr>
                   <td>
                     <nuxt-link
-                      v-if="item.media"
+                      v-if="item.warehouse && item.warehouse[0].media"
                       :to="{ path: '/collections/products/' + item.id }"
                     >
-                      <img :src="$tools.getFileUrl(item.media[0].url)" alt />
+                      <img
+                        :src="$tools.getFileUrl(item.warehouse[0].media[0].url)"
+                        alt
+                      />
                     </nuxt-link>
                     <nuxt-link
                       v-else

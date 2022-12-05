@@ -157,7 +157,7 @@ export default {
       this.$snotify.success("Successfully added to cart");
       this.$store.dispatch("cart/addToCart", product);
     },
-    addToWishlist: function (product) {
+    addToWishlist(product) {
       this.$store.dispatch("products/addToWishlist", {
         data: product,
       });
