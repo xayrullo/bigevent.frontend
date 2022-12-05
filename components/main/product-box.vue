@@ -90,7 +90,7 @@
         {{ $tools.priceFormat(product.price) | currency }}
       </h4>
       <!-- <ul class="color-variant" v-if="product.isColor"> -->
-      <ul class="color-variant">
+      <ul class="color-variant" v-if="product.warehouse">
         <li
           v-for="(variant, variantIndex) in Color(product.warehouse)"
           :key="variantIndex"
@@ -138,8 +138,10 @@ export default {
     },
   },
   mounted() {
-    this.media = this.product.warehouse[0].media;
-    this.imageSrc = this.media[0];
+    if (this.product.warehouse) {
+      this.media = this.product.warehouse[0].media;
+      this.imageSrc = this.media[0];
+    }
   },
   computed: {
     ...mapState({
