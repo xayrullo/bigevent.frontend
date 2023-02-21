@@ -17,7 +17,7 @@
                           alt
                         />
                       </a>
-                      <div class="top-banner-content small-section">
+                      <div id="fashion" class="top-banner-content small-section">
                         <h4>fashion</h4>
                         <p>
                           Handmade and crafted to perfection, our effortlessly
@@ -225,6 +225,7 @@ export default {
   },
   methods: {
     changePage(event) {
+      window.scrollTo(0, 0);
       this.$router.push({
         name: this.$route.name,
         query: {

@@ -43,7 +43,7 @@
       @closeCart="closeCartModal"
       :products="products"
     />
-    <newsletterModel />
+    <!-- <newsletterModel /> -->
   </div>
 </template>
 <script>
@@ -51,7 +51,7 @@ import { mapState } from "vuex";
 import quickviewModel from "~/components/widgets/quickview";
 import compareModel from "~/components/widgets/compare-popup";
 import cartModel from "~/components/cart-model/cart-modal-popup";
-import newsletterModel from "~/components/widgets/newsletter-popup";
+// import newsletterModel from "~/components/widgets/newsletter-popup";
 import Slider from "~/components/home/slider";
 import DirectionsSlider from "~/components/home/directions-slider";
 import SpecialProducts from "~/components/home/special-products";
@@ -81,7 +81,7 @@ export default {
     quickviewModel,
     compareModel,
     cartModel,
-    newsletterModel,
+    // newsletterModel,
   },
   data() {
     return {

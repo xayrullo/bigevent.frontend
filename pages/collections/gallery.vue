@@ -225,6 +225,7 @@ export default {
   },
   methods: {
     changePage(event) {
+      window.scrollTo(0, 0);
       this.$router.push({
         name: this.$route.name,
         query: {

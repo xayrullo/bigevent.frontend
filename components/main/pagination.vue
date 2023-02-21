@@ -134,10 +134,6 @@ export default {
   },
   data() {
     return {
-      current: 1,
-      paginate: 12,
-      paginateRange: 3,
-      paginates: "",
       beginningPages: {
         first: 2,
         second: 3,
