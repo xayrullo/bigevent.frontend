@@ -3,6 +3,8 @@ node_modules
 /dist
 yarn.lock
 .nuxt
+.env
+package.lock.json
 
 # local env files
 .env.local
