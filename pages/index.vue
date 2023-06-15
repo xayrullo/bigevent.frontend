@@ -8,13 +8,6 @@
       :directions="directions"
       class="mt-4"
     />
-    <!-- <ProductSlider
-      :products="products"
-      @openQuickview="showQuickview"
-      @openCompare="showCoampre"
-      @openCart="showCart"
-    /> -->
-    <!-- <Banner /> -->
     <special-products
       :products="products"
       :category="category"
@@ -23,10 +16,8 @@
       @openCart="showCart"
     />
     <companies />
-    <Services />
+    <!-- <Services /> -->
     <Blog />
-    <!-- <Instagram /> -->
-    <!-- <companies /> -->
     <x-footer />
     <quickviewModel
       :openModal="showquickviewmodel"
@@ -43,7 +34,6 @@
       @closeCart="closeCartModal"
       :products="products"
     />
-    <!-- <newsletterModel /> -->
   </div>
 </template>
 <script>
@@ -51,18 +41,11 @@ import { mapState } from "vuex";
 import quickviewModel from "~/components/widgets/quickview";
 import compareModel from "~/components/widgets/compare-popup";
 import cartModel from "~/components/cart-model/cart-modal-popup";
-// import newsletterModel from "~/components/widgets/newsletter-popup";
 import Slider from "~/components/home/slider";
 import DirectionsSlider from "~/components/home/directions-slider";
 import SpecialProducts from "~/components/home/special-products";
 import Companies from "~/components/home/companies";
 import Blog from "~/components/home/blog";
-// import Banner from "~/components/home/banner";
-// import ProductSlider from "./shop/fashion/components/product_slider";
-// import ProductTab from "./shop/fashion/components/product_tab";
-import Services from "./shop/fashion/components/services";
-// import Instagram from "./shop/fashion/components/instagram";
-import LogoSlider from "./shop/fashion/components/logo_slider";
 
 export default {
   auth: false,
@@ -70,18 +53,11 @@ export default {
     Companies,
     Slider,
     DirectionsSlider,
-    // ProductSlider,
     Blog,
     SpecialProducts,
-    // Banner,
-    // ProductTab,
-    Services,
-    // Instagram,
-    LogoSlider,
     quickviewModel,
     compareModel,
     cartModel,
-    // newsletterModel,
   },
   data() {
     return {

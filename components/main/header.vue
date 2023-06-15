@@ -12,7 +12,7 @@
                   <nuxt-link :to="{ path: '/' }">
                     <img
                       :src="$tools.getImgUrl('logos/logo-line.png')"
-                      height="90"
+                      width="200"
                     />
                   </nuxt-link>
                 </div>

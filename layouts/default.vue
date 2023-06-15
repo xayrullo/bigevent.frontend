@@ -1,14 +1,12 @@
 <template>
   <div>
     <nuxt id="body-content" />
-    <layout-setting />
     <back-to-top />
     <vue-snotify />
   </div>
 </template>
 
 <script>
-import LayoutSetting from "../components/widgets/layout-setting";
 import BackToTop from "../components/main/back-to-top";
 export default {
   head() {
@@ -18,8 +16,7 @@ export default {
   },
   asyncData({ store, params, i18n, route }) {},
   components: {
-    BackToTop,
-    LayoutSetting,
+    BackToTop
   },
   async fetch() {
     if (!process.client) {
