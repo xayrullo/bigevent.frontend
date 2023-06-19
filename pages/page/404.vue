@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header />
+    <x-header />
     <Breadcrumbs title="404" />
     <section class="p-0">
       <div class="container">
@@ -15,7 +15,7 @@
         </div>
       </div>
     </section>
-    <Footer />
+    <x-footer/>
   </div>
 </template>
 <script>
