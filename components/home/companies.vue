@@ -1,5 +1,13 @@
 <template>
   <div>
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="home-title">{{ 'Stores' }}</h2>
+      <nuxt-link to="/companies" class="home-all">
+        <span>{{ 'See all' }}</span>
+        <img src="~/assets/images/home/link-all.svg" alt="" />
+      </nuxt-link>
+    </div>
+
     <section class="section-b-space">
       <div class="container">
         <div class="row">

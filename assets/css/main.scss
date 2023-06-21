@@ -14,3 +14,14 @@
 .home-title ::after {
   @apply absolute h-1 w-20 bg-[#ff4c3b] left-0 right-0 bottom-0 
 }
+.home-all {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+
+  img {
+    margin-left: 6px;
+  }
+}
