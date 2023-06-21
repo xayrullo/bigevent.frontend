@@ -2,22 +2,23 @@
   <div>
     <x-header />
     <slider :directions="directions" />
-    <directions-slider
-      title="Explore Our Collections"
-      subtitle="Luxury pieces and accessories that are designed to be treasured."
-      :directions="directions"
-      class="mt-4"
-    />
-    <special-products
-      :products="products"
-      :category="category"
-      @openQuickview="showQuickview"
-      @openCompare="showCoampre"
-      @openCart="showCart"
-    />
-    <companies />
-    <!-- <Services /> -->
-    <Blog />
+    <div class="site-container">
+      <directions-slider
+        title="Explore Our Collections"
+        subtitle="Luxury pieces and accessories that are designed to be treasured."
+        :directions="directions"
+        class="mt-4"
+      />
+      <!-- <special-products
+        :products="products"
+        :category="category"
+        @openQuickview="showQuickview"
+        @openCompare="showCoampre"
+        @openCart="showCart"
+      /> -->
+      <companies />
+      <Blog />
+    </div>
     <x-footer />
     <quickviewModel
       :openModal="showquickviewmodel"

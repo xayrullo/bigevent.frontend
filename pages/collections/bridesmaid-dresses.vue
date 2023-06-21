@@ -10,14 +10,7 @@
                 <div class="row">
                   <div class="col-sm-12">
                     <div class="top-banner-wrapper">
-                      <a href="#">
-                        <img
-                          :src="$tools.getImgUrl('banner/wedding-dresses.webp')"
-                          class="img-fluid"
-                          alt
-                        />
-                      </a>
-                      <div id="fashion" class="top-banner-content small-section">
+                      <div id="fashion" class="top-banner-content small-section pt-4">
                         <h4>fashion</h4>
                         <p>
                           Handmade and crafted to perfection, our effortlessly

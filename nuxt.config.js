@@ -31,7 +31,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: ["swiper/css/swiper.css", "~/assets/scss/app.scss"],
+  css: ["swiper/css/swiper.css", "~/assets/scss/app.scss", "~/assets/css/tailwind.css", "~/assets/css/main.scss"],
   /*
    ** Plugins to load before mounting the App
    */
@@ -118,5 +118,13 @@ export default {
      */
     extend(config, ctx) {},
     babel: { compact: true },
+    postcss: {
+      postcssOptions: {
+        plugins: {
+          tailwindcss: {},
+          autoprefixer: {},
+        },
+      },
+    },
   },
 };

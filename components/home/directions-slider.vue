@@ -1,14 +1,7 @@
 <template>
   <div>
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="title1 section-t-space">
-            <h4>{{ subtitle }}</h4>
-            <h2 class="title-inner1">{{ title }}</h2>
-          </div>
-        </div>
-      </div>
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="home-title">{{ title }}</h2>
     </div>
     <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">

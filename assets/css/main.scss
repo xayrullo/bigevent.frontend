@@ -1,0 +1,16 @@
+.site-container {
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.home-title {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  @apply border-4 border-b-[#ff4c3b] border-t-0 border-l-0 border-r-0
+}
+.home-title ::after {
+  @apply absolute h-1 w-20 bg-[#ff4c3b] left-0 right-0 bottom-0 
+}
