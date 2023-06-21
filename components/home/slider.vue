@@ -20,7 +20,7 @@
                   <div class="row">
                     <div class="col">
                       <div class="slider-contain">
-                        <div>
+                        <div class="slider-content">
                           <h1>{{ item.title }}</h1>
                           <h4>{{ item.description }}</h4>
                           <nuxt-link
@@ -101,5 +101,22 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
+.home {
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+  }
+  .slider-content {
+    position: relative;
+    z-index: 10;
+  }
+}
+
 </style>

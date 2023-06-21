@@ -7,7 +7,7 @@
         title="Explore Our Collections"
         subtitle="Luxury pieces and accessories that are designed to be treasured."
         :directions="directions"
-        class="mt-4"
+        class="mt-12"
       />
       <!-- <special-products
         :products="products"
@@ -16,10 +16,10 @@
         @openCompare="showCoampre"
         @openCart="showCart"
       /> -->
-      <companies />
-      <Blog />
+      <companies class="mt-12" />
+      <Blog class="mt-12" />
     </div>
-    <x-footer />
+    <x-footer class="mt-12" />
     <quickviewModel
       :openModal="showquickviewmodel"
       :productData="quickviewproduct"

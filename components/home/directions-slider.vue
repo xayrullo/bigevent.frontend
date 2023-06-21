@@ -30,7 +30,7 @@
             </div>
             <div class="product-detail mt-2">
               <nuxt-link :to="`/collections/${direction.link}`">
-                <h5>{{ direction.title }}</h5>
+                <div class="text-xl font-medium">{{ direction.title }}</div>
               </nuxt-link>
             </div>
           </div>
